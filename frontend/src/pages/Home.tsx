@@ -1,3 +1,4 @@
+import LaunchFeed from "../components/home/MissionFeed";
 import Loading from "../components/Loading";
 import { useFetchUpcomingLaunches } from "../hooks/useFetchUpcomingLaunches";
 
@@ -6,9 +7,9 @@ const HomePage = () => {
 
   if (isLoading) return <Loading />;
 
-  if (error) return <div>Error: {JSON.stringify(error)}</div>;
+  if (error || !missions) return <div>Error: {JSON.stringify(error)}</div>;
 
-  return <div>{JSON.stringify(missions)}</div>;
+  return <LaunchFeed missions={missions} />;
 };
 
 export default HomePage;
