@@ -7,6 +7,8 @@ import { FaGooglePlay } from "react-icons/fa";
 import { IoRocket } from "react-icons/io5";
 import { getMissionStatusType } from "../../utils/getMissionStatusType";
 import { cn } from "../../lib/utils";
+import { formatMissionDate } from "../../utils/formatMissionDate";
+import { useEffect, useState } from "react";
 
 type MissionCardProps = {
   mission: Mission;
@@ -14,7 +16,7 @@ type MissionCardProps = {
 
 const MissionCard = ({ mission }: MissionCardProps) => {
   return (
-    <div className="grid h-[500px] grid-cols-3 overflow-hidden rounded-md bg-slate-300">
+    <div className="my-4 grid h-[500px] grid-cols-3 overflow-hidden rounded-md bg-slate-300 transition-all hover:shadow-md">
       <MissionProvider mission={mission}>
         <Image />
         <Info />
@@ -54,8 +56,45 @@ const Title = () => {
 
 const Countdown = () => {
   const { mission } = useMissionContext();
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(mission.net));
 
-  return <div>{mission.net.toISOString()}</div>;
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setTimeLeft(calculateTimeLeft(mission.net));
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, [mission.net]);
+
+  function calculateTimeLeft(targetDate: Date) {
+    const now = new Date();
+    const difference = targetDate.getTime() - now.getTime();
+
+    if (difference <= 0) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((difference / (1000 * 60)) % 60);
+    const seconds = Math.floor((difference / 1000) % 60);
+
+    return { days, hours, minutes, seconds };
+  }
+
+  function formatTimeUnit(unit: number) {
+    return unit.toString().padStart(2, "0");
+  }
+
+  return (
+    <div>
+      <div className="text-4xl">
+        NET - {formatTimeUnit(timeLeft.days)}:{formatTimeUnit(timeLeft.hours)}:
+        {formatTimeUnit(timeLeft.minutes)}:{formatTimeUnit(timeLeft.seconds)}
+      </div>
+      <div>{formatMissionDate(mission.net)}</div>
+    </div>
+  );
 };
 
 const Status = () => {
