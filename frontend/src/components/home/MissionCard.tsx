@@ -3,6 +3,10 @@ import MissionProvider, {
   useMissionContext,
 } from "../../context/MissionContext";
 import { Mission } from "../../types/Mission";
+import { FaGooglePlay } from "react-icons/fa";
+import { IoRocket } from "react-icons/io5";
+import { getMissionStatusType } from "../../utils/getMissionStatusType";
+import { cn } from "../../lib/utils";
 
 type MissionCardProps = {
   mission: Mission;
@@ -37,7 +41,7 @@ const Info = () => {
       <Title />
       <Countdown />
       <Status />
-      <Buttons />
+      <Links />
     </div>
   );
 };
@@ -57,17 +61,54 @@ const Countdown = () => {
 const Status = () => {
   const { mission } = useMissionContext();
 
-  return <div>{mission.status.name}</div>;
+  const statusType = getMissionStatusType(mission.status.id);
+
+  const getColor = (): string => {
+    if (statusType === "success") return "text-green-500";
+    if (statusType === "failure") return "text-red-500";
+    return "";
+  };
+
+  return (
+    <h2
+      className={cn("text-2xl font-bold", getColor())}
+      title={mission.status.description}
+    >
+      {mission.status.name}
+    </h2>
+  );
 };
 
-const Buttons = () => {
+const Links = () => {
   const { mission } = useMissionContext();
 
   return (
     <div className="flex items-center justify-around">
-      <Link to={mission.links.live}>Live</Link>
-      <Link to="#">Rocket</Link>
+      <MissionLink
+        to={mission.links.live}
+        text="Live"
+        icon={<FaGooglePlay />}
+      />
+      <MissionLink to="#" text="Rocket" icon={<IoRocket />} />
     </div>
+  );
+};
+
+type MissionLinkProps = {
+  to: string;
+  text: string;
+  icon: JSX.Element;
+};
+
+const MissionLink = ({ to, text, icon }: MissionLinkProps) => {
+  return (
+    <Link
+      className="flex items-center gap-x-4 rounded-md bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90"
+      to={to}
+    >
+      {icon}
+      {text}
+    </Link>
   );
 };
 
