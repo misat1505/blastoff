@@ -1,0 +1,23 @@
+export type Mission = {
+  id: string;
+  name: string;
+  net: Date;
+  image: string;
+  window: {
+    start: Date;
+    end: Date;
+  };
+  rocket: {
+    id: number;
+    name: string;
+    image: string;
+  };
+  status: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  links: {
+    live: string;
+  };
+};
