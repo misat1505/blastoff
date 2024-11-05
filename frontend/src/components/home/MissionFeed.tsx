@@ -1,4 +1,3 @@
-import MissionProvider from "../../context/MissionContext";
 import { Mission } from "../../types/Mission";
 import MissionCard from "./MissionCard";
 
@@ -8,11 +7,9 @@ type LaunchFeedProps = {
 
 const LaunchFeed = ({ missions }: LaunchFeedProps) => {
   return (
-    <div>
+    <div className="mx-auto my-4 w-1/3 min-w-96">
       {missions.map((mission) => (
-        <MissionProvider mission={mission} key={mission.id}>
-          <MissionCard />
-        </MissionProvider>
+        <MissionCard mission={mission} key={mission.id} />
       ))}
     </div>
   );
