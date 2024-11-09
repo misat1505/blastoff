@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.exc import NoResultFound
 from app.models import Agency
-from app.schemas.agency import AgencyCreate
+from app.schemas import AgencyCreate
 
 
 async def create_agency(db: AsyncSession, agency_data: AgencyCreate):

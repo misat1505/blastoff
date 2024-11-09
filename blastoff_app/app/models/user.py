@@ -10,3 +10,7 @@ class User(Base):
     username = Column(String(100), unique=True, index=True)
     email = Column(String(100), unique=True, index=True)
     hashed_password = Column(String(500))
+
+    favourite_agencies = relationship(
+        "FavouriteAgency", back_populates="user", cascade="all, delete-orphan"
+    )

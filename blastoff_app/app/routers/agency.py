@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.schemas.agency import AgencyCreate, AgencyResponse
-from app.crud.agency import (
+from app.schemas import AgencyCreate, AgencyResponse
+from app.crud import (
     create_agency,
     get_all_agencies,
     get_agency_by_id,
