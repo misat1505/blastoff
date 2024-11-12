@@ -27,7 +27,7 @@ async def get_users(db: AsyncSession = Depends(get_db)):
     return users
 
 
-@router.get("/users/{user_id}", response_model=UserResponse)
+@router.get("/{user_id}", response_model=UserResponse)
 async def get_user_by_id_route(user_id: int, db: AsyncSession = Depends(get_db)):
     user = await get_user_by_id(db, user_id)
     if not user:
@@ -35,7 +35,7 @@ async def get_user_by_id_route(user_id: int, db: AsyncSession = Depends(get_db))
     return user
 
 
-@router.delete("/delete/{user_id}", response_model=dict)
+@router.delete("/{user_id}", response_model=dict)
 async def delete_user_route(user_id: int, db: AsyncSession = Depends(get_db)):
     success = await delete_user(db, user_id)
     if not success:

@@ -17,3 +17,7 @@ async def startup():
     # Use SQLAlchemy's create_all to create tables
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    await engine.dispose()
