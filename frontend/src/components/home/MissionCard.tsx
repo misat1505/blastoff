@@ -17,7 +17,7 @@ type MissionCardProps = {
 
 const MissionCard = ({ mission }: MissionCardProps) => {
   return (
-    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-md bg-slate-300 transition-all hover:shadow-lg lg:grid lg:h-[500px]">
+    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-md bg-slate-300 transition-all hover:shadow-lg dark:bg-slate-700 lg:grid lg:h-[500px]">
       <MissionProvider mission={mission}>
         <Image />
         <Info />

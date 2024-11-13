@@ -1,13 +1,16 @@
 import { ROUTES } from "../lib/routes";
 import { Link } from "react-router-dom";
 import Tooltip from "./Tooltip";
+import ThemeSwitch from "./ThemeSwitch";
 
 const Navbar = () => {
   return (
     <>
-      <header className="fixed flex h-20 w-full items-center justify-between bg-slate-100 px-4">
+      <header className="fixed flex h-20 w-full items-center justify-between bg-slate-100 px-4 dark:bg-slate-900">
         <Logo />
-        <div></div>
+        <div>
+          <ThemeSwitch />
+        </div>
       </header>
       <div className="h-20" />
     </>

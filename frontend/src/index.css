@@ -90,6 +90,10 @@ body {
   background-color: rgb(226, 232, 240);
 }
 
+html.dark body {
+  background-color: rgb(30, 41, 59);
+}
+
 #root {
   min-height: 100vh;
   overflow-x: hidden;
