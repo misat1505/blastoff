@@ -17,7 +17,7 @@ type MissionCardProps = {
 
 const MissionCard = ({ mission }: MissionCardProps) => {
   return (
-    <div className="mb-8 grid h-[500px] grid-cols-3 overflow-hidden rounded-md bg-slate-300 transition-all hover:shadow-lg">
+    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-md bg-slate-300 transition-all hover:shadow-lg lg:grid lg:h-[500px]">
       <MissionProvider mission={mission}>
         <Image />
         <Info />
@@ -31,7 +31,7 @@ const Image = () => {
 
   return (
     <img
-      className="col-span-1 h-full object-cover"
+      className="col-span-1 max-h-40 w-full object-cover lg:h-full lg:max-h-full"
       src={mission.image}
       alt={mission.name}
     />
@@ -40,7 +40,7 @@ const Image = () => {
 
 const Info = () => {
   return (
-    <div className="col-span-2 flex h-full flex-col justify-between p-4 text-center">
+    <div className="col-span-2 flex h-[calc(100%-10rem)] flex-col justify-between p-4 text-center lg:h-full">
       <Header />
       <Countdown />
       <Status />
@@ -56,7 +56,7 @@ const Header = () => {
     <div>
       <h2 className="text-xl font-extrabold">{mission.name}</h2>
       <p>{mission.agency.name}</p>
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center justify-center space-x-2">
         <p>
           {mission.site.name}, {mission.site.country}
         </p>
@@ -111,7 +111,7 @@ const Countdown = () => {
 
   return (
     <div>
-      <div className="text-4xl">
+      <div className="text-nowrap text-4xl font-semibold lg:text-2xl 2xl:text-4xl">
         NET - {formatTimeUnit(timeLeft.days)} : {formatTimeUnit(timeLeft.hours)}{" "}
         : {formatTimeUnit(timeLeft.minutes)} :{" "}
         {formatTimeUnit(timeLeft.seconds)}
