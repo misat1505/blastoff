@@ -51,7 +51,15 @@ const Info = () => {
 const Title = () => {
   const { mission } = useMissionContext();
 
-  return <h2 className="text-lg font-semibold">{mission.name}</h2>;
+  return (
+    <div>
+      <h2 className="text-xl font-extrabold">{mission.name}</h2>
+      <p>{mission.agency.name}</p>
+      <p>
+        {mission.site.name}, {mission.site.country}
+      </p>
+    </div>
+  );
 };
 
 const Countdown = () => {
@@ -89,8 +97,9 @@ const Countdown = () => {
   return (
     <div>
       <div className="text-4xl">
-        NET - {formatTimeUnit(timeLeft.days)}:{formatTimeUnit(timeLeft.hours)}:
-        {formatTimeUnit(timeLeft.minutes)}:{formatTimeUnit(timeLeft.seconds)}
+        NET - {formatTimeUnit(timeLeft.days)} : {formatTimeUnit(timeLeft.hours)}{" "}
+        : {formatTimeUnit(timeLeft.minutes)} :{" "}
+        {formatTimeUnit(timeLeft.seconds)}
       </div>
       <div>{formatMissionDate(mission.net)}</div>
     </div>

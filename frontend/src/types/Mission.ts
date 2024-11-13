@@ -20,4 +20,15 @@ export type Mission = {
   links: {
     live: string;
   };
+  agency: {
+    id: number;
+    name: string;
+  };
+  site: {
+    id: number;
+    name: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+  };
 };
