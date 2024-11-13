@@ -2,6 +2,7 @@ import { ROUTES } from "../lib/routes";
 import { Link } from "react-router-dom";
 import Tooltip from "./Tooltip";
 import ThemeSwitch from "./ThemeSwitch";
+import { LOGO_PATH } from "../constants";
 
 const Navbar = () => {
   return (
@@ -22,7 +23,7 @@ const Logo = () => {
     <Tooltip content="Home">
       <Link to={ROUTES.HOME.path}>
         <img
-          src={`${process.env.PUBLIC_URL}/logo.png`}
+          src={LOGO_PATH}
           alt="Blastoff Logo"
           className="h-12 w-12 rounded-full object-cover"
         />

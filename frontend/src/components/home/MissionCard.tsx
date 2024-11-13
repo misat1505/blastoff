@@ -10,6 +10,8 @@ import { cn } from "../../lib/utils";
 import { formatMissionDate } from "../../utils/formatMissionDate";
 import { useEffect, useState } from "react";
 import Tooltip from "../Tooltip";
+import { GOOGLE_MAPS_LOGO_PATH } from "../../constants";
+import { buildGoogleMapsURL } from "../../utils/googleMaps";
 
 type MissionCardProps = {
   mission: Mission;
@@ -52,6 +54,11 @@ const Info = () => {
 const Header = () => {
   const { mission } = useMissionContext();
 
+  const launchSiteGoogleMapsURL = buildGoogleMapsURL({
+    latitude: mission.site.latitude,
+    longitude: mission.site.longitude,
+  });
+
   return (
     <div>
       <h2 className="text-xl font-extrabold">{mission.name}</h2>
@@ -61,12 +68,9 @@ const Header = () => {
           {mission.site.name}, {mission.site.country}
         </p>
         <Tooltip content="Open Launch Site in Google Maps">
-          <Link
-            to={`https://www.google.com/maps?q=${mission.site.latitude},${mission.site.longitude}`}
-            target="_blank"
-          >
+          <Link to={launchSiteGoogleMapsURL} target="_blank">
             <img
-              src={`${process.env.PUBLIC_URL}/google-maps-logo.png`}
+              src={GOOGLE_MAPS_LOGO_PATH}
               alt="Google Maps"
               className="h-8 w-8 rounded-full object-cover"
             />
