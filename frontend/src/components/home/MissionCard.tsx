@@ -9,6 +9,7 @@ import { getMissionStatusType } from "../../utils/getMissionStatusType";
 import { cn } from "../../lib/utils";
 import { formatMissionDate } from "../../utils/formatMissionDate";
 import { useEffect, useState } from "react";
+import Tooltip from "../Tooltip";
 
 type MissionCardProps = {
   mission: Mission;
@@ -40,7 +41,7 @@ const Image = () => {
 const Info = () => {
   return (
     <div className="col-span-2 flex h-full flex-col justify-between p-4 text-center">
-      <Title />
+      <Header />
       <Countdown />
       <Status />
       <Links />
@@ -48,16 +49,30 @@ const Info = () => {
   );
 };
 
-const Title = () => {
+const Header = () => {
   const { mission } = useMissionContext();
 
   return (
     <div>
       <h2 className="text-xl font-extrabold">{mission.name}</h2>
       <p>{mission.agency.name}</p>
-      <p>
-        {mission.site.name}, {mission.site.country}
-      </p>
+      <div className="flex items-center space-x-2">
+        <p>
+          {mission.site.name}, {mission.site.country}
+        </p>
+        <Tooltip content="Open Launch Site in Google Maps">
+          <Link
+            to={`https://www.google.com/maps?q=${mission.site.latitude},${mission.site.longitude}`}
+            target="_blank"
+          >
+            <img
+              src={`${process.env.PUBLIC_URL}/google-maps-logo.png`}
+              alt="Google Maps"
+              className="h-8 w-8 rounded-full object-cover"
+            />
+          </Link>
+        </Tooltip>
+      </div>
     </div>
   );
 };
@@ -118,12 +133,11 @@ const Status = () => {
   };
 
   return (
-    <h2
-      className={cn("text-2xl font-bold", getColor())}
-      title={mission.status.description}
-    >
-      {mission.status.name}
-    </h2>
+    <Tooltip content={mission.status.description}>
+      <h2 className={cn("text-2xl font-bold", getColor())}>
+        {mission.status.name}
+      </h2>
+    </Tooltip>
   );
 };
 
@@ -136,8 +150,14 @@ const Links = () => {
         to={mission.links.live}
         text="Live"
         icon={<FaGooglePlay />}
+        tooltipText="Watch Live"
       />
-      <MissionLink to="#" text="Rocket" icon={<IoRocket />} />
+      <MissionLink
+        to="#"
+        text="Rocket"
+        icon={<IoRocket />}
+        tooltipText="Rocket Details"
+      />
     </div>
   );
 };
@@ -146,17 +166,20 @@ type MissionLinkProps = {
   to: string;
   text: string;
   icon: JSX.Element;
+  tooltipText: string;
 };
 
-const MissionLink = ({ to, text, icon }: MissionLinkProps) => {
+const MissionLink = ({ to, text, icon, tooltipText }: MissionLinkProps) => {
   return (
-    <Link
-      className="flex items-center gap-x-4 rounded-md bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90"
-      to={to}
-    >
-      {icon}
-      <span className="font-semibold">{text}</span>
-    </Link>
+    <Tooltip content={tooltipText}>
+      <Link
+        className="flex items-center gap-x-4 rounded-md bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90"
+        to={to}
+      >
+        {icon}
+        <span className="font-semibold">{text}</span>
+      </Link>
+    </Tooltip>
   );
 };
 
