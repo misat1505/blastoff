@@ -15,6 +15,7 @@ async def create_launch(db: AsyncSession, launch_data: LaunchCreate) -> LaunchRe
         image_url=launch_data.image_url,
         rocket_id=launch_data.rocket_id,
         program_id=launch_data.program_id,
+        site_id=launch_data.site_id,
     )
     db.add(db_launch)
     await db.commit()

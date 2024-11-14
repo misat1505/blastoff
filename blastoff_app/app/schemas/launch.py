@@ -14,7 +14,8 @@ class LaunchBase(BaseModel):
 
 class LaunchCreate(LaunchBase):
     rocket_id: int = Field(..., description="ID of the associated rocket")
-    program_id: int
+    program_id: int = Field(..., description="ID of the associated program")
+    site_id: int = Field(..., description="ID of the associated site")
 
 
 class LaunchResponse(LaunchBase):

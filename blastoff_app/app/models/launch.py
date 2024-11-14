@@ -16,6 +16,8 @@ class Launch(Base):
 
     rocket_id = Column(Integer, ForeignKey("rockets.id"), nullable=False)
     program_id = Column(Integer, ForeignKey("programs.id"), nullable=False)
+    site_id = Column(Integer, ForeignKey("sites.id"), nullable=False)
 
     rocket = relationship("Rocket", back_populates="launches")
     program = relationship("Program", back_populates="launches")
+    site = relationship("Site", back_populates="launches")
