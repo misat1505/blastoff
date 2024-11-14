@@ -2,26 +2,31 @@ import { Switch } from "./ui/switch";
 import { MdSunny } from "react-icons/md";
 import { IoMoon } from "react-icons/io5";
 import Tooltip from "./Tooltip";
-import { useThemeContext } from "../context/ThemeContext";
+import { useThemeContext, Theme } from "../context/ThemeContext";
+
+type ThemeIconProps = {
+  theme: Theme;
+};
+
+const ThemeIcon = ({ theme }: ThemeIconProps) => {
+  return theme === "light" ? (
+    <MdSunny className="text-white" />
+  ) : (
+    <IoMoon className="text-black" />
+  );
+};
 
 const ThemeSwitch = () => {
   const { theme, toggleTheme } = useThemeContext();
-
-  const component =
-    theme === "light" ? (
-      <MdSunny className="text-white" />
-    ) : (
-      <IoMoon className="text-black" />
-    );
-
-  const tooltipText = `Switch to ${theme === "light" ? "dark" : "light"} mode`;
+  const isDarkMode = theme === "dark";
+  const tooltipText = `Switch to ${isDarkMode ? "light" : "dark"} mode`;
 
   return (
     <Tooltip content={tooltipText}>
       <span>
-        <Switch onClick={toggleTheme} checked={theme === "dark"}>
+        <Switch onClick={toggleTheme} checked={isDarkMode}>
           <div className="flex h-full w-full items-center justify-center">
-            {component}
+            <ThemeIcon theme={theme} />
           </div>
         </Switch>
       </span>

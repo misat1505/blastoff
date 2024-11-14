@@ -8,7 +8,7 @@ import {
 
 type ThemeContextProps = PropsWithChildren & {};
 
-type Theme = "light" | "dark";
+export type Theme = "light" | "dark";
 
 type ThemeContextProvidedValues = {
   theme: Theme;
