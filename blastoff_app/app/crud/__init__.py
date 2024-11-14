@@ -20,3 +20,5 @@ from .agency import (
     get_agency_by_id,
     get_all_agencies,
 )
+from .rocket import get_all_rockets, get_rocket_by_id, create_rocket
+from .launch import get_all_launches, get_launch_by_id, create_launch

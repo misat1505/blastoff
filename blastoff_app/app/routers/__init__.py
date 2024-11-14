@@ -12,3 +12,5 @@ from .agency import (
     update_agency_route,
     delete_agency_route,
 )
+from .rocket import create_rocket_route, get_rockets, get_rocket
+from .launch import create_launch_route, get_launch, get_launches

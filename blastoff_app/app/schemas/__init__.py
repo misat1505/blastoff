@@ -6,3 +6,5 @@ from .favourite_agency import (
     FavouriteAgencyCreate,
     FavouriteAgencyDelete,
 )
+from .rocket import RocketBase, RocketCreate, RocketResponse
+from .launch import LaunchBase, LaunchCreate, LaunchResponse

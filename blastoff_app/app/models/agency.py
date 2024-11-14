@@ -15,3 +15,7 @@ class Agency(Base):
     favourite_agencies = relationship(
         "FavouriteAgency", back_populates="agency", cascade="all, delete-orphan"
     )
+
+    rockets = relationship(
+        "Rocket", back_populates="agency", cascade="all, delete-orphan"
+    )
