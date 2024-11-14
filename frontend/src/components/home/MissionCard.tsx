@@ -19,7 +19,7 @@ type MissionCardProps = {
 
 const MissionCard = ({ mission }: MissionCardProps) => {
   return (
-    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-md bg-slate-300 transition-all hover:shadow-lg dark:bg-slate-700 lg:grid lg:h-[500px]">
+    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-300 transition-all hover:shadow-sm dark:bg-slate-700 sm:grid sm:h-[500px]">
       <MissionProvider mission={mission}>
         <Image />
         <Info />
@@ -33,7 +33,7 @@ const Image = () => {
 
   return (
     <img
-      className="col-span-1 max-h-40 w-full object-cover lg:h-full lg:max-h-full"
+      className="col-span-1 max-h-40 w-full object-cover sm:h-full sm:max-h-full"
       src={mission.image}
       alt={mission.name}
     />
@@ -42,7 +42,7 @@ const Image = () => {
 
 const Info = () => {
   return (
-    <div className="col-span-2 flex h-[calc(100%-10rem)] flex-col justify-between p-4 text-center lg:h-full">
+    <div className="col-span-2 flex h-[calc(100%-10rem)] flex-col justify-between p-4 text-center sm:h-full">
       <Header />
       <Countdown />
       <Status />
@@ -115,7 +115,7 @@ const Countdown = () => {
 
   return (
     <div>
-      <div className="text-nowrap text-4xl font-semibold lg:text-2xl 2xl:text-4xl">
+      <div className="text-nowrap text-2xl font-semibold sm:text-2xl sm:text-4xl 2xl:text-4xl">
         NET - {formatTimeUnit(timeLeft.days)} : {formatTimeUnit(timeLeft.hours)}{" "}
         : {formatTimeUnit(timeLeft.minutes)} :{" "}
         {formatTimeUnit(timeLeft.seconds)}
@@ -177,7 +177,7 @@ const MissionLink = ({ to, text, icon, tooltipText }: MissionLinkProps) => {
   return (
     <Tooltip content={tooltipText}>
       <Link
-        className="flex items-center gap-x-4 rounded-md bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90"
+        className="flex items-center gap-x-4 rounded-sm bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90"
         to={to}
       >
         {icon}

@@ -7,7 +7,7 @@ type LaunchFeedProps = {
 
 const LaunchFeed = ({ missions }: LaunchFeedProps) => {
   return (
-    <div className="mx-auto my-4 w-1/3 min-w-96">
+    <div className="mx-auto my-4 w-full max-w-full px-2 sm:w-4/5 md:w-3/5 lg:w-1/3">
       {missions.map((mission) => (
         <MissionCard mission={mission} key={mission.id} />
       ))}
