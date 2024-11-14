@@ -15,4 +15,7 @@ class Launch(Base):
     image_url = Column(String(250))
 
     rocket_id = Column(Integer, ForeignKey("rockets.id"), nullable=False)
+    program_id = Column(Integer, ForeignKey("programs.id"), nullable=False)
+
     rocket = relationship("Rocket", back_populates="launches")
+    program = relationship("Program", back_populates="launches")
