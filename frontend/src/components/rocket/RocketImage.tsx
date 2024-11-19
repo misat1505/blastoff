@@ -26,7 +26,7 @@ const RocketImage = () => {
       />
       <div
         className={cn(
-          "absolute left-1/2 top-1/2 mt-[-2.5rem] -translate-x-1/2 -translate-y-1/2 text-center transition-all delay-200 duration-1000 ease-out",
+          "absolute left-1/2 top-1/2 z-10 mt-[-2.5rem] -translate-x-1/2 -translate-y-1/2 text-center text-white transition-all delay-200 duration-1000 ease-out",
           {
             "translate-y-0 opacity-100": isVisible,
             "translate-y-10 opacity-0": !isVisible,

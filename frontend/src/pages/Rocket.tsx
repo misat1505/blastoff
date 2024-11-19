@@ -6,6 +6,7 @@ import { queryKeysBuilder } from "../utils/queryKeysBuilder";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import RocketImage from "../components/rocket/RocketImage";
+import RocketManufacture from "../components/rocket/RocketManufacture";
 
 const Rocket = () => {
   const params = useParams();
@@ -46,6 +47,7 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
   return (
     <RocketProvider rocket={rocket}>
       <RocketImage />
+      <RocketManufacture />
     </RocketProvider>
   );
 };
