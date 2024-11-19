@@ -3,6 +3,7 @@ import { SATTELITES_IMAGES } from "../../constants";
 import { useRocketContext } from "../../context/RocketContext";
 import Tooltip from "../Tooltip";
 import CountUp from "react-countup";
+import { useInView } from "react-intersection-observer";
 
 const RocketCapacity = () => {
   const { rocket } = useRocketContext();
@@ -45,16 +46,21 @@ const RocketCapacity = () => {
     },
   ];
 
+  const landings = rocket.landings.attempted_landings;
+
+  const isReusable = landings && landings > 0;
+
   return (
     <section className="w-full bg-slate-300 py-8 dark:bg-slate-700">
       <h2 className="mb-8 text-center text-4xl font-semibold">
         Payload Capacity (kg)
       </h2>
-      <div className="mx-auto grid w-full grid-cols-1 gap-x-12 gap-y-6 px-4 sm:grid-cols-4 lg:px-8">
+      <div className="mx-auto grid w-full grid-cols-1 gap-x-12 gap-y-6 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
         {capacities.map((item, idx) => (
           <RocketCapacityCard key={idx} {...item} />
         ))}
       </div>
+      {isReusable ? <ReusabilityNote /> : null}
     </section>
   );
 };
@@ -88,18 +94,51 @@ const RocketCapacityCard = ({
           />
         </Tooltip>
         <Tooltip content="Learn more">
-          <Link to={wiki} target="_blank" className="text-2xl font-semibold">
+          <Link
+            to={wiki}
+            target="_blank"
+            className="text-2xl font-semibold underline"
+          >
             {name}
           </Link>
         </Tooltip>
       </div>
-      <p className="my-8 text-4xl font-bold">
-        {capacity ? (
-          <CountUp end={capacity} duration={1.5} separator="," />
-        ) : (
-          "N/A"
-        )}
-      </p>
+      <RocketCapacityDisplayer capacity={capacity} />
+    </div>
+  );
+};
+
+type RocketCapacityDisplayerProps = {
+  capacity: number | null;
+};
+
+const RocketCapacityDisplayer = ({
+  capacity,
+}: RocketCapacityDisplayerProps) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.5,
+  });
+
+  const component =
+    capacity && inView ? (
+      <CountUp end={capacity} duration={1.5} separator="," />
+    ) : (
+      "N/A"
+    );
+
+  return (
+    <p className="my-8 text-4xl font-bold" ref={ref}>
+      {component}
+    </p>
+  );
+};
+
+const ReusabilityNote = () => {
+  return (
+    <div className="mt-8 text-center">
+      <span className="font-semibold">Note:</span> These values represent
+      vehicle capacity in its reusable mode.
     </div>
   );
 };
