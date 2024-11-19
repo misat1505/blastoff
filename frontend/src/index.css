@@ -81,3 +81,20 @@
       "calt" 1;
   }
 }
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: rgb(226, 232, 240);
+}
+
+html.dark body {
+  background-color: rgb(30, 41, 59);
+}
+
+#root {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
