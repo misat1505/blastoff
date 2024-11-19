@@ -12,24 +12,24 @@ const RocketImage = () => {
   }, []);
 
   return (
-    <div className="relative h-[calc(100vh-5rem)] w-screen">
+    <div
+      className={cn(
+        "relative h-[calc(100vh+5rem)] w-screen transition-all duration-1000 ease-out",
+        {
+          "h-[calc(100vh-5rem)]": isVisible,
+        }
+      )}
+    >
       <img
         src={rocket.image_url}
         alt={rocket.name}
-        className={cn(
-          "h-full w-full object-cover transition-all duration-1000 ease-out",
-          {
-            "translate-y-0 opacity-100": isVisible,
-            "translate-y-10 opacity-0": !isVisible,
-          }
-        )}
+        className="h-full w-full object-cover transition-all duration-1000 ease-out"
       />
       <div
         className={cn(
-          "absolute left-1/2 top-1/2 z-10 mt-[-5rem] -translate-x-1/2 -translate-y-1/2 text-center text-white transition-all delay-200 duration-1000 ease-out",
+          "absolute left-1/2 top-1/2 z-10 -translate-x-1/2 translate-y-10 text-center text-white opacity-0 transition-all delay-500 duration-1000 ease-out",
           {
-            "translate-y-0 opacity-100": isVisible,
-            "translate-y-10 opacity-0": !isVisible,
+            "-translate-y-1/2 opacity-100": isVisible,
           }
         )}
       >
