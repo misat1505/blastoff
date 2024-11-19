@@ -2,11 +2,11 @@ export type Rocket = {
   id: number;
   name: string;
   description: string;
-  imageURL: string;
+  image_url: string;
   agency: {
     id: number;
     name: string;
-    imageURL: string;
+    image_url: string;
   };
   dimensions: {
     diameter: number;

@@ -1,9 +1,11 @@
+import RocketProvider from "../context/RocketContext";
 import Loading from "../components/Loading";
 import { RocketService } from "../services/RocketService";
 import { Rocket as RocketType } from "../types/Rocket";
 import { queryKeysBuilder } from "../utils/queryKeysBuilder";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import RocketImage from "../components/rocket/RocketImage";
 
 const Rocket = () => {
   const params = useParams();
@@ -41,5 +43,9 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
 
   if (!rocket) return <div>Rocket not found.</div>;
 
-  return <div>{JSON.stringify(rocket)}</div>;
+  return (
+    <RocketProvider rocket={rocket}>
+      <RocketImage />
+    </RocketProvider>
+  );
 };

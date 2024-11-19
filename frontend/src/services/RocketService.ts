@@ -6,12 +6,12 @@ export class RocketService {
       id: 464,
       name: "Starship",
       description: "Fully reusable two-stage super heavy-lift launch vehicle.",
-      imageURL:
+      image_url:
         "https://thespacedevs-prod.nyc3.digitaloceanspaces.com/media/images/starship_liftof_image_20240314160301.jpg",
       agency: {
         id: 121,
         name: "SpaceX",
-        imageURL:
+        image_url:
           "https://thespacedevs-prod.nyc3.digitaloceanspaces.com/media/images/spacex_logo_20220826094919.png",
       },
       dimensions: {
@@ -43,7 +43,7 @@ export class RocketService {
 
     return await new Promise((res) => {
       setTimeout(() => {
-        res(rocket);
+        res(rocket.id === id ? rocket : null);
       }, 1000);
     });
   }
