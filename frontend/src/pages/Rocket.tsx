@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import RocketImage from "../components/rocket/RocketImage";
 import RocketManufacture from "../components/rocket/RocketManufacture";
 import RocketCapacity from "../components/rocket/RocketCapacity";
+import RockeLaunches from "../components/rocket/RocketLaunches";
 
 const Rocket = () => {
   const params = useParams();
@@ -50,6 +51,7 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
       <RocketImage />
       <RocketManufacture />
       <RocketCapacity />
+      <RockeLaunches />
     </RocketProvider>
   );
 };
