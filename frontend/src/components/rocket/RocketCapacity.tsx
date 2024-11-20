@@ -4,6 +4,7 @@ import { useRocketContext } from "../../context/RocketContext";
 import Tooltip from "../Tooltip";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
+import { cn } from "../../lib/utils";
 
 const RocketCapacity = () => {
   const { rocket } = useRocketContext();
@@ -55,9 +56,26 @@ const RocketCapacity = () => {
       <h2 className="mb-8 text-center text-4xl font-semibold">
         Payload Capacity (kg)
       </h2>
-      <div className="mx-auto grid w-full grid-cols-1 gap-x-12 gap-y-6 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
+      <div className="relative mx-auto grid w-full grid-cols-1 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
         {capacities.map((item, idx) => (
-          <RocketCapacityCard key={idx} {...item} />
+          <div key={idx} className="relative h-full">
+            <div
+              className={cn(
+                "h-full border-b-0 border-r-0 border-slate-500 p-4",
+                {
+                  "sm:border-r lg:border-r-0": idx % 2 === 0,
+                  "lg:border-r": idx % 4 !== 3,
+                  "border-b lg:border-b-0": idx < capacities.length - 1,
+                  "sm:border-b-0": idx > 1,
+                }
+              )}
+            >
+              <RocketCapacityCard {...item} />
+            </div>
+            {idx === capacities.length - 1 ? (
+              <div className="absolute left-0 top-0 hidden h-8 w-8 -translate-x-1/2 -translate-y-1/2 bg-slate-300 dark:bg-slate-700 sm:block lg:hidden"></div>
+            ) : null}
+          </div>
         ))}
       </div>
       {isReusable ? <ReusabilityNote /> : null}
@@ -136,7 +154,7 @@ const RocketCapacityDisplayer = ({
 
 const ReusabilityNote = () => {
   return (
-    <div className="mt-8 text-center">
+    <div className="mt-8 px-2 text-center">
       <span className="font-semibold">Note:</span> These values represent
       vehicle capacity in its reusable mode.
     </div>

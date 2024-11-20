@@ -29,15 +29,15 @@ export class RocketService {
       },
       launches: {
         cost: null,
-        launches_count: 5,
-        successful_launches: 3,
+        launches_count: 6,
+        successful_launches: 4,
         failed_launches: 2,
-        pending_launches: 3,
+        pending_launches: 2,
       },
       landings: {
-        attempted_landings: 4,
+        attempted_landings: 5,
         successful_landings: 2,
-        failed_landings: 2,
+        failed_landings: 3,
       },
     };
 
