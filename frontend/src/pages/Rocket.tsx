@@ -10,6 +10,7 @@ import RocketManufacture from "../components/rocket/RocketManufacture";
 import RocketCapacity from "../components/rocket/RocketCapacity";
 import RockeLaunches from "../components/rocket/RocketLaunches";
 import RocketLandings from "../components/rocket/RocketLandings";
+import NotFound from "../components/NotFound";
 
 const Rocket = () => {
   const params = useParams();
@@ -18,9 +19,13 @@ const Rocket = () => {
 
   const isNumberRegex = /^\d+$/;
 
-  if (!rocketId || !isNumberRegex.test(rocketId)) {
-    return <div>Invalid rocket ID. Please provide a valid number.</div>;
-  }
+  if (!rocketId || !isNumberRegex.test(rocketId))
+    return (
+      <NotFound
+        title="Rocket not found"
+        text="Invalid rocket ID - not a number. Check your URL."
+      />
+    );
 
   return <RocketPageContent id={parseInt(rocketId)} />;
 };
@@ -45,7 +50,13 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
 
   if (error) return <div>{JSON.stringify(error)}</div>;
 
-  if (!rocket) return <div>Rocket not found.</div>;
+  if (!rocket)
+    return (
+      <NotFound
+        title="Rocket not found"
+        text="Rocket of given ID doesn't exist."
+      />
+    );
 
   const landings = rocket.landings.attempted_landings;
   const isReusable = landings ? landings > 0 : false;
