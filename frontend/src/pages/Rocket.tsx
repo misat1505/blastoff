@@ -9,6 +9,7 @@ import RocketImage from "../components/rocket/RocketImage";
 import RocketManufacture from "../components/rocket/RocketManufacture";
 import RocketCapacity from "../components/rocket/RocketCapacity";
 import RockeLaunches from "../components/rocket/RocketLaunches";
+import RocketLandings from "../components/rocket/RocketLandings";
 
 const Rocket = () => {
   const params = useParams();
@@ -46,12 +47,16 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
 
   if (!rocket) return <div>Rocket not found.</div>;
 
+  const landings = rocket.landings.attempted_landings;
+  const isReusable = landings ? landings > 0 : false;
+
   return (
     <RocketProvider rocket={rocket}>
       <RocketImage />
       <RocketManufacture />
       <RocketCapacity />
       <RockeLaunches />
+      {isReusable ? <RocketLandings /> : null}
     </RocketProvider>
   );
 };
