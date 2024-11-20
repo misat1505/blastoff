@@ -14,7 +14,7 @@ const RocketLaunches = () => {
   const items = [
     {
       icon: <FaDollarSign size={iconSize} />,
-      title: "Cost",
+      title: "Cost ($)",
       value: rocket.launches.cost,
     },
     {
@@ -42,7 +42,7 @@ const RocketLaunches = () => {
   return (
     <section className="w-full bg-slate-200 py-8 dark:bg-slate-800">
       <h2 className="mb-6 text-center text-4xl font-semibold">Launches</h2>
-      <div className="grid grid-cols-3 gap-y-6 sm:grid-cols-5">
+      <div className="grid grid-cols-2 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
         {items.map((item, idx) => (
           <RocketLaunchCard key={idx} {...item} />
         ))}
