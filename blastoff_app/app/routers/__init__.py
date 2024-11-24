@@ -12,7 +12,12 @@ from .agency import (
     update_agency_route,
     delete_agency_route,
 )
-from .rocket import create_rocket_route, get_rockets, get_rocket
-from .launch import create_launch_route, get_launch, get_launches
-from .program import create_program_route, get_program, get_programs
-from .site import create_site_route, get_site, get_sites
+from .rocket import create_rocket_route, get_rockets, get_rocket, delete_rocket_route
+from .launch import create_launch_route, get_launch, get_launches, delete_launch_route
+from .program import (
+    create_program_route,
+    get_program,
+    get_programs,
+    delete_program_route,
+)
+from .site import create_site_route, get_site, get_sites, delete_site_route

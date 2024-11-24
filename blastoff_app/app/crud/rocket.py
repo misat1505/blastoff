@@ -45,3 +45,12 @@ async def get_all_rockets(db: AsyncSession) -> list[RocketResponse]:
     result = await db.execute(select(Rocket))
     rockets = result.scalars().all()
     return rockets
+
+
+async def delete_rocket(db: AsyncSession, rocket_id: int):
+    rocket = await get_rocket_by_id(db, rocket_id)
+    if not rocket:
+        return None
+    await db.delete(rocket)
+    await db.commit()
+    return rocket

@@ -20,7 +20,7 @@ from .agency import (
     get_agency_by_id,
     get_all_agencies,
 )
-from .rocket import get_all_rockets, get_rocket_by_id, create_rocket
-from .launch import get_all_launches, get_launch_by_id, create_launch
-from .program import get_all_programs, get_program_by_id, create_program
-from .site import get_all_sites, get_site_by_id, create_site
+from .rocket import get_all_rockets, get_rocket_by_id, create_rocket, delete_rocket
+from .launch import get_all_launches, get_launch_by_id, create_launch, delete_launch
+from .program import get_all_programs, get_program_by_id, create_program, delete_program
+from .site import get_all_sites, get_site_by_id, create_site, delete_site

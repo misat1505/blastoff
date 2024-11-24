@@ -27,3 +27,12 @@ async def get_site_by_id(db: AsyncSession, site_id: int):
     result = await db.execute(select(Site).filter(Site.id == site_id))
     site = result.scalar_one_or_none()
     return site
+
+
+async def delete_site(db: AsyncSession, site_id: int):
+    site = await get_site_by_id(db, site_id)
+    if not site:
+        return None
+    await db.delete(site)
+    await db.commit()
+    return site

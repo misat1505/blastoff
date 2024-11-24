@@ -32,3 +32,12 @@ async def get_all_programs(db: AsyncSession) -> list[ProgramResponse]:
     result = await db.execute(select(Program))
     programs = result.scalars().all()
     return programs
+
+
+async def delete_program(db: AsyncSession, program_id: int):
+    program = await get_program_by_id(db, program_id)
+    if not program:
+        return None
+    await db.delete(program)
+    await db.commit()
+    return program

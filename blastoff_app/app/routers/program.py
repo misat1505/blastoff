@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 from app.schemas import ProgramCreate, ProgramResponse
-from app.crud import create_program, get_program_by_id, get_all_programs
+from app.crud import create_program, get_program_by_id, get_all_programs, delete_program
 from app.dependencies import get_db
 
 router = APIRouter()
@@ -26,3 +26,11 @@ async def get_program(program_id: int, db: AsyncSession = Depends(get_db)):
 @router.get("/", response_model=List[ProgramResponse])
 async def get_programs(db: AsyncSession = Depends(get_db)):
     return await get_all_programs(db=db)
+
+
+@router.delete("/{program_id}", response_model=ProgramResponse)
+async def delete_program_route(program_id: int, db: AsyncSession = Depends(get_db)):
+    deleted_program = await delete_program(db=db, program_id=program_id)
+    if not deleted_program:
+        raise HTTPException(status_code=404, detail="Program not found")
+    return deleted_program

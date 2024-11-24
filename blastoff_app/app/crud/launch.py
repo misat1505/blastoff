@@ -35,3 +35,12 @@ async def get_all_launches(db: AsyncSession) -> list[LaunchResponse]:
     result = await db.execute(select(Launch))
     launches = result.scalars().all()
     return launches
+
+
+async def delete_launch(db: AsyncSession, launch_id: int):
+    launch = await get_launch_by_id(db, launch_id)
+    if not launch:
+        return None
+    await db.delete(launch)
+    await db.commit()
+    return launch
