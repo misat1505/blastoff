@@ -5,3 +5,4 @@ from .rocket import Rocket
 from .launch import Launch
 from .program import Program
 from .site import Site
+from .favourite_launch import FavouriteLaunch

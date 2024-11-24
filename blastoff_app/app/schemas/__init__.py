@@ -10,3 +10,8 @@ from .rocket import RocketBase, RocketCreate, RocketResponse
 from .launch import LaunchBase, LaunchCreate, LaunchResponse
 from .program import ProgramBase, ProgramCreate, ProgramResponse
 from .site import SiteBase, SiteCreate, SiteResponse
+from .favourite_launch import (
+    FavouriteLaunch,
+    FavouriteLaunchCreate,
+    FavouriteLaunchDelete,
+)

@@ -1,5 +1,14 @@
 from fastapi import FastAPI
-from app.routers import user, agency, favourite_agency, rocket, launch, program, site
+from app.routers import (
+    user,
+    agency,
+    favourite_agency,
+    rocket,
+    launch,
+    program,
+    site,
+    favourite_launch,
+)
 from app.database import engine
 from app.database import Base
 
@@ -14,6 +23,9 @@ app.include_router(rocket.router, prefix="/rockets", tags=["Rockets"])
 app.include_router(launch.router, prefix="/launches", tags=["Launches"])
 app.include_router(program.router, prefix="/programs", tags=["Programs"])
 app.include_router(site.router, prefix="/sites", tags=["Sites"])
+app.include_router(
+    favourite_launch.router, prefix="/favourite-launches", tags=["FavouriteLaunches"]
+)
 
 
 @app.on_event("startup")

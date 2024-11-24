@@ -14,3 +14,7 @@ class User(Base):
     favourite_agencies = relationship(
         "FavouriteAgency", back_populates="user", cascade="all, delete-orphan"
     )
+
+    favourite_launches = relationship(
+        "FavouriteLaunch", back_populates="user", cascade="all, delete-orphan"
+    )

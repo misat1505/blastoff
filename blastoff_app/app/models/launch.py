@@ -21,3 +21,6 @@ class Launch(Base):
     rocket = relationship("Rocket", back_populates="launches")
     program = relationship("Program", back_populates="launches")
     site = relationship("Site", back_populates="launches")
+    favourite_launches = relationship(
+        "FavouriteLaunch", back_populates="launch", cascade="all, delete-orphan"
+    )
