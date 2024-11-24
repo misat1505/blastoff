@@ -7,3 +7,34 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+
+  database:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: blastoff_db
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3307:3306"
+    volumes:
+      - database-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./blastoff_app
+      dockerfile: Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+volumes:
+  database-data:
+  
