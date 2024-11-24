@@ -24,3 +24,6 @@ class Launch(Base):
     favourite_launches = relationship(
         "FavouriteLaunch", back_populates="launch", cascade="all, delete-orphan"
     )
+    comments = relationship(
+        "Comment", back_populates="launch", cascade="all, delete-orphan"
+    )

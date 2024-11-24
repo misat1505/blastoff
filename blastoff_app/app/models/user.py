@@ -18,3 +18,7 @@ class User(Base):
     favourite_launches = relationship(
         "FavouriteLaunch", back_populates="user", cascade="all, delete-orphan"
     )
+
+    comments = relationship(
+        "Comment", back_populates="user", cascade="all, delete-orphan"
+    )

@@ -15,3 +15,4 @@ from .favourite_launch import (
     FavouriteLaunchCreate,
     FavouriteLaunchDelete,
 )
+from .comment import CommentBase, CommentCreate, CommentResponse

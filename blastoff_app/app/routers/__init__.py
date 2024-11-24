@@ -28,3 +28,4 @@ from .favourite_launch import (
     delete_favourite_launch_by_id_route,
     delete_favourite_launch_by_user_or_launch_route,
 )
+from .comment import get_all_comments, get_comment, get_comments, delete_comment_route
