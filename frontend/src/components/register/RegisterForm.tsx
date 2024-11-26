@@ -1,39 +1,22 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormField from "../FormField";
 import SubmitButton from "../SubmitButton";
-
-const schema = z
-  .object({
-    username: z
-      .string()
-      .min(3, { message: "Username must be at least 3 characters long." }),
-    email: z.string().email({ message: "Invalid email address." }),
-    password: z
-      .string()
-      .min(6, { message: "Password must be at least 6 characters long." }),
-    confirmPassword: z.string().min(6, {
-      message: "Confirm Password must be at least 6 characters long.",
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords must match.",
-    path: ["confirmPassword"],
-  });
-
-type FormValues = z.infer<typeof schema>;
+import {
+  registerFormSchema,
+  RegisterFormValues,
+} from "../../validators/RegisterForm.validators";
 
 const RegisterForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
-    resolver: zodResolver(schema),
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerFormSchema),
   });
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
     await new Promise((res) =>
       setTimeout(() => {
         console.log("Form Data:", data);
