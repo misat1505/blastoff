@@ -11,6 +11,7 @@ import RocketCapacity from "../components/rocket/RocketCapacity";
 import RockeLaunches from "../components/rocket/RocketLaunches";
 import RocketLandings from "../components/rocket/RocketLandings";
 import NotFound from "../components/NotFound";
+import Error from "../components/Error";
 
 const Rocket = () => {
   const params = useParams();
@@ -41,6 +42,7 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
     data: rocket,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryFn: () => RocketService.getRocketById(id),
     queryKey: queryKeysBuilder.rocket(id),
@@ -48,7 +50,14 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
 
   if (isLoading) return <Loading />;
 
-  if (error) return <div>{JSON.stringify(error)}</div>;
+  if (error)
+    return (
+      <Error
+        title="Error fetching rocket"
+        description={JSON.stringify(error)}
+        handleRefresh={refetch}
+      />
+    );
 
   if (!rocket)
     return (

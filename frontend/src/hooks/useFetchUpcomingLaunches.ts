@@ -7,10 +7,11 @@ type useFetchUpcomingLaunchesValue = {
   missions: Mission[] | undefined;
   isLoading: boolean;
   error: unknown;
+  refetch: () => void;
 };
 
 export function useFetchUpcomingLaunches(): useFetchUpcomingLaunchesValue {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: queryKeysBuilder.upcomingLaunches(),
     queryFn: MissionService.getUpcomingMissions,
   });
@@ -19,5 +20,6 @@ export function useFetchUpcomingLaunches(): useFetchUpcomingLaunchesValue {
     missions: data,
     isLoading,
     error,
+    refetch,
   };
 }
