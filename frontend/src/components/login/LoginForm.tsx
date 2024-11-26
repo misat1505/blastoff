@@ -49,7 +49,7 @@ const LoginForm = () => {
         placeholder="Password"
       />
       <div className="w-full text-center">
-        <Button disabled={isSubmitting}>Create Account</Button>
+        <Button disabled={isSubmitting}>Log in</Button>
       </div>
     </form>
   );

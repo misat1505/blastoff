@@ -6,7 +6,7 @@ import LoginForm from "../components/login/LoginForm";
 const LoginPage = () => {
   return (
     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-slate-300 p-4 text-center shadow-lg dark:bg-slate-700">
-      <h2 className="mb-4 text-3xl font-semibold">Login to Blastoff</h2>
+      <h2 className="mb-4 text-3xl font-semibold">Log in to Blastoff</h2>
       <img
         src={LOGO_PATH}
         alt="logo"
