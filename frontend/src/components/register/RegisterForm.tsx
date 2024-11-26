@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormField from "../FormField";
-import { Button } from "../ui/button";
+import SubmitButton from "../SubmitButton";
 
 const schema = z
   .object({
@@ -71,9 +71,9 @@ const RegisterForm = () => {
         placeholder="Re-enter your password"
       />
 
-      <Button disabled={isSubmitting} className="mx-auto">
-        Create Account
-      </Button>
+      <SubmitButton className="mx-auto" isPending={isSubmitting}>
+        {isSubmitting ? "Creating..." : "Create Account"}
+      </SubmitButton>
     </form>
   );
 };

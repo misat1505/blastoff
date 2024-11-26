@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormField from "../FormField";
-import { Button } from "../ui/button";
+import SubmitButton from "../SubmitButton";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -49,7 +49,9 @@ const LoginForm = () => {
         placeholder="Password"
       />
       <div className="w-full text-center">
-        <Button disabled={isSubmitting}>Log in</Button>
+        <SubmitButton className="mx-auto" isPending={isSubmitting}>
+          {isSubmitting ? "Logging in..." : "Log in"}
+        </SubmitButton>
       </div>
     </form>
   );
