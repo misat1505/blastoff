@@ -28,17 +28,25 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log("Form Data:", data);
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    await new Promise((res) =>
+      setTimeout(() => {
+        console.log("Form Data:", data);
+        res(null);
+      }, 1000)
+    );
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-72 space-y-4 text-left"
+    >
       <FormField
         error={errors.username}
         {...register("username")}
@@ -63,7 +71,9 @@ const RegisterForm = () => {
         placeholder="Re-enter your password"
       />
 
-      <Button>Submit</Button>
+      <Button disabled={isSubmitting} className="mx-auto">
+        Create Account
+      </Button>
     </form>
   );
 };
