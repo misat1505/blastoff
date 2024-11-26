@@ -1,13 +1,21 @@
+import Error from "../components/Error";
 import LaunchFeed from "../components/home/MissionFeed";
 import Loading from "../components/Loading";
 import { useFetchUpcomingLaunches } from "../hooks/useFetchUpcomingLaunches";
 
 const HomePage = () => {
-  const { missions, isLoading, error } = useFetchUpcomingLaunches();
+  const { missions, isLoading, error, refetch } = useFetchUpcomingLaunches();
 
   if (isLoading) return <Loading />;
 
-  if (error || !missions) return <div>Error: {JSON.stringify(error)}</div>;
+  if (error || !missions)
+    return (
+      <Error
+        title="Error fetching upcoming launches"
+        description={JSON.stringify(error)}
+        handleRefresh={refetch}
+      />
+    );
 
   return <LaunchFeed missions={missions} />;
 };

@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import Tooltip from "../Tooltip";
 import { GOOGLE_MAPS_LOGO_PATH } from "../../constants";
 import { buildGoogleMapsURL } from "../../utils/googleMaps";
+import { ROUTES } from "../../lib/routes";
 
 type MissionCardProps = {
   mission: Mission;
@@ -157,7 +158,7 @@ const Links = () => {
         tooltipText="Watch Live"
       />
       <MissionLink
-        to="#"
+        to={ROUTES.ROCKET.buildPath({ rocketId: mission.rocket.id.toString() })}
         text="Rocket"
         icon={<IoRocket />}
         tooltipText="Rocket Details"

@@ -7,7 +7,7 @@ import { LOGO_PATH } from "../constants";
 const Navbar = () => {
   return (
     <>
-      <header className="fixed flex h-20 w-full items-center justify-between bg-slate-100 px-4 dark:bg-slate-900">
+      <header className="fixed z-50 flex h-20 w-full items-center justify-between bg-slate-100 px-4 transition-all dark:bg-slate-900">
         <Logo />
         <div>
           <ThemeSwitch />
