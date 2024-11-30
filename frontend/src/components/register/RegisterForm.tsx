@@ -28,7 +28,7 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-72 space-y-4 text-left"
+      className="mx-auto w-72 max-w-full space-y-4 text-left lg:max-w-[calc(100%-4rem)]"
     >
       <FormField
         error={errors.username}

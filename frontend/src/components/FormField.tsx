@@ -15,7 +15,7 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
           ref={ref}
           {...rest}
           className={cn(
-            `mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm`,
+            `mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm`,
             className,
             {
               "border-red-500": error,

@@ -28,7 +28,7 @@ const LoginForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-72 space-y-4 text-left"
+      className="mx-auto w-[calc(100vw-4rem)] max-w-72 space-y-4 text-left sm:w-72"
     >
       <FormField
         error={errors.email}

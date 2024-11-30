@@ -5,7 +5,7 @@ export class MissionService {
     const mission: Mission = {
       id: "83ba001e-9bca-48ac-84cb-ccea96bfe9c1",
       name: "Starship | Integrated Flight Test 7",
-      net: new Date("2024-11-26T12:25:00Z"),
+      net: new Date("2024-12-31T12:25:00Z"),
       image:
         "https://thespacedevs-prod.nyc3.digitaloceanspaces.com/media/images/superheavy_appr_image_20241013171532.jpeg",
       window: {
