@@ -5,7 +5,7 @@ import { ROUTES } from "../lib/routes";
 
 const RegisterPage = () => {
   return (
-    <div className="absolute left-1/2 top-[calc(50vh+2.5rem)] max-w-[calc(100vw-4rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-slate-300 p-4 text-center shadow-lg dark:bg-slate-700 lg:top-1/2">
+    <div className="absolute left-1/2 top-[calc(50vh+2.5rem)] max-w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-slate-300 p-4 text-center shadow-lg dark:bg-slate-700 lg:top-1/2">
       <h2 className="mb-4 text-3xl font-semibold">Join Blastoff Community</h2>
       <div className="grid-cols-2 lg:grid lg:space-x-8">
         <img
