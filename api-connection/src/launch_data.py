@@ -29,9 +29,9 @@ class LaunchDataList(collections.UserList):
         raise KeyError(id)
 
     def compare(self, other: "LaunchDataList") -> LaunchData:
-        for launch_data in other:
-            if launch_data.id in self:
-                if launch_data.last_updated != self.get_by_id(launch_data.id).last_updated:
+        for launch_data in self:
+            if launch_data.id in other:
+                if launch_data.last_updated != other.get_by_id(launch_data.id).last_updated:
                     yield launch_data
             else:
                 yield launch_data
