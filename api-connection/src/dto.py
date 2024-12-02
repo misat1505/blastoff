@@ -1,4 +1,14 @@
 import json
+import functools
+
+
+def save_to_file(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        obj = func(*args, **kwargs)
+        obj.save_to_file()
+        return obj
+    return wrapper
 
 
 class LaunchDTO:
@@ -11,6 +21,7 @@ class LaunchDTO:
         self.status = status
 
     @classmethod
+    @save_to_file
     def from_api(cls, details):
         agency = {
             "name": details.get("launch_service_provider", {}).get("name"),

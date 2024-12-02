@@ -13,8 +13,25 @@ class LaunchData:
 
 
 class LaunchDataList(collections.UserList):
-    def get_by_id(self, id: str):
+    @classmethod
+    def from_api(cls, data):
+        return cls([LaunchData(launch["id"], launch["last_updated"], launch["url"]) for launch in data])
+
+    @classmethod
+    def from_db(cls, data):
+        # TODO
+        pass
+
+    def get_by_id(self, id: str) -> LaunchData:
         for item in self.data:
             if item.id == id:
                 return item
         raise KeyError(id)
+
+    def compare(self, other: "LaunchDataList") -> LaunchData:
+        for launch_data in other:
+            if launch_data.id in self:
+                if launch_data.last_updated != self.get_by_id(launch_data.id).last_updated:
+                    yield launch_data
+            else:
+                yield launch_data
