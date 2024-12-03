@@ -26,7 +26,7 @@ class LaunchDataList(collections.UserList):
     data: list[LaunchData]
 
     @classmethod
-    def from_api(cls, data: list[dict]):
+    def from_api(cls, data: list[dict[str,]]):
         """
         Creates an LaunchDataList object from api data
 
