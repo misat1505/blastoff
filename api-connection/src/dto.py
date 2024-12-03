@@ -1,5 +1,6 @@
 import json
 from dataclasses import dataclass
+from typing import Any
 
 
 class CouldNotReadFile(Exception):
@@ -19,15 +20,15 @@ class LaunchDTO:
     - site: site details (from api), containing only necessary (from db perspective) fields
     - status: launch status details (from api), containing only necessary (from db perspective) fields
     """
-    agency: dict
-    launch: dict
-    program: dict
-    rocket: dict
-    site: dict
-    status: dict
+    agency: dict[str, Any] | None
+    launch: dict[str, Any] | None
+    program: dict[str, Any] | None
+    rocket: dict[str, Any] | None
+    site: dict[str, Any] | None
+    status: dict[str, Any] | None
 
     @classmethod
-    def from_api(cls, details: dict):
+    def from_api(cls, details: dict[str, Any]) -> "LaunchDTO":
         """
         Creates a LaunchDTO object from api data
 
@@ -52,11 +53,11 @@ class LaunchDTO:
             "url": cls._get_launch_url(details.get("info_urls"), details.get("vid_urls")),
         }
         if details.get("mission", {}):
-            launch["mission_name"] = details.get("mission").get("name")
+            launch["mission_name"] = details.get("mission", {}).get("name")
         else:
             launch["mission_name"] = None
         if details.get("status", {}):
-            launch["status"] = details.get("status").get("abbrev")
+            launch["status"] = details.get("status", {}).get("abbrev")
         else:
             launch["status"] = None
         if details.get("image", {}):
@@ -140,7 +141,7 @@ class LaunchDTO:
         return cls(agency, launch, program, rocket, site, status)
 
     @classmethod
-    def from_file(cls, filename):
+    def from_file(cls, filename: str) -> "LaunchDTO":
         """
         Creates a LaunchDTO object from filedata
 
@@ -166,7 +167,7 @@ class LaunchDTO:
         pass
 
     @staticmethod
-    def _get_launch_url(info_urls: list[dict[str,]], vid_urls: list[dict[str,]]) -> str | None:
+    def _get_launch_url(info_urls: list[dict[str, Any]], vid_urls: list[dict[str, Any]]) -> str | None:
         """
         Help method to get media url with max priority
 

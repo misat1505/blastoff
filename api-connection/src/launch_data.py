@@ -1,6 +1,6 @@
 import collections
 from dataclasses import dataclass
-from typing import Generator
+from typing import Generator, Any
 
 
 @dataclass
@@ -26,7 +26,7 @@ class LaunchDataList(collections.UserList):
     data: list[LaunchData]
 
     @classmethod
-    def from_api(cls, data: list[dict[str,]]):
+    def from_api(cls, data: list[dict[str, Any]]):
         """
         Creates an LaunchDataList object from api data
 

@@ -6,7 +6,7 @@ from launch_data import LaunchDataList
 
 
 class APIDataConnector:
-    def __init__(self, first_url, database_data, max_loop_count: int = 5):
+    def __init__(self, first_url: str, database_data: list[tuple[str, str, str]], max_loop_count: int = 5):
         self.url = first_url
         self.database_data = LaunchDataList.from_db(database_data)
         self.max_loop_count = max_loop_count

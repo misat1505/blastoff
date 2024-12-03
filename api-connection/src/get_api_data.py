@@ -1,3 +1,5 @@
+from typing import Any
+
 import requests
 
 from launch_data import LaunchDataList
@@ -14,19 +16,19 @@ class GetAPIData:
     def _build_query(self) -> str:
         return self.api_url
 
-    def execute(self) -> dict:
+    def execute(self) -> dict[str, Any]:
         return requests.get(self._build_query()).json()
 
 
 class GetLaunchesAPIData(GetAPIData):
     def __init__(self, api_url: str):
         super().__init__(api_url)
-        self.results = None
-        self.next = None
+        self.results: dict[str, Any] = {}
+        self.next: str = ""
 
-    def get_structured_data(self) -> None | LaunchDataList:
-        self.results = self.execute()
+    def get_structured_data(self) -> LaunchDataList:
         try:
+            self.results = self.execute()
             self.next = self.results["next"]
             return LaunchDataList.from_api(self.results["results"])
         except KeyError:
