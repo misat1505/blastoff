@@ -36,15 +36,14 @@ class LaunchDataList(collections.UserList):
         return cls([LaunchData(launch["id"], launch["last_updated"], launch["url"]) for launch in data])
 
     @classmethod
-    def from_db(cls, data):
+    def from_db(cls, data: list[tuple[str, str, str]]):
         """
         Creates an LaunchDataList object from db data
 
-        :param data:
+        :param data: list of tuples containing launch data - tuple format (id, last_updated, url) - ex. [('some_id', '2024-01-01', 'details_url')]
         :return: LaunchDataList object (containing LaunchData objects with id, last_updated, url fields)
         """
-        # TODO
-        return cls(data)
+        return cls([LaunchData(api_id, last_updated, url) for api_id, last_updated, url in data])
 
     def get_by_id(self, id: str) -> LaunchData:
         """
