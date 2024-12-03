@@ -1,112 +1,192 @@
 import json
-import functools
+from dataclasses import dataclass
 
 
-def save_to_file(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        obj = func(*args, **kwargs)
-        obj.save_to_file()
-        return obj
-    return wrapper
+class CouldNotReadFile(Exception):
+    def __init__(self, exception):
+        super().__init__(exception)
 
 
+@dataclass
 class LaunchDTO:
-    def __init__(self, agency, launch, program, rocket, site, status):
-        self.agency = agency
-        self.launch = launch
-        self.program = program
-        self.rocket = rocket
-        self.site = site
-        self.status = status
+    """
+    Dataclass for specific information about launch
+
+    - agency: agency details (from api), containing only necessary (from db perspective) fields
+    - launch: launch details (from api), containing only necessary (from db perspective) fields
+    - program: program details (from api), containing only necessary (from db perspective) fields
+    - rocket: rocket details (from api), containing only necessary (from db perspective) fields
+    - site: site details (from api), containing only necessary (from db perspective) fields
+    - status: launch status details (from api), containing only necessary (from db perspective) fields
+    """
+    agency: dict
+    launch: dict
+    program: dict
+    rocket: dict
+    site: dict
+    status: dict
 
     @classmethod
-    @save_to_file
-    def from_api(cls, details):
-        agency = {
-            "name": details.get("launch_service_provider", {}).get("name"),
-            "country": details.get("launch_service_provider", {}).get("country", [{}])[0].get("name"),
-            "description": details.get("launch_service_provider", {}).get("description"),
-            "website": details.get("launch_service_provider", {}).get("info_url"),
-            "image_url": details.get("launch_service_provider", {}).get("logo", {}).get("image_url"),
-        }
+    def from_api(cls, details: dict):
+        """
+        Creates a LaunchDTO object from api data
+
+        :param details: result of api query for details of specific launch
+        :return: LaunchDTO object
+        """
+        if details.get("launch_service_provider", {}):
+            agency = {
+                "name": details.get("launch_service_provider", {}).get("name"),
+                "country": details.get("launch_service_provider", {}).get("country", [{}])[0].get("name"),
+                "description": details.get("launch_service_provider", {}).get("description"),
+                "website": details.get("launch_service_provider", {}).get("info_url"),
+                "image_url": details.get("launch_service_provider", {}).get("logo", {}).get("image_url"),
+            }
+        else:
+            agency = None
 
         launch = {
             "api_id": details.get("id"),
             "last_updated": details.get("last_updated"),
-            "mission_name": details.get("mission", {}).get("name"),
-            "status": details.get("status", {}).get("abbrev"),
             "date": details.get("net"),
-            "description": details.get("mission", {}).get("description"),
             "url": cls._get_launch_url(details.get("info_urls"), details.get("vid_urls")),
-            "image_url": details.get("image", {}).get("image_url"),
         }
+        if details.get("mission", {}):
+            launch["mission_name"] = details.get("mission").get("name")
+        else:
+            launch["mission_name"] = None
+        if details.get("status", {}):
+            launch["status"] = details.get("status").get("abbrev")
+        else:
+            launch["status"] = None
+        if details.get("image", {}):
+            launch["image_url"] = details.get("image", {}).get("image_url")
+        else:
+            launch["image_url"] = None
+        if details.get("mission", {}):
+            launch["description"] = details.get("mission", {}).get("description")
+        else:
+            launch["description"] = None
 
-        program = {
-            "name": details.get("program", [{}])[0].get("name"),
-            "description": details.get("program", [{}])[0].get("description"),
-            "website": details.get("program", [{}])[0].get("info_url"),
-            "image_url": details.get("program", [{}])[0].get("image", {}).get("image_url"),
-        }
+        if details.get("program", []):
+            program = {
+                "name": details.get("program", [{}])[0].get("name"),
+                "description": details.get("program", [{}])[0].get("description"),
+                "website": details.get("program", [{}])[0].get("info_url"),
+            }
+            if details.get("program", [{}])[0].get("image", {}) is not None:
+                program["image_url"] = details.get("program", [{}])[0].get("image", {}).get("image_url")
+            else:
+                program["image_url"] = None
+        else:
+            program = None
 
-        rocket = {
-            "name": details.get("rocket", {}).get("configuration", {}).get("name"),
-            "no_stages": details.get("rocket", {}).get("configuration", {}).get("max_stage"),
-            "height": details.get("rocket", {}).get("configuration", {}).get("length"),
-            "mass": details.get("rocket", {}).get("configuration", {}).get("launch_mass"),
-            "diameter": details.get("rocket", {}).get("configuration", {}).get("diameter"),
-            "description": details.get("rocket", {}).get("configuration", {}).get("description"),
-            "launches_count": details.get("rocket", {}).get("configuration", {}).get("total_launch_count"),
-            "successful_launches_count": details.get("rocket", {}).get("configuration", {}).get("successful_launches"),
-            "failed_launches_count": details.get("rocket", {}).get("configuration", {}).get("failed_launches"),
-            "landings_count": details.get("rocket", {}).get("configuration", {}).get("attempted_landings"),
-            "successful_landings_count": details.get("rocket", {}).get("configuration", {}).get("successful_landings"),
-            "failed_landings_count": details.get("rocket", {}).get("configuration", {}).get("failed_landings"),
-            "leo_capacity": details.get("rocket", {}).get("configuration", {}).get("leo_capacity"),
-            "gto_capacity": details.get("rocket", {}).get("configuration", {}).get("gto_capacity"),
-            "geo_capacity": details.get("rocket", {}).get("configuration", {}).get("geo_capacity"),
-            "sso_capacity": details.get("rocket", {}).get("configuration", {}).get("sso_capacity"),
-            "image_url": details.get("rocket", {}).get("configuration", {}).get("image", {}).get("image_url"),
-        }
+        if details.get("rocket", {}):
+            if details.get("rocket", {}).get("configuration", {}):
+                rocket = {
+                    "name": details.get("rocket", {}).get("configuration", {}).get("name"),
+                    "no_stages": details.get("rocket", {}).get("configuration", {}).get("max_stage"),
+                    "height": details.get("rocket", {}).get("configuration", {}).get("length"),
+                    "mass": details.get("rocket", {}).get("configuration", {}).get("launch_mass"),
+                    "diameter": details.get("rocket", {}).get("configuration", {}).get("diameter"),
+                    "description": details.get("rocket", {}).get("configuration", {}).get("description"),
+                    "launches_count": details.get("rocket", {}).get("configuration", {}).get("total_launch_count"),
+                    "successful_launches_count": details.get("rocket", {}).get("configuration", {}).get("successful_launches"),
+                    "failed_launches_count": details.get("rocket", {}).get("configuration", {}).get("failed_launches"),
+                    "landings_count": details.get("rocket", {}).get("configuration", {}).get("attempted_landings"),
+                    "successful_landings_count": details.get("rocket", {}).get("configuration", {}).get("successful_landings"),
+                    "failed_landings_count": details.get("rocket", {}).get("configuration", {}).get("failed_landings"),
+                    "leo_capacity": details.get("rocket", {}).get("configuration", {}).get("leo_capacity"),
+                    "gto_capacity": details.get("rocket", {}).get("configuration", {}).get("gto_capacity"),
+                    "geo_capacity": details.get("rocket", {}).get("configuration", {}).get("geo_capacity"),
+                    "sso_capacity": details.get("rocket", {}).get("configuration", {}).get("sso_capacity"),
+                }
+                if details.get("rocket", {}).get("configuration", {}).get("image", {}):
+                    rocket["image_url"] = details.get("rocket", {}).get("configuration", {}).get("image", {}).get("image_url")
+                else:
+                    rocket["image_url"] = None
+            else:
+                rocket = None
+        else:
+            rocket = None
 
-        site = {
-            "name": details.get("pad", {}).get("name"),
-            "country": details.get("pad", {}).get("country", {}).get("name"),
-            "latitude": details.get("pad", {}).get("latitude"),
-            "longitude": details.get("pad", {}).get("longitude"),
-            "description": details.get("pad", {}).get("description"),
-            "image_url": details.get("pad", {}).get("image", {}).get("image_url"),
-        }
+        if details.get("pad", {}):
+            site = {
+                "name": details.get("pad", {}).get("name"),
+                "latitude": details.get("pad", {}).get("latitude"),
+                "longitude": details.get("pad", {}).get("longitude"),
+                "description": details.get("pad", {}).get("description"),
+            }
+            if details.get("pad", {}).get("country"):
+                site["country"] = details.get("pad", {}).get("country").get("name")
+            else:
+                site["country"] = None
 
-        status = {
-            "name": details.get("status", {}).get("name"),
-            "description": details.get("status", {}).get("description"),
-        }
+            if details.get("pad", {}).get("image", {}):
+                site["image_url"] = details.get("pad", {}).get("image", {}).get("image_url")
+            else:
+                site["image_url"] = None
+        else:
+            site = None
+
+        if details.get("status", {}):
+            status = {
+                "name": details.get("status", {}).get("name"),
+                "description": details.get("status", {}).get("description"),
+            }
+        else:
+            status = None
+
         return cls(agency, launch, program, rocket, site, status)
 
     @classmethod
     def from_file(cls, filename):
+        """
+        Creates a LaunchDTO object from filedata
+
+        :param filename: name of the file with stored data
+        :return: LaunchDTO object
+        """
         try:
             with open(filename, 'r') as file:
                 data = json.load(file)
             return cls(data.get("agency"), data.get("launch"), data.get("program"), data.get("rocket"), data.get("site"), data.get("status"))
         except (FileNotFoundError, json.JSONDecodeError) as e:
-            print(f"Error loading from file: {e}")
+            raise CouldNotReadFile(e)
 
     @classmethod
     def from_db(cls, data):
+        """
+        Creates a LaunchDTO object from db data
+
+        :param data:
+        :return:
+        """
         # TODO
         pass
 
     @staticmethod
     def _get_launch_url(info_urls: list[dict[str,]], vid_urls: list[dict[str,]]) -> str | None:
+        """
+        Help method to get media url with max priority
+
+        :param info_urls: info_urls from api
+        :param vid_urls: vid_urls from api
+        :return: url with max priority
+        """
         if not info_urls and not vid_urls:
             return None
         media = info_urls + vid_urls
         best = max(media, key=lambda x: x["priority"])
         return best["url"]
 
-    def save_to_file(self, filename):
+    def save_to_file(self, filename: str) -> None:
+        """
+        Method to save data to file
+
+        :param filename: name of the file which data will be saved in
+        :return: None
+        """
         data = {
             "agency": self.agency,
             "launch": self.launch,
