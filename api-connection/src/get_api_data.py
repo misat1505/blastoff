@@ -1,5 +1,10 @@
 import requests
-from launch_data import LaunchData, LaunchDataList
+
+from launch_data import LaunchDataList
+
+
+class APIRequestTimeout(Exception):
+    pass
 
 
 class GetAPIData:
@@ -25,4 +30,4 @@ class GetLaunchesAPIData(GetAPIData):
             self.next = self.results["next"]
             return LaunchDataList.from_api(self.results["results"])
         except KeyError:
-            return None
+            raise APIRequestTimeout("No more requests are available at the moment. Try again later...")
