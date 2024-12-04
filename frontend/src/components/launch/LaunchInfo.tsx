@@ -9,6 +9,7 @@ import { useLaunchCountdown } from "../../hooks/useLaunchCountdown";
 import { formatLaunchDate } from "../../utils/formatLaunchDate";
 import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
 import { cn } from "../../lib/utils";
+import LaunchCountdown from "../LaunchCountdown";
 
 const LaunchInfo = () => {
   return (
@@ -57,19 +58,10 @@ const GeneralLaunchInfo = () => {
 
 const TimeDisplay = () => {
   const { launch } = useLaunchContext();
-  const timeLeft = useLaunchCountdown(launch.net);
-
-  function formatTimeUnit(unit: number) {
-    return unit.toString().padStart(2, "0");
-  }
-
-  const timeText = `NET - ${formatTimeUnit(timeLeft.days)} : ${formatTimeUnit(timeLeft.hours)}
-        : ${formatTimeUnit(timeLeft.minutes)} :
-        ${formatTimeUnit(timeLeft.seconds)}`;
 
   return (
     <div className="mt-8">
-      <p className="text-nowrap text-xl font-semibold">{timeText}</p>
+      <LaunchCountdown date={launch.net} className="text-xl font-semibold" />
       <div className="text-sm">{formatLaunchDate(launch.net)}</div>
     </div>
   );

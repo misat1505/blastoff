@@ -10,6 +10,7 @@ import { ROUTES } from "../../lib/routes";
 import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
 import { CgDetailsMore } from "react-icons/cg";
 import { useLaunchCountdown } from "../../hooks/useLaunchCountdown";
+import LaunchCountdown from "../LaunchCountdown";
 
 type LaunchCardProps = {
   launch: Launch;
@@ -81,19 +82,13 @@ const Header = () => {
 
 const Countdown = () => {
   const { launch } = useLaunchContext();
-  const timeLeft = useLaunchCountdown(launch.net);
-
-  function formatTimeUnit(unit: number) {
-    return unit.toString().padStart(2, "0");
-  }
 
   return (
     <div>
-      <div className="text-nowrap text-2xl font-semibold sm:text-4xl 2xl:text-4xl">
-        NET - {formatTimeUnit(timeLeft.days)} : {formatTimeUnit(timeLeft.hours)}{" "}
-        : {formatTimeUnit(timeLeft.minutes)} :{" "}
-        {formatTimeUnit(timeLeft.seconds)}
-      </div>
+      <LaunchCountdown
+        date={launch.net}
+        className="text-nowrap text-2xl font-semibold sm:text-4xl 2xl:text-4xl"
+      />
       <div>{formatLaunchDate(launch.net)}</div>
     </div>
   );

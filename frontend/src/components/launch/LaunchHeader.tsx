@@ -3,6 +3,7 @@ import { useLaunchContext } from "../../context/LaunchContext";
 import { useThemeContext } from "../../context/ThemeContext";
 import { useInView } from "react-intersection-observer";
 import { cn } from "../../lib/utils";
+import LaunchCountdown from "../LaunchCountdown";
 
 const LaunchHeader = () => {
   const { theme } = useThemeContext();
@@ -32,31 +33,13 @@ const LaunchHeader = () => {
           }}
         >
           <h2>{launch.name}</h2>
-          <Countdown />
+          <LaunchCountdown
+            date={launch.net}
+            className="text-2xl font-semibold sm:text-4xl 2xl:text-4xl"
+          />
         </div>
       </div>
       <div></div>
-    </div>
-  );
-};
-
-const Countdown = () => {
-  const {
-    launch: { net },
-  } = useLaunchContext();
-  const timeLeft = useLaunchCountdown(net);
-
-  function formatTimeUnit(unit: number) {
-    return unit.toString().padStart(2, "0");
-  }
-
-  return (
-    <div>
-      <div className="text-nowrap text-2xl font-semibold sm:text-4xl 2xl:text-4xl">
-        NET - {formatTimeUnit(timeLeft.days)} : {formatTimeUnit(timeLeft.hours)}{" "}
-        : {formatTimeUnit(timeLeft.minutes)} :{" "}
-        {formatTimeUnit(timeLeft.seconds)}
-      </div>
     </div>
   );
 };
@@ -67,15 +50,6 @@ type LaunchBarProps = {
 
 const LaunchBar = ({ isVisible }: LaunchBarProps) => {
   const { launch } = useLaunchContext();
-  const timeLeft = useLaunchCountdown(launch.net);
-
-  function formatTimeUnit(unit: number) {
-    return unit.toString().padStart(2, "0");
-  }
-
-  const timeText = `NET - ${formatTimeUnit(timeLeft.days)} : ${formatTimeUnit(timeLeft.hours)}
-        : ${formatTimeUnit(timeLeft.minutes)} :
-        ${formatTimeUnit(timeLeft.seconds)}`;
 
   return (
     <div
@@ -87,7 +61,7 @@ const LaunchBar = ({ isVisible }: LaunchBarProps) => {
       )}
     >
       <p>{launch.name}</p>
-      <p>{timeText}</p>
+      <LaunchCountdown date={launch.net} />
     </div>
   );
 };
