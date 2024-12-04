@@ -75,4 +75,4 @@ class GetLaunchesAPIData(GetAPIData):
             self.next = self.results["next"]
             return LaunchDataList.from_api(self.results["results"])
         except KeyError:
-            raise APIRequestTimeout("No more requests are available at the moment. Try again later...")
+            raise APIRequestTimeout(f'No more requests are available at the moment. Details: {self.results}')
