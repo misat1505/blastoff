@@ -16,7 +16,7 @@ const LaunchHeader = () => {
         <img
           src={launch.image}
           alt={launch.name}
-          className="w-full object-cover"
+          className="w-full rounded-sm object-cover shadow-lg"
         />
         <div
           ref={ref}
