@@ -3,6 +3,7 @@ import { Launch } from "../types/Launch";
 const launch: Launch = {
   id: "83ba001e-9bca-48ac-84cb-ccea96bfe9c1",
   name: "Starship | Integrated Flight Test 7",
+  description: "Fifth test flight of the two-stage Starship launch vehicle.",
   net: new Date("2024-12-31T12:25:00Z"),
   image:
     "https://thespacedevs-prod.nyc3.digitaloceanspaces.com/media/images/superheavy_appr_image_20241013171532.jpeg",

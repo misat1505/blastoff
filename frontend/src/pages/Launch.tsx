@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 import Error from "../components/Error";
 import LaunchProvider from "../context/LaunchContext";
 import LaunchHeader from "../components/launch/LaunchHeader";
+import LaunchInfo from "../components/launch/LaunchInfo";
 
 const LaunchPage = () => {
   const { launchId } = useParams();
@@ -63,6 +64,7 @@ const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
     <div className="mx-auto w-1/2 overflow-x-hidden">
       <LaunchProvider launch={launch}>
         <LaunchHeader />
+        <LaunchInfo />
         {JSON.stringify(launch)}
         {JSON.stringify(launch)}
         {JSON.stringify(launch)}

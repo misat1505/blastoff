@@ -1,6 +1,7 @@
 export type Launch = {
   id: string;
   name: string;
+  description: string;
   net: Date;
   image: string;
   window: {
