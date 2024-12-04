@@ -1,6 +1,6 @@
-import { MissionService } from "../services/MissionService";
+import { LaunchService } from "../services/LaunchService";
 import NotFound from "../components/NotFound";
-import { Mission } from "../types/Mission";
+import { Launch } from "../types/Launch";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { queryKeysBuilder } from "../utils/queryKeysBuilder";
@@ -24,7 +24,7 @@ const LaunchPage = () => {
 export default LaunchPage;
 
 type LaunchPageContentProps = {
-  id: Mission["id"];
+  id: Launch["id"];
 };
 
 const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
@@ -34,7 +34,7 @@ const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
     error,
     refetch,
   } = useQuery({
-    queryFn: () => MissionService.getMissionById(id),
+    queryFn: () => LaunchService.getLaunchById(id),
     queryKey: queryKeysBuilder.launch(id),
   });
 

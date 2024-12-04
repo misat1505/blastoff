@@ -1,4 +1,4 @@
-export type Mission = {
+export type Launch = {
   id: string;
   name: string;
   net: Date;

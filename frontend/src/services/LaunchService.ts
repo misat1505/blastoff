@@ -1,6 +1,6 @@
-import { Mission } from "../types/Mission";
+import { Launch } from "../types/Launch";
 
-const mission: Mission = {
+const launch: Launch = {
   id: "83ba001e-9bca-48ac-84cb-ccea96bfe9c1",
   name: "Starship | Integrated Flight Test 7",
   net: new Date("2024-12-31T12:25:00Z"),
@@ -38,22 +38,22 @@ const mission: Mission = {
   },
 };
 
-export class MissionService {
-  static async getUpcomingMissions(): Promise<Mission[]> {
-    const missions = new Array(5).fill(0).map((_) => mission);
-    missions.forEach((m, id) => (m.id += id));
+export class LaunchService {
+  static async getUpcomingLaunches(): Promise<Launch[]> {
+    const launches = new Array(5).fill(0).map((_) => launch);
+    launches.forEach((m, id) => (m.id += id));
 
     return await new Promise((res) => {
       setTimeout(() => {
-        return res(missions);
+        return res(launches);
       }, 1000);
     });
   }
 
-  static async getMissionById(id: Mission["id"]): Promise<Mission | null> {
+  static async getLaunchById(id: Launch["id"]): Promise<Launch | null> {
     return await new Promise((res) => {
       setTimeout(() => {
-        return res(mission.id === id ? mission : null);
+        return res(launch.id === id ? launch : null);
       }, 1000);
     });
   }

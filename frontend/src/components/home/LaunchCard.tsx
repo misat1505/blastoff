@@ -1,42 +1,40 @@
 import { Link } from "react-router-dom";
-import MissionProvider, {
-  useMissionContext,
-} from "../../context/MissionContext";
-import { Mission } from "../../types/Mission";
+import LaunchProvider, { useLaunchContext } from "../../context/LaunchContext";
+import { Launch } from "../../types/Launch";
 import { FaGooglePlay } from "react-icons/fa";
 import { IoRocket } from "react-icons/io5";
-import { getMissionStatusType } from "../../utils/getMissionStatusType";
 import { cn } from "../../lib/utils";
-import { formatMissionDate } from "../../utils/formatMissionDate";
+import { formatLaunchDate } from "../../utils/formatLaunchDate";
 import { useEffect, useState } from "react";
 import Tooltip from "../Tooltip";
 import { GOOGLE_MAPS_LOGO_PATH } from "../../constants";
 import { buildGoogleMapsURL } from "../../utils/googleMaps";
 import { ROUTES } from "../../lib/routes";
+import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
 
-type MissionCardProps = {
-  mission: Mission;
+type LaunchCardProps = {
+  launch: Launch;
 };
 
-const MissionCard = ({ mission }: MissionCardProps) => {
+const LaunchCard = ({ launch }: LaunchCardProps) => {
   return (
     <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-300 transition-all hover:shadow-sm dark:bg-slate-700 sm:grid sm:h-[500px]">
-      <MissionProvider mission={mission}>
+      <LaunchProvider launch={launch}>
         <Image />
         <Info />
-      </MissionProvider>
+      </LaunchProvider>
     </div>
   );
 };
 
 const Image = () => {
-  const { mission } = useMissionContext();
+  const { launch } = useLaunchContext();
 
   return (
     <img
       className="col-span-1 max-h-40 w-full object-cover sm:h-full sm:max-h-full"
-      src={mission.image}
-      alt={mission.name}
+      src={launch.image}
+      alt={launch.name}
     />
   );
 };
@@ -53,20 +51,20 @@ const Info = () => {
 };
 
 const Header = () => {
-  const { mission } = useMissionContext();
+  const { launch } = useLaunchContext();
 
   const launchSiteGoogleMapsURL = buildGoogleMapsURL({
-    latitude: mission.site.latitude,
-    longitude: mission.site.longitude,
+    latitude: launch.site.latitude,
+    longitude: launch.site.longitude,
   });
 
   return (
     <div>
-      <h2 className="text-xl font-extrabold">{mission.name}</h2>
-      <p>{mission.agency.name}</p>
+      <h2 className="text-xl font-extrabold">{launch.name}</h2>
+      <p>{launch.agency.name}</p>
       <div className="flex items-center justify-center space-x-2">
         <p>
-          {mission.site.name}, {mission.site.country}
+          {launch.site.name}, {launch.site.country}
         </p>
         <Tooltip content="Open Launch Site in Google Maps">
           <Link to={launchSiteGoogleMapsURL} target="_blank">
@@ -83,16 +81,16 @@ const Header = () => {
 };
 
 const Countdown = () => {
-  const { mission } = useMissionContext();
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(mission.net));
+  const { launch } = useLaunchContext();
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(launch.net));
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      setTimeLeft(calculateTimeLeft(mission.net));
+      setTimeLeft(calculateTimeLeft(launch.net));
     }, 1000);
 
     return () => clearInterval(timerId);
-  }, [mission.net]);
+  }, [launch.net]);
 
   function calculateTimeLeft(targetDate: Date) {
     const now = new Date();
@@ -121,15 +119,15 @@ const Countdown = () => {
         : {formatTimeUnit(timeLeft.minutes)} :{" "}
         {formatTimeUnit(timeLeft.seconds)}
       </div>
-      <div>{formatMissionDate(mission.net)}</div>
+      <div>{formatLaunchDate(launch.net)}</div>
     </div>
   );
 };
 
 const Status = () => {
-  const { mission } = useMissionContext();
+  const { launch } = useLaunchContext();
 
-  const statusType = getMissionStatusType(mission.status.id);
+  const statusType = getLaunchStatusType(launch.status.id);
 
   const getColor = (): string => {
     if (statusType === "success") return "text-green-500";
@@ -138,27 +136,27 @@ const Status = () => {
   };
 
   return (
-    <Tooltip content={mission.status.description}>
+    <Tooltip content={launch.status.description}>
       <h2 className={cn("text-2xl font-bold", getColor())}>
-        {mission.status.name}
+        {launch.status.name}
       </h2>
     </Tooltip>
   );
 };
 
 const Links = () => {
-  const { mission } = useMissionContext();
+  const { launch } = useLaunchContext();
 
   return (
     <div className="flex items-center justify-around">
-      <MissionLink
-        to={mission.links.live}
+      <LaunchLink
+        to={launch.links.live}
         text="Live"
         icon={<FaGooglePlay />}
         tooltipText="Watch Live"
       />
-      <MissionLink
-        to={ROUTES.ROCKET.buildPath({ rocketId: mission.rocket.id.toString() })}
+      <LaunchLink
+        to={ROUTES.ROCKET.buildPath({ rocketId: launch.rocket.id.toString() })}
         text="Rocket"
         icon={<IoRocket />}
         tooltipText="Rocket Details"
@@ -167,14 +165,14 @@ const Links = () => {
   );
 };
 
-type MissionLinkProps = {
+type LaunchLinkProps = {
   to: string;
   text: string;
   icon: JSX.Element;
   tooltipText: string;
 };
 
-const MissionLink = ({ to, text, icon, tooltipText }: MissionLinkProps) => {
+const LaunchLink = ({ to, text, icon, tooltipText }: LaunchLinkProps) => {
   return (
     <Tooltip content={tooltipText}>
       <Link
@@ -188,4 +186,4 @@ const MissionLink = ({ to, text, icon, tooltipText }: MissionLinkProps) => {
   );
 };
 
-export default MissionCard;
+export default LaunchCard;
