@@ -40,8 +40,7 @@ const launch: Launch = {
 
 export class LaunchService {
   static async getUpcomingLaunches(): Promise<Launch[]> {
-    const launches = new Array(5).fill(0).map((_) => launch);
-    launches.forEach((m, id) => (m.id += id));
+    const launches = new Array(5).fill(0).map((_) => ({ ...launch }));
 
     return await new Promise((res) => {
       setTimeout(() => {
@@ -53,7 +52,7 @@ export class LaunchService {
   static async getLaunchById(id: Launch["id"]): Promise<Launch | null> {
     return await new Promise((res) => {
       setTimeout(() => {
-        return res(launch.id === id ? launch : null);
+        return res(launch.id === id ? { ...launch } : null);
       }, 1000);
     });
   }

@@ -7,6 +7,7 @@ import { queryKeysBuilder } from "../utils/queryKeysBuilder";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import LaunchProvider from "../context/LaunchContext";
+import LaunchHeader from "../components/launch/LaunchHeader";
 
 const LaunchPage = () => {
   const { launchId } = useParams();
@@ -59,8 +60,16 @@ const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
     );
 
   return (
-    <div>
-      <LaunchProvider launch={launch}>{JSON.stringify(launch)}</LaunchProvider>
+    <div className="mx-auto w-1/2 overflow-x-hidden">
+      <LaunchProvider launch={launch}>
+        <LaunchHeader />
+        {JSON.stringify(launch)}
+        {JSON.stringify(launch)}
+        {JSON.stringify(launch)}
+        {JSON.stringify(launch)}
+        {JSON.stringify(launch)}
+        {JSON.stringify(launch)}
+      </LaunchProvider>
     </div>
   );
 };
