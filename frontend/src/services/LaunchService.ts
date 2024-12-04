@@ -40,6 +40,8 @@ const launch: Launch = {
     country: "United States of America",
     latitude: 25.997116,
     longitude: -97.1550309985665,
+    image_map:
+      "https://thespacedevs-prod.nyc3.digitaloceanspaces.com/media/map_images/pad_orbital_launch_mount_a_20210514061342.jpg",
   },
 };
 

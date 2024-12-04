@@ -97,7 +97,7 @@ const SiteInfo = () => {
             </Link>
           </Tooltip>
         </div>
-        <img src="https://thespacedevs-prod.nyc3.digitaloceanspaces.com/media/map_images/pad_orbital_launch_mount_a_20210514061342.jpg" />
+        <img src={launch.site.image_map} className="rounded-md shadow-md" />
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import Error from "../components/Error";
 import LaunchProvider from "../context/LaunchContext";
 import LaunchHeader from "../components/launch/LaunchHeader";
 import LaunchInfo from "../components/launch/LaunchInfo";
+import CommentSection from "../components/launch/CommentSection";
 
 const LaunchPage = () => {
   const { launchId } = useParams();
@@ -65,6 +66,7 @@ const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
       <LaunchProvider launch={launch}>
         <LaunchHeader />
         <LaunchInfo />
+        <CommentSection />
       </LaunchProvider>
     </div>
   );
