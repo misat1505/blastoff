@@ -1,8 +1,6 @@
 import CountUp from "react-countup";
 import { useRocketContext } from "../../context/RocketContext";
-import { FaCheck, FaDollarSign } from "react-icons/fa";
-import { IoMdRocket } from "react-icons/io";
-import { MdOutlinePendingActions } from "react-icons/md";
+import { FaCheck } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { useInView } from "react-intersection-observer";
 import { PiAirplaneLandingFill } from "react-icons/pi";
