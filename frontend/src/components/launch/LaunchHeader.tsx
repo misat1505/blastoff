@@ -27,9 +27,7 @@ const LaunchHeader = () => {
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-nowrap text-center text-2xl font-semibold text-slate-900 dark:text-slate-100"
           style={{
             textShadow:
-              theme === "dark"
-                ? "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
-                : "-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white",
+              theme === "dark" ? "2px 2px 4px black" : "2px 2px 4px white",
           }}
         >
           <h2>{launch.name}</h2>

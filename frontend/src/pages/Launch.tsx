@@ -65,12 +65,6 @@ const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
       <LaunchProvider launch={launch}>
         <LaunchHeader />
         <LaunchInfo />
-        {JSON.stringify(launch)}
-        {JSON.stringify(launch)}
-        {JSON.stringify(launch)}
-        {JSON.stringify(launch)}
-        {JSON.stringify(launch)}
-        {JSON.stringify(launch)}
       </LaunchProvider>
     </div>
   );

@@ -24,6 +24,9 @@ export type Launch = {
   agency: {
     id: number;
     name: string;
+    image_url: string;
+    country: string;
+    website: string;
   };
   site: {
     id: number;

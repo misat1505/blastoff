@@ -29,6 +29,10 @@ const launch: Launch = {
   agency: {
     id: 121,
     name: "SpaceX",
+    image_url:
+      "https://thespacedevs-prod.nyc3.digitaloceanspaces.com/media/images/spacex_logo_20220826094919.png",
+    country: "United States of America",
+    website: "http://www.spacex.com/",
   },
   site: {
     id: 188,
