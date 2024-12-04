@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom";
 import LaunchProvider, { useLaunchContext } from "../../context/LaunchContext";
 import { Launch } from "../../types/Launch";
-import { FaGooglePlay } from "react-icons/fa";
-import { IoRocket } from "react-icons/io5";
 import { cn } from "../../lib/utils";
 import { formatLaunchDate } from "../../utils/formatLaunchDate";
-import { useEffect, useState } from "react";
 import Tooltip from "../Tooltip";
 import { GOOGLE_MAPS_LOGO_PATH } from "../../constants";
 import { buildGoogleMapsURL } from "../../utils/googleMaps";
 import { ROUTES } from "../../lib/routes";
 import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
+import { CgDetailsMore } from "react-icons/cg";
+import { useLaunchCountdown } from "../../hooks/useLaunchCountdown";
 
 type LaunchCardProps = {
   launch: Launch;
@@ -82,31 +81,7 @@ const Header = () => {
 
 const Countdown = () => {
   const { launch } = useLaunchContext();
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(launch.net));
-
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      setTimeLeft(calculateTimeLeft(launch.net));
-    }, 1000);
-
-    return () => clearInterval(timerId);
-  }, [launch.net]);
-
-  function calculateTimeLeft(targetDate: Date) {
-    const now = new Date();
-    const difference = targetDate.getTime() - now.getTime();
-
-    if (difference <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    }
-
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((difference / (1000 * 60)) % 60);
-    const seconds = Math.floor((difference / 1000) % 60);
-
-    return { days, hours, minutes, seconds };
-  }
+  const timeLeft = useLaunchCountdown(launch.net);
 
   function formatTimeUnit(unit: number) {
     return unit.toString().padStart(2, "0");
@@ -114,7 +89,7 @@ const Countdown = () => {
 
   return (
     <div>
-      <div className="text-nowrap text-2xl font-semibold sm:text-2xl sm:text-4xl 2xl:text-4xl">
+      <div className="text-nowrap text-2xl font-semibold sm:text-4xl 2xl:text-4xl">
         NET - {formatTimeUnit(timeLeft.days)} : {formatTimeUnit(timeLeft.hours)}{" "}
         : {formatTimeUnit(timeLeft.minutes)} :{" "}
         {formatTimeUnit(timeLeft.seconds)}
@@ -150,16 +125,10 @@ const Links = () => {
   return (
     <div className="flex items-center justify-around">
       <LaunchLink
-        to={launch.links.live}
-        text="Live"
-        icon={<FaGooglePlay />}
-        tooltipText="Watch Live"
-      />
-      <LaunchLink
-        to={ROUTES.ROCKET.buildPath({ rocketId: launch.rocket.id.toString() })}
-        text="Rocket"
-        icon={<IoRocket />}
-        tooltipText="Rocket Details"
+        to={ROUTES.LAUNCH.buildPath({ launchId: launch.id })}
+        text="Read more"
+        icon={<CgDetailsMore />}
+        tooltipText="Launch Details"
       />
     </div>
   );

@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { queryKeysBuilder } from "../utils/queryKeysBuilder";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
+import LaunchProvider from "../context/LaunchContext";
 
 const LaunchPage = () => {
   const { launchId } = useParams();
@@ -57,5 +58,9 @@ const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
       />
     );
 
-  return <div>{JSON.stringify(launch)}</div>;
+  return (
+    <div>
+      <LaunchProvider launch={launch}>{JSON.stringify(launch)}</LaunchProvider>
+    </div>
+  );
 };
