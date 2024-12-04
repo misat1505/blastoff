@@ -3,6 +3,7 @@ import { route } from "react-router-typesafe-routes/dom";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const RocketPage = lazy(() => import("../pages/Rocket"));
+const LaunchPage = lazy(() => import("../pages/Launch"));
 const RegisterPage = lazy(() => import("../pages/Register"));
 const LoginPage = lazy(() => import("../pages/Login"));
 const NotFoundPage = lazy(() => import("../pages/NotFound"));
@@ -17,6 +18,7 @@ export const ROUTES = {
   ROCKET: route("rockets/:rocketId"),
   REGISTER: route("register"),
   LOGIN: route("login"),
+  LAUNCH: route("launches/:launchId"),
 };
 
 export const routes: Route[] = [
@@ -27,6 +29,10 @@ export const routes: Route[] = [
   {
     path: ROUTES.ROCKET.path,
     component: RocketPage,
+  },
+  {
+    path: ROUTES.LAUNCH.path,
+    component: LaunchPage,
   },
   {
     path: ROUTES.REGISTER.path,
