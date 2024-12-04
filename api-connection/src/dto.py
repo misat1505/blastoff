@@ -31,14 +31,12 @@ class LaunchDTO:
     - program: program details (from api), containing only necessary (from db perspective) fields
     - rocket: rocket details (from api), containing only necessary (from db perspective) fields
     - site: site details (from api), containing only necessary (from db perspective) fields
-    - status: launch status details (from api), containing only necessary (from db perspective) fields
     """
     agency: dict[str, Any] | None
     launch: dict[str, Any] | None
     program: dict[str, Any] | None
     rocket: dict[str, Any] | None
     site: dict[str, Any] | None
-    status: dict[str, Any] | None
 
     @classmethod
     def from_api(cls, details: dict[str, Any]) -> "LaunchDTO":
@@ -70,9 +68,11 @@ class LaunchDTO:
         else:
             launch["mission_name"] = None
         if details.get("status", {}):
-            launch["status"] = details.get("status", {}).get("abbrev")
+            launch["status_name"] = details.get("status", {}).get("name")
+            launch["status_description"] = details.get("status", {}).get("description")
         else:
-            launch["status"] = None
+            launch["status_name"] = None
+            launch["status_description"] = None
         if details.get("image", {}):
             launch["image_url"] = details.get("image", {}).get("image_url")
         else:
@@ -130,6 +130,7 @@ class LaunchDTO:
                 "latitude": details.get("pad", {}).get("latitude"),
                 "longitude": details.get("pad", {}).get("longitude"),
                 "description": details.get("pad", {}).get("description"),
+                "map_image": details.get("pad", {}).get("map_image")
             }
             if details.get("pad", {}).get("country"):
                 site["country"] = details.get("pad", {}).get("country").get("name")
@@ -143,15 +144,7 @@ class LaunchDTO:
         else:
             site = None
 
-        if details.get("status", {}):
-            status = {
-                "name": details.get("status", {}).get("name"),
-                "description": details.get("status", {}).get("description"),
-            }
-        else:
-            status = None
-
-        return cls(agency, launch, program, rocket, site, status)
+        return cls(agency, launch, program, rocket, site)
 
     @classmethod
     def from_file(cls, filename: str) -> "LaunchDTO":
@@ -166,7 +159,7 @@ class LaunchDTO:
         try:
             with open(filename, 'r') as file:
                 data = json.load(file)
-            return cls(data.get("agency"), data.get("launch"), data.get("program"), data.get("rocket"), data.get("site"), data.get("status"))
+            return cls(data.get("agency"), data.get("launch"), data.get("program"), data.get("rocket"), data.get("site"))
         except (FileNotFoundError, json.JSONDecodeError):
             raise CouldNotReadFile(f'Could not read file: {filename}')
 
@@ -197,8 +190,7 @@ class LaunchDTO:
             "launch": self.launch,
             "program": self.program,
             "rocket": self.rocket,
-            "site": self.site,
-            "status": self.status
+            "site": self.site
         }
         try:
             with open(filename, 'w') as file:
