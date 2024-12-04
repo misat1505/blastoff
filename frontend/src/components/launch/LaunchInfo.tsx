@@ -15,7 +15,7 @@ const LaunchInfo = () => {
   return (
     <>
       <GeneralLaunchInfo />
-      <div className="my-4 flex space-x-4">
+      <div className="my-4 sm:flex sm:space-x-4">
         <div className="flex flex-col">
           <div className="flex h-full flex-col space-y-4">
             <div className="rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
@@ -80,12 +80,12 @@ const SiteInfo = () => {
   });
 
   return (
-    <div className="rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900">
-      <h2 className="mb-4">
+    <div className="mt-4 flex flex-col gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900 sm:mt-0">
+      <h2>
         <span className="font-semibold">{launch.name}</span> is schedule for
         blastoff from {launch.site.name}, {launch.site.country}
       </h2>
-      <div className="relative">
+      <div className="relative flex-grow">
         <div className="absolute right-4 top-4">
           <Tooltip content="Open in Google Maps">
             <Link to={link} target="_blank">
@@ -97,7 +97,10 @@ const SiteInfo = () => {
             </Link>
           </Tooltip>
         </div>
-        <img src={launch.site.image_map} className="rounded-md shadow-md" />
+        <img
+          src={launch.site.image_map}
+          className="h-full rounded-md object-cover shadow-md"
+        />
       </div>
     </div>
   );
@@ -138,7 +141,7 @@ const AgencyPreview = () => {
   const { launch } = useLaunchContext();
 
   return (
-    <div className="flex h-full flex-col justify-between">
+    <div className="flex h-full flex-col items-center justify-between gap-y-4">
       <h2 className="text-xl font-semibold">Manufacturer</h2>
       <img
         src={launch.agency.image_url}

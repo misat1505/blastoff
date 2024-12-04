@@ -62,7 +62,7 @@ const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
     );
 
   return (
-    <div className="mx-auto w-1/2 overflow-x-hidden">
+    <div className="mx-auto w-full overflow-x-hidden px-4 lg:w-1/2 lg:px-0">
       <LaunchProvider launch={launch}>
         <LaunchHeader />
         <LaunchInfo />
