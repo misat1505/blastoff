@@ -6,7 +6,17 @@ from launch_data import LaunchDataList
 
 
 class APIDataConnector:
-    def __init__(self, first_url: str, database_data: list[tuple[str, str, str]], max_loop_count: int = 5):
+    """
+    Class allows to get necessary API data
+    """
+    def __init__(self, first_url: str, database_data: list[tuple[str, str]], max_loop_count: int = 5):
+        """
+        Initialize APIDataConnector object
+
+        :param first_url: url to get first portion of data
+        :param database_data: list with tuples (api_id, last_updated) from current records in database
+        :param max_loop_count: max number of loops in get_difference, used to avoid infinite execution
+        """
         self.url = first_url
         self.database_data = LaunchDataList.from_db(database_data)
         self.max_loop_count = max_loop_count

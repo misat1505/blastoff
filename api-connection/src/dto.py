@@ -4,8 +4,21 @@ from typing import Any
 
 
 class CouldNotReadFile(Exception):
-    def __init__(self, exception):
-        super().__init__(exception)
+    """
+    Custom exception for handling exceptions related to files
+    """
+
+    def __init__(self, text):
+        self.text = text
+
+
+class CouldNotSaveToFile(Exception):
+    """
+    Custom exception for handling exceptions related to saving data to file
+    """
+
+    def __init__(self, text):
+        self.text = text
 
 
 @dataclass
@@ -145,6 +158,8 @@ class LaunchDTO:
         """
         Creates a LaunchDTO object from filedata
 
+        Method might raise CouldNotReadFile exception, if it encounters the problem
+
         :param filename: name of the file with stored data
         :return: LaunchDTO object
         """
@@ -152,19 +167,8 @@ class LaunchDTO:
             with open(filename, 'r') as file:
                 data = json.load(file)
             return cls(data.get("agency"), data.get("launch"), data.get("program"), data.get("rocket"), data.get("site"), data.get("status"))
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            raise CouldNotReadFile(e)
-
-    @classmethod
-    def from_db(cls, data):
-        """
-        Creates a LaunchDTO object from db data
-
-        :param data:
-        :return:
-        """
-        # TODO
-        pass
+        except (FileNotFoundError, json.JSONDecodeError):
+            raise CouldNotReadFile(f'Could not read file: {filename}')
 
     @staticmethod
     def _get_launch_url(info_urls: list[dict[str, Any]], vid_urls: list[dict[str, Any]]) -> str | None:
@@ -196,5 +200,8 @@ class LaunchDTO:
             "site": self.site,
             "status": self.status
         }
-        with open(filename, 'w') as file:
-            json.dump(data, file, indent=4)
+        try:
+            with open(filename, 'w') as file:
+                json.dump(data, file, indent=4)
+        except FileNotFoundError:
+            raise CouldNotSaveToFile(f'Could not save data to file: {filename}')
