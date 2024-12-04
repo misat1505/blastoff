@@ -11,6 +11,7 @@ import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
 import { CgDetailsMore } from "react-icons/cg";
 import { useLaunchCountdown } from "../../hooks/useLaunchCountdown";
 import LaunchCountdown from "../LaunchCountdown";
+import StyledLink from "../StyledLink";
 
 type LaunchCardProps = {
   launch: Launch;
@@ -119,34 +120,14 @@ const Links = () => {
 
   return (
     <div className="flex items-center justify-around">
-      <LaunchLink
+      <StyledLink
         to={ROUTES.LAUNCH.buildPath({ launchId: launch.id })}
-        text="Read more"
-        icon={<CgDetailsMore />}
-        tooltipText="Launch Details"
-      />
-    </div>
-  );
-};
-
-type LaunchLinkProps = {
-  to: string;
-  text: string;
-  icon: JSX.Element;
-  tooltipText: string;
-};
-
-const LaunchLink = ({ to, text, icon, tooltipText }: LaunchLinkProps) => {
-  return (
-    <Tooltip content={tooltipText}>
-      <Link
-        className="flex items-center gap-x-4 rounded-sm bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90"
-        to={to}
+        tooltip="Launch Details"
       >
-        {icon}
-        <span className="font-semibold">{text}</span>
-      </Link>
-    </Tooltip>
+        <CgDetailsMore />
+        <span className="text-sm font-semibold">Read more</span>
+      </StyledLink>
+    </div>
   );
 };
 

@@ -9,6 +9,7 @@ import { formatLaunchDate } from "../../utils/formatLaunchDate";
 import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
 import { cn } from "../../lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
+import StyledLink from "../StyledLink";
 
 const LaunchInfo = () => {
   return (
@@ -104,21 +105,17 @@ const SiteInfo = () => {
 
 const RocketPreview = () => {
   const { launch } = useLaunchContext();
+  const rocketPageLink = ROUTES.ROCKET.buildPath({
+    rocketId: launch.rocket.id.toString(),
+  });
 
   return (
     <div className="flex h-full flex-col justify-between">
       <h2 className="mb-4 text-nowrap text-lg font-semibold">Vehicle</h2>
-      <Tooltip content={`${launch.rocket.name} details`}>
-        <Link
-          className="mx-auto flex w-fit items-center gap-x-4 rounded-sm bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90"
-          to={ROUTES.ROCKET.buildPath({
-            rocketId: launch.rocket.id.toString(),
-          })}
-        >
-          <FaRocket />
-          <span className="font-semibold">{launch.rocket.name}</span>
-        </Link>
-      </Tooltip>
+      <StyledLink to={rocketPageLink} tooltip={`${launch.rocket.name} details`}>
+        <FaRocket />
+        <span className="text-sm font-semibold">{launch.rocket.name}</span>
+      </StyledLink>
     </div>
   );
 };
@@ -129,16 +126,10 @@ const LaunchLinks = () => {
   return (
     <div>
       <h2 className="mb-8 text-xl font-semibold">Links</h2>
-      <Tooltip content="Open video">
-        <Link
-          target="_blank"
-          className="mx-auto flex w-fit items-center gap-x-4 rounded-sm bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90"
-          to={launch.links.live}
-        >
-          <FaPlay />
-          <span className="font-semibold">Video</span>
-        </Link>
-      </Tooltip>
+      <StyledLink to={launch.links.live} tooltip="Open video" target="_blank">
+        <FaPlay />
+        <span className="text-sm font-semibold">Video</span>
+      </StyledLink>
     </div>
   );
 };
@@ -157,15 +148,14 @@ const AgencyPreview = () => {
       <p className="text-sm">
         {launch.agency.name}, {launch.agency.country}
       </p>
-      <Tooltip content={`${launch.agency.name} website`}>
-        <Link
-          target="_blank"
-          className="mx-auto flex w-fit items-center gap-x-4 rounded-sm bg-primary px-3 py-2 text-primary-foreground hover:bg-primary/90"
-          to={launch.agency.website}
-        >
-          <span className="font-semibold">Learn more</span>
-        </Link>
-      </Tooltip>
+
+      <StyledLink
+        to={launch.agency.website}
+        tooltip={`${launch.agency.name} website`}
+        target="_blank"
+      >
+        <span className="text-sm font-semibold">Learn more</span>
+      </StyledLink>
     </div>
   );
 };
