@@ -25,6 +25,8 @@ class APIDataConnector:
         """
         Method to get new and/or changed launches
 
+        Might raise APIRequestTimeout exception
+
         :param new: boolean indicating if new data should be yielded
         :param changed: boolean indicating if changed data should be yielded
         :return: yields every new and/or changed launches (yields LaunchDTO object)
