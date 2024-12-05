@@ -1,6 +1,17 @@
 import collections
+import datetime
 from dataclasses import dataclass
 from typing import Generator, Any
+
+
+class InvalidAPIData(Exception):
+    def __init__(self, text):
+        self.text = text
+
+
+class InvalidDBData(Exception):
+    def __init__(self, text):
+        self.text = text
 
 
 @dataclass
@@ -15,8 +26,12 @@ class LaunchData:
     - url: url to get launch details (from api)
     """
     id: str
-    last_updated: str
+    last_updated: datetime.datetime
     url: str
+
+    def __post_init__(self):
+        if not self.id:
+            raise ValueError("Launch id cannot be empty")
 
     def __eq__(self, other_id: str):
         return self.id == other_id
@@ -26,24 +41,41 @@ class LaunchDataList(collections.UserList):
     data: list[LaunchData]
 
     @classmethod
-    def from_api(cls, data: list[dict[str, Any]]):
+    def from_api(cls, data: list[dict[str, Any]]) -> "LaunchDataList":
         """
         Creates an LaunchDataList object from api data
+
+        Method might raise InvalidAPIData exception if data is not structured properly
 
         :param data: 'results' from default query (all launches), is a list of dicts containing launch data
         :return: LaunchDataList object (containing LaunchData objects with id, last_updated, url fields)
         """
-        return cls([LaunchData(launch["id"], launch["last_updated"], launch["url"]) for launch in data])
+        if not data:
+            raise InvalidAPIData("Empty list")
+        ids = [launch["id"] for launch in data]
+        if len(ids) != len(set(ids)):
+            raise InvalidAPIData("Id fields must be unique!")
+        try:
+            return cls([LaunchData(launch["id"], datetime.datetime.fromisoformat(launch["last_updated"]), launch["url"]) for launch in data])
+        except KeyError as e:
+            raise InvalidAPIData("Missing key {}".format(e))
+        except ValueError as e:
+            raise InvalidAPIData("Invalid datetime field - {}".format(e))
 
     @classmethod
-    def from_db(cls, data: list[tuple[str, str]]):
+    def from_db(cls, data: list[tuple[str, str]]) -> "LaunchDataList":
         """
         Creates an LaunchDataList object from db data
 
-        :param data: list of tuples containing launch data - tuple format (id, last_updated, url) - ex. [('some_id', '2024-01-01', 'details_url')]
+        Method might raise InvalidDBData exception if data is not structured properly
+
+        :param data: list of tuples containing launch data - tuple format (id, last_updated) - ex. [('some_id', '2024-01-01')]
         :return: LaunchDataList object (containing LaunchData objects with id, last_updated, url fields)
         """
-        return cls([LaunchData(api_id, last_updated, "") for api_id, last_updated in data])
+        try:
+            return cls([LaunchData(api_id, datetime.datetime.fromisoformat(last_updated), "") for api_id, last_updated in data])
+        except ValueError as e:
+            raise InvalidDBData("Invalid datetime field - {}".format(e))
 
     def get_by_id(self, id: str) -> LaunchData:
         """

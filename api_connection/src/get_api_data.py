@@ -2,14 +2,15 @@ from typing import Any
 
 import requests
 
-from launch_data import LaunchDataList
+from launch_data import LaunchDataList, InvalidAPIData
 
 
-class APIRequestTimeout(Exception):
+class APIError(Exception):
     """
-    Custom exception for handling api timeout
+    Custom exception for handling api errors
 
     """
+
     def __init__(self, text):
         self.text = text
 
@@ -66,7 +67,7 @@ class GetLaunchesAPIData(GetAPIData):
 
         Additionally, sets next parameter to url (returned by api), which allows to get next launches data
 
-        Method might raise APIRequestTimeout exception if no more requests are available
+        Method might raise APIError exception if no more requests are available or api sent wrong data
 
         :return: LaunchDataList object with api data
         """
@@ -74,5 +75,5 @@ class GetLaunchesAPIData(GetAPIData):
             self.results = self.execute()
             self.next = self.results["next"]
             return LaunchDataList.from_api(self.results["results"])
-        except KeyError:
-            raise APIRequestTimeout(f'No more requests are available at the moment. Details: {self.results}')
+        except (KeyError, InvalidAPIData) as e:
+            raise APIError(f'API error occurred. Request results: {self.results}. Error details: {e}')

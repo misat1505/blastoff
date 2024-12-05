@@ -1,7 +1,7 @@
 from typing import Generator
 
 from dto import LaunchDTO
-from get_api_data import GetLaunchesAPIData, GetAPIData, APIRequestTimeout
+from get_api_data import GetLaunchesAPIData, GetAPIData, APIError
 from launch_data import LaunchDataList
 
 
@@ -41,6 +41,6 @@ class APIDataConnector:
             for launch in result.compare(self.database_data, new=new, changed=changed):
                 details = GetAPIData(launch.url).execute()
                 if details.get("id") is None:
-                    raise APIRequestTimeout("No more requests are available at the moment. Try again later...")
+                    raise APIError("No more requests are available at the moment. Try again later...")
                 yield LaunchDTO.from_api(details)
             self.max_loop_count -= 1

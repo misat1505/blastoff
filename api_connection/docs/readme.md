@@ -11,6 +11,6 @@ def use_case():
         for launch_data in connector.get_difference():
             launch_data.save_to_file(f'launches/{launch_data.launch["api_id"]}.json')
             print(f'Got data - {launch_data.launch["api_id"]}')
-    except APIRequestTimeout as e:
+    except APIError as e:
         print(e.text)
 ```
