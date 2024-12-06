@@ -10,7 +10,7 @@ type FormFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
 const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
   ({ error, className, ...rest }, ref) => {
     return (
-      <div>
+      <div className="w-full">
         <Input
           ref={ref}
           {...rest}

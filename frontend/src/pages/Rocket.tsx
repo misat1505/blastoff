@@ -71,12 +71,14 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
   const isReusable = landings ? landings > 0 : false;
 
   return (
-    <RocketProvider rocket={rocket}>
-      <RocketImage />
-      <RocketManufacture />
-      <RocketCapacity />
-      <RockeLaunches />
-      {isReusable ? <RocketLandings /> : null}
-    </RocketProvider>
+    <div className="overflow-x-hidden">
+      <RocketProvider rocket={rocket}>
+        <RocketImage />
+        <RocketManufacture />
+        <RocketCapacity />
+        <RockeLaunches />
+        {isReusable ? <RocketLandings /> : null}
+      </RocketProvider>
+    </div>
   );
 };
