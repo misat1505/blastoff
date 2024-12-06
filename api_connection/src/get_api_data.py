@@ -2,7 +2,7 @@ from typing import Any
 
 import requests
 
-from launch_data import LaunchDataList, InvalidAPIData
+from api_connection.src.launch_data import LaunchDataList, InvalidAPIData
 
 
 class APIError(Exception):

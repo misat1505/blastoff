@@ -2,6 +2,8 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
+from api_connection.src.launch_data import InvalidAPIData
+
 
 class CouldNotReadFile(Exception):
     """
@@ -38,6 +40,12 @@ class LaunchDTO:
     rocket: dict[str, Any] | None
     site: dict[str, Any] | None
 
+    def __post_init__(self):
+        for field in ["agency", "launch", "program", "rocket", "site"]:
+            value = getattr(self, field)
+            if value is not None and not isinstance(value, dict):
+                raise ValueError(f"{field} must be a dictionary or None, got {type(value)}")
+
     @classmethod
     def from_api(cls, details: dict[str, Any]) -> "LaunchDTO":
         """
@@ -46,6 +54,8 @@ class LaunchDTO:
         :param details: result of api query for details of specific launch
         :return: LaunchDTO object
         """
+        if not details.get("id"):
+            raise InvalidAPIData("Launch id must be provided")
         launch = cls._create_launch(details)
         agency = cls._create_agency(details.get("launch_service_provider", {}))
         program = cls._create_program(extract_nested(details, "program", 0))

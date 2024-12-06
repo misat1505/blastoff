@@ -1,14 +1,15 @@
 from typing import Generator
 
+from api_connection.src.get_api_data import GetLaunchesAPIData, GetAPIData, APIError
+from api_connection.src.launch_data import LaunchDataList
 from dto import LaunchDTO
-from get_api_data import GetLaunchesAPIData, GetAPIData, APIError
-from launch_data import LaunchDataList
 
 
 class APIDataConnector:
     """
     Class allows to get necessary API data
     """
+
     def __init__(self, first_url: str, database_data: list[tuple[str, str]], max_loop_count: int = 5):
         """
         Initialize APIDataConnector object
