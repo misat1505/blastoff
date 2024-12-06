@@ -1,5 +1,6 @@
 import json
 from dataclasses import dataclass
+from multiprocessing.managers import Value
 from typing import Any
 
 from api_connection.src.launch_data import InvalidAPIData
@@ -45,6 +46,8 @@ class LaunchDTO:
             value = getattr(self, field)
             if value is not None and not isinstance(value, dict):
                 raise ValueError(f"{field} must be a dictionary or None, got {type(value)}")
+        if not self.launch or not self.launch.get("api_id"):
+            raise ValueError("Launch data must be provided")
 
     @classmethod
     def from_api(cls, details: dict[str, Any]) -> "LaunchDTO":

@@ -7,7 +7,7 @@ from dto import LaunchDTO
 
 class APIDataConnector:
     """
-    Class allows to get necessary API data
+    Class allows to get new and/or modified data from API
     """
 
     def __init__(self, first_url: str, database_data: list[tuple[str, str]], max_loop_count: int = 5):
@@ -30,7 +30,7 @@ class APIDataConnector:
 
         :param new: boolean indicating if new data should be yielded
         :param changed: boolean indicating if changed data should be yielded
-        :return: yields every new and/or changed launches (yields LaunchDTO object)
+        :return: yields every new and/or changed launch (yields LaunchDTO object)
         """
         while self.max_loop_count > 0:
             if not self.url:
