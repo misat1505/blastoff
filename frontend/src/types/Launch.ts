@@ -27,6 +27,7 @@ export type Launch = {
     image_url: string;
     country: string;
     website: string;
+    description: string;
   };
   site: {
     id: number;

@@ -141,25 +141,31 @@ const AgencyPreview = () => {
   const { launch } = useLaunchContext();
 
   return (
-    <div className="flex h-full flex-col items-center justify-between gap-y-4">
-      <h2 className="text-xl font-semibold">Manufacturer</h2>
-      <img
-        src={launch.agency.image_url}
-        alt={launch.agency.name}
-        className="max-w-48 object-cover"
-      />
-      <p className="text-sm">
-        {launch.agency.name}, {launch.agency.country}
-      </p>
+    <Tooltip
+      content={
+        <p className="max-w-96 text-wrap">{launch.agency.description}</p>
+      }
+    >
+      <div className="flex h-full flex-col items-center justify-between gap-y-4">
+        <h2 className="text-xl font-semibold">Manufacturer</h2>
+        <img
+          src={launch.agency.image_url}
+          alt={launch.agency.name}
+          className="max-w-48 object-cover"
+        />
+        <p className="text-sm">
+          {launch.agency.name}, {launch.agency.country}
+        </p>
 
-      <StyledLink
-        to={launch.agency.website}
-        tooltip={`${launch.agency.name} website`}
-        target="_blank"
-      >
-        <span className="text-sm font-semibold">Learn more</span>
-      </StyledLink>
-    </div>
+        <StyledLink
+          to={launch.agency.website}
+          tooltip={`${launch.agency.name} website`}
+          target="_blank"
+        >
+          <span className="text-sm font-semibold">Learn more</span>
+        </StyledLink>
+      </div>
+    </Tooltip>
   );
 };
 
