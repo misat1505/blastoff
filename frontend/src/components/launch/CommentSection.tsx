@@ -17,7 +17,11 @@ const CommentSection = () => {
   return (
     <div className="relative min-h-fit rounded-md bg-slate-100 text-center shadow-md dark:bg-slate-900">
       <OpenChatSectionButton isOpen={isOpen} setIsOpen={setIsOpen} />
-      {isOpen && <CommentGroup indent={0} repliesTo={undefined} />}
+      {isOpen && (
+        <div className="px-4">
+          <CommentGroup indent={1} repliesTo={undefined} />
+        </div>
+      )}
       {isOpen && <CommentForm />}
     </div>
   );
@@ -105,20 +109,39 @@ const Comment = ({ comment, indent }: CommentProps) => {
 
   return (
     <>
-      <div
-        className="p-2 hover:cursor-pointer"
-        onClick={() => setIsExpanded((prev) => !prev)}
-      >
-        <div className="flex items-center space-x-2">
-          <h2 className="font-semibold">{comment.user.username}</h2>
-          <p>at {comment.added_at.toISOString()}</p>
+      <div className="flex w-full space-x-2">
+        <IndentDisplay indent={indent} />
+        <div
+          className="p-2 hover:cursor-pointer"
+          onClick={() => setIsExpanded((prev) => !prev)}
+        >
+          <div className="flex items-center space-x-2">
+            <h2 className="font-semibold">{comment.user.username}</h2>
+            <p>at {comment.added_at.toISOString()}</p>
+          </div>
+          <p className="text-start">{comment.text}</p>
         </div>
-        <p className="text-start">{comment.text}</p>
       </div>
       {isExpanded && (
         <CommentGroup repliesTo={comment.id} indent={indent + 1} />
       )}
     </>
+  );
+};
+
+type IndentDisplayProps = { indent: number };
+
+const IndentDisplay = ({ indent }: IndentDisplayProps) => {
+  return (
+    <div className="flex">
+      {Array.from({ length: indent }).map((_, i) => (
+        <div
+          key={i}
+          className="h-auto w-2 border-l border-slate-500"
+          aria-hidden="true"
+        />
+      ))}
+    </div>
   );
 };
 
