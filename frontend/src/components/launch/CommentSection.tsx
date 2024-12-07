@@ -15,6 +15,8 @@ import { HiReply } from "react-icons/hi";
 import { formatCommentDate } from "../../utils/formatCommentDate";
 import { useCommentSectionContext } from "../../context/CommentSectionContext";
 import { RxCross1 } from "react-icons/rx";
+import { ClipLoader } from "react-spinners";
+import { useThemeContext } from "../../context/ThemeContext";
 
 const CommentSection = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,8 +62,9 @@ const OpenChatSectionButton = ({
 };
 
 const CommentForm = () => {
-  const { submitForm, response, errors, register, setResponse } =
+  const { submitForm, response, errors, register, setResponse, isSubmitting } =
     useCommentSectionContext();
+  const { theme } = useThemeContext();
 
   return (
     <form
@@ -79,7 +82,11 @@ const CommentForm = () => {
           <Tooltip content="Cancel reply">
             <button
               onClick={() => setResponse(null)}
-              className="rounded-sm p-1 hover:bg-slate-200 dark:hover:bg-slate-800"
+              className={cn(
+                "rounded-sm p-1 hover:bg-slate-200 dark:hover:bg-slate-800",
+                { "hover:cursor-not-allowed": isSubmitting }
+              )}
+              disabled={isSubmitting}
             >
               <RxCross1 />
             </button>
@@ -92,10 +99,23 @@ const CommentForm = () => {
           error={errors.text}
           placeholder="Type a comment..."
           className="flex-grow"
+          disabled={isSubmitting}
         />
         <Tooltip content="Send message">
-          <button type="submit" className="p-2 text-orange-500">
-            <BiSolidSend size={20} />
+          <button
+            type="submit"
+            className={cn("p-2 text-orange-500", {
+              "hover:cursor-not-allowed": isSubmitting,
+            })}
+          >
+            {isSubmitting ? (
+              <ClipLoader
+                size={20}
+                color={theme === "light" ? "#0f172a" : "#f1f5f9"}
+              />
+            ) : (
+              <BiSolidSend size={20} />
+            )}
           </button>
         </Tooltip>
       </div>
