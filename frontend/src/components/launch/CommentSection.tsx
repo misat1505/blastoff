@@ -2,7 +2,7 @@ import { PropsWithChildren, useState } from "react";
 import { ROUTES } from "../../lib/routes";
 import StyledLink from "../StyledLink";
 import Tooltip from "../Tooltip";
-import { FaArrowDown, FaReply } from "react-icons/fa";
+import { FaArrowDown } from "react-icons/fa";
 import { cn } from "../../lib/utils";
 import FormField from "../FormField";
 import { BiSolidSend } from "react-icons/bi";
@@ -12,6 +12,7 @@ import { queryKeysBuilder } from "../../utils/queryKeysBuilder";
 import { CommentService } from "../../services/CommentService";
 import { IoIosArrowDown } from "react-icons/io";
 import { HiReply } from "react-icons/hi";
+import { formatCommentDate } from "../../utils/formatCommentDate";
 
 const CommentSection = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,12 +20,14 @@ const CommentSection = () => {
   return (
     <div className="relative min-h-fit rounded-md bg-slate-100 text-center shadow-md dark:bg-slate-900">
       <OpenChatSectionButton isOpen={isOpen} setIsOpen={setIsOpen} />
-      {isOpen && (
-        <div className="px-4">
-          <CommentGroup indent={1} repliesTo={undefined} />
-        </div>
-      )}
-      {isOpen && <CommentForm />}
+      <div>
+        {isOpen && (
+          <div className="px-4">
+            <CommentGroup indent={1} repliesTo={undefined} />
+          </div>
+        )}
+        {isOpen && <CommentForm />}
+      </div>
     </div>
   );
 };
@@ -116,10 +119,10 @@ const Comment = ({ comment, indent }: CommentProps) => {
           <IndentDisplay indent={indent} />
           <div className="p-2">
             <div className="flex items-center space-x-2">
-              <h2 className="font-semibold">{comment.user.username}</h2>
-              <p>at {comment.added_at.toISOString()}</p>
+              <h2 className="text-lg font-semibold">{comment.user.username}</h2>
+              <p>| {formatCommentDate(comment.added_at)}</p>
             </div>
-            <p className="text-start">{comment.text}</p>
+            <p className="text-start text-sm">{comment.text}</p>
           </div>
         </div>
         <div className="flex items-center space-x-2">
