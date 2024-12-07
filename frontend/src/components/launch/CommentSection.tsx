@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { ROUTES } from "../../lib/routes";
 import StyledLink from "../StyledLink";
 import Tooltip from "../Tooltip";
-import { FaArrowDown } from "react-icons/fa";
+import { FaArrowDown, FaReply } from "react-icons/fa";
 import { cn } from "../../lib/utils";
 import FormField from "../FormField";
 import { BiSolidSend } from "react-icons/bi";
@@ -10,6 +10,8 @@ import { Comment as CommentType } from "../../types/Comment";
 import { useQuery } from "react-query";
 import { queryKeysBuilder } from "../../utils/queryKeysBuilder";
 import { CommentService } from "../../services/CommentService";
+import { IoIosArrowDown } from "react-icons/io";
+import { HiReply } from "react-icons/hi";
 
 const CommentSection = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,17 +111,35 @@ const Comment = ({ comment, indent }: CommentProps) => {
 
   return (
     <>
-      <div className="flex w-full space-x-2">
-        <IndentDisplay indent={indent} />
-        <div
-          className="p-2 hover:cursor-pointer"
-          onClick={() => setIsExpanded((prev) => !prev)}
-        >
-          <div className="flex items-center space-x-2">
-            <h2 className="font-semibold">{comment.user.username}</h2>
-            <p>at {comment.added_at.toISOString()}</p>
+      <div className="group flex items-center justify-between">
+        <div className="flex w-full space-x-2">
+          <IndentDisplay indent={indent} />
+          <div className="p-2">
+            <div className="flex items-center space-x-2">
+              <h2 className="font-semibold">{comment.user.username}</h2>
+              <p>at {comment.added_at.toISOString()}</p>
+            </div>
+            <p className="text-start">{comment.text}</p>
           </div>
-          <p className="text-start">{comment.text}</p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <CommentButton
+            onclick={() => console.log(`Setting ${comment.id} as reply to.`)}
+            tooltipText="Reply"
+            isExpanded={isExpanded}
+          >
+            <HiReply size={16} className="ml-0.5" />
+          </CommentButton>
+          <CommentButton
+            onclick={() => setIsExpanded((prev) => !prev)}
+            tooltipText={isExpanded ? "Close thread" : "Open thread"}
+            isExpanded={isExpanded}
+          >
+            <IoIosArrowDown
+              size={20}
+              className={cn("transition-all", { "rotate-180": isExpanded })}
+            />
+          </CommentButton>
         </div>
       </div>
       {isExpanded && (
@@ -142,6 +162,33 @@ const IndentDisplay = ({ indent }: IndentDisplayProps) => {
         />
       ))}
     </div>
+  );
+};
+
+type CommentButtonProps = PropsWithChildren & {
+  tooltipText?: string;
+  isExpanded: boolean;
+  onclick: () => void;
+};
+
+const CommentButton = ({
+  tooltipText,
+  isExpanded,
+  onclick,
+  children,
+}: CommentButtonProps) => {
+  return (
+    <Tooltip content={tooltipText}>
+      <button
+        className={cn(
+          "hidden h-6 w-6 rounded-sm p-0.5 hover:bg-slate-200 group-hover:block dark:hover:bg-slate-800",
+          { block: isExpanded }
+        )}
+        onClick={onclick}
+      >
+        {children}
+      </button>
+    </Tooltip>
   );
 };
 
