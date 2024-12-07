@@ -106,9 +106,10 @@ const CommentForm = () => {
 type CommentGroupProps = { repliesTo?: CommentType["id"]; indent: number };
 
 const CommentGroup = ({ repliesTo, indent }: CommentGroupProps) => {
+  const { launchId } = useCommentSectionContext();
   const { data: comments, isLoading } = useQuery({
-    queryFn: () => CommentService.getComments(repliesTo),
-    queryKey: queryKeysBuilder.commentsGroup(repliesTo),
+    queryFn: () => CommentService.getComments(launchId, repliesTo),
+    queryKey: queryKeysBuilder.commentsGroup(launchId, repliesTo),
   });
 
   if (isLoading) return null;

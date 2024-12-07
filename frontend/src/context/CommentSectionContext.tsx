@@ -26,6 +26,7 @@ type CommentFormEntries = {
 };
 
 type CommentSectionContextProvidedValues = {
+  launchId: Launch["id"];
   register: UseFormRegister<CommentFormEntries>;
   errors: FieldErrors<CommentFormEntries>;
   isSubmitting: boolean;
@@ -77,7 +78,7 @@ const CommentSectionProvider = ({
       const comment = await CommentService.createComment(launchId, data);
       reset();
       queryClient.setQueryData<Comment[]>(
-        queryKeysBuilder.commentsGroup(data.responseId || undefined),
+        queryKeysBuilder.commentsGroup(launchId, data.responseId || undefined),
         (oldComments) => {
           if (!oldComments) return [comment];
           return [...oldComments, comment];
@@ -101,6 +102,7 @@ const CommentSectionProvider = ({
   return (
     <CommentSectionContext.Provider
       value={{
+        launchId,
         register,
         errors,
         isSubmitting,

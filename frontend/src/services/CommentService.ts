@@ -63,7 +63,10 @@ export const replyComments: Comment[] = [
 ];
 
 export class CommentService {
-  static async getComments(id?: Comment["id"]): Promise<Comment[]> {
+  static async getComments(
+    launchId: Launch["id"],
+    id?: Comment["id"]
+  ): Promise<Comment[]> {
     return await new Promise((res) => {
       setTimeout(() => {
         const comments = id ? directComments : replyComments;
