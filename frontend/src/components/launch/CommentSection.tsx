@@ -13,6 +13,8 @@ import { CommentService } from "../../services/CommentService";
 import { IoIosArrowDown } from "react-icons/io";
 import { HiReply } from "react-icons/hi";
 import { formatCommentDate } from "../../utils/formatCommentDate";
+import { useCommentSectionContext } from "../../context/CommentSectionContext";
+import { RxCross1 } from "react-icons/rx";
 
 const CommentSection = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,33 +59,46 @@ const OpenChatSectionButton = ({
   );
 };
 
-type CommentFormProps = {};
-
-const CommentForm = ({}: CommentFormProps) => {
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await new Promise((res) =>
-      setTimeout(() => {
-        res(null);
-      }, 1000)
-    );
-  };
+const CommentForm = () => {
+  const { submitForm, response, errors, register, setResponse } =
+    useCommentSectionContext();
 
   return (
     <form
-      onSubmit={handleSubmit}
-      className="sticky bottom-0 flex w-full items-center space-x-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900"
+      onSubmit={submitForm}
+      className="sticky bottom-0 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900"
     >
-      <FormField
-        error={undefined}
-        placeholder="Type a comment..."
-        className="flex-grow"
-      />
-      <Tooltip content="Send message">
-        <button type="submit" className="p-2 text-orange-500">
-          <BiSolidSend size={20} />
-        </button>
-      </Tooltip>
+      {response && (
+        <div className="mb-2 flex w-full items-center justify-between text-start">
+          <div>
+            <h2 className="font-semibold">
+              Response to {response.user.username}
+            </h2>
+            <p className="text-nowrap">{response.text}</p>
+          </div>
+          <Tooltip content="Cancel reply">
+            <button
+              onClick={() => setResponse(null)}
+              className="rounded-sm p-1 hover:bg-slate-200 dark:hover:bg-slate-800"
+            >
+              <RxCross1 />
+            </button>
+          </Tooltip>
+        </div>
+      )}
+      <div className="flex w-full items-center space-x-4">
+        <FormField
+          {...register("text")}
+          error={errors.text}
+          placeholder="Type a comment..."
+          className="flex-grow"
+        />
+        <Tooltip content="Send message">
+          <button type="submit" className="p-2 text-orange-500">
+            <BiSolidSend size={20} />
+          </button>
+        </Tooltip>
+      </div>
     </form>
   );
 };
@@ -110,6 +125,7 @@ const CommentGroup = ({ repliesTo, indent }: CommentGroupProps) => {
 type CommentProps = { comment: CommentType; indent: number };
 
 const Comment = ({ comment, indent }: CommentProps) => {
+  const { setResponse } = useCommentSectionContext();
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -127,7 +143,7 @@ const Comment = ({ comment, indent }: CommentProps) => {
         </div>
         <div className="flex items-center space-x-2">
           <CommentButton
-            onclick={() => console.log(`Setting ${comment.id} as reply to.`)}
+            onclick={() => setResponse(comment)}
             tooltipText="Reply"
             isExpanded={isExpanded}
           >

@@ -10,6 +10,7 @@ import LaunchProvider from "../context/LaunchContext";
 import LaunchHeader from "../components/launch/LaunchHeader";
 import LaunchInfo from "../components/launch/LaunchInfo";
 import CommentSection from "../components/launch/CommentSection";
+import CommentSectionProvider from "../context/CommentSectionContext";
 
 const LaunchPage = () => {
   const { launchId } = useParams();
@@ -66,7 +67,9 @@ const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
       <LaunchProvider launch={launch}>
         <LaunchHeader />
         <LaunchInfo />
-        <CommentSection />
+        <CommentSectionProvider launchId={id}>
+          <CommentSection />
+        </CommentSectionProvider>
       </LaunchProvider>
     </div>
   );

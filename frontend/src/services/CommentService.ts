@@ -1,4 +1,6 @@
-import { Comment } from "@/types/Comment";
+import { Comment } from "../types/Comment";
+import { Launch } from "../types/Launch";
+import { CommentFormType } from "../validators/CommentForm.validators";
 
 export const directComments: Comment[] = [
   {
@@ -66,6 +68,26 @@ export class CommentService {
       setTimeout(() => {
         const comments = id ? directComments : replyComments;
         return res(comments);
+      }, 1000);
+    });
+  }
+
+  static async createComment(
+    launchId: Launch["id"],
+    data: CommentFormType
+  ): Promise<Comment> {
+    return await new Promise((res) => {
+      setTimeout(() => {
+        const newComment: Comment = {
+          id: 3648732,
+          text: data.text,
+          added_at: new Date(),
+          user: {
+            id: 106,
+            username: "visual_learner",
+          },
+        };
+        return res(newComment);
       }, 1000);
     });
   }
