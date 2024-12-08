@@ -4,7 +4,7 @@ This module enables communication with external API.
 # Use case:
 ```python
 def use_case():
-    API_BASE = 'https://ll.thespacedevs.com/2.3.0/launches/?limit=2&ordering=net&net__gte=2024-12-05&format=json&mode=list'
+    API_BASE = f'https://ll.thespacedevs.com/2.3.0/launches/?limit=2&ordering=net&net__gte={datetime.datetime.now().isoformat()}&format=json&mode=list'
 
     connector = APIDataConnector(API_BASE, [], max_loop_count=1)
     try:
