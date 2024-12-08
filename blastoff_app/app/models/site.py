@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
 from app.database import Base
+from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy.orm import relationship
 
 
 class Site(Base):
@@ -8,7 +8,11 @@ class Site(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), unique=True, index=True, nullable=False)
-    location = Column(String(250), nullable=True)
-    description = Column(String(500), nullable=True)
+    country = Column(String(100), nullable=False)
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
+    description = Column(String(500))
+    image_url = Column(String(500))
+    map_image_url = Column(String(500))
 
     launches = relationship("Launch", back_populates="site")
