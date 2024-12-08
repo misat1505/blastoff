@@ -1,14 +1,17 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 from app.models import Launch
 from app.schemas import LaunchCreate, LaunchResponse
 from fastapi import HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 
 async def create_launch(db: AsyncSession, launch_data: LaunchCreate) -> LaunchResponse:
     db_launch = Launch(
+        api_id=launch_data.api_id,
+        last_updated=launch_data.last_updated,
         mission_name=launch_data.mission_name,
-        status=launch_data.status,
+        status_name=launch_data.status_name,
+        status_description=launch_data.status_description,
         date=launch_data.date,
         description=launch_data.description,
         url=launch_data.url,
