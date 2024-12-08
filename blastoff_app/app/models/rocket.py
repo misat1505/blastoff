@@ -9,7 +9,7 @@ class Rocket(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), unique=True, index=True)
     agency_id = Column(Integer, ForeignKey("agencies.id"), nullable=False)
-    no_stages = Column(Integer, nullable=False)
+    no_stages = Column(Integer)
     height = Column(Float)
     mass = Column(Float)
     diameter = Column(Float)

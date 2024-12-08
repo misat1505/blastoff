@@ -4,7 +4,7 @@ from typing import Optional
 
 class RocketBase(BaseModel):
     name: str
-    no_stages: int = Field(
+    no_stages: Optional[int] = Field(
         ..., gt=0, description="Number of stages, must be a positive integer"
     )
     height: Optional[float] = None

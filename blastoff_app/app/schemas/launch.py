@@ -24,8 +24,8 @@ class LaunchCreate(LaunchBase):
 class LaunchResponse(LaunchBase):
     id: int
     rocket_id: int
-    program_id: int
-    site_id: int
+    program_id: Optional[int]
+    site_id: Optional[int]
 
     class Config:
         from_attributes = True
