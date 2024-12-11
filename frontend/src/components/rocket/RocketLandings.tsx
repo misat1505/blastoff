@@ -69,7 +69,7 @@ const RocketLandingCard = ({ icon, title, value }: RocketLaunchCardProps) => {
     if (typeof value === "string") return value;
     if (value && inView) return <CountUp end={value} duration={1.5} />;
     if (value) return "";
-    return "N/A";
+    return <p className="text-muted-foreground">N/A</p>;
   };
 
   return (

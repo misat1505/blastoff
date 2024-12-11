@@ -146,9 +146,9 @@ const RocketCapacityDisplayer = ({
     );
 
   return (
-    <p className="my-8 text-4xl font-bold" ref={ref}>
+    <div className="my-8 text-4xl font-bold" ref={ref}>
       {component}
-    </p>
+    </div>
   );
 };
 
