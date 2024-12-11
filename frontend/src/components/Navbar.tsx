@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Tooltip from "./Tooltip";
 import ThemeSwitch from "./ThemeSwitch";
 import { LOGO_PATH } from "../constants";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
   Sheet,
   SheetClose,
@@ -18,6 +18,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Switch } from "./ui/switch";
 import { useCountdownFormat } from "../hooks/useCountdownFormat";
 import { useTooltipSwitch } from "../hooks/useTooltipSwitch";
+import { cn } from "../lib/utils";
 
 const Navbar = () => {
   return (
@@ -101,13 +102,18 @@ const SettingsSheet = () => {
               />
             </div>
           </div>
-          <Button type="submit">Save changes</Button>
-        </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
+          <SheetClose className="w-full">
+            <Link
+              className={buttonVariants({
+                variant: "outline",
+                className: "w-full",
+              })}
+              to={ROUTES.LOGIN.path}
+            >
+              Log in to Blastoff
+            </Link>
           </SheetClose>
-        </SheetFooter>
+        </div>
       </SheetContent>
     </Sheet>
   );
