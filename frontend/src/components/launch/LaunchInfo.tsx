@@ -51,11 +51,13 @@ const GeneralLaunchInfo = () => {
   return (
     <div className="my-4 rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
       <h2 className="text-2xl font-semibold">{launch.name}</h2>
-      <p className="text-sm">{launch.description}</p>
+      <p className="text-sm text-muted-foreground">{launch.description}</p>
       <TimeDisplay />
       <div className={cn("mt-8", getStatusColor())}>
         <h2 className="text-xl font-semibold">{launch.status.name}</h2>
-        <p className="text-sm">{launch.status.description}</p>
+        <p className="text-sm text-muted-foreground">
+          {launch.status.description}
+        </p>
       </div>
     </div>
   );
@@ -67,7 +69,9 @@ const TimeDisplay = () => {
   return (
     <div className="mt-8">
       <LaunchCountdown date={launch.net} className="text-xl font-semibold" />
-      <div className="text-sm">{formatLaunchDate(launch.net)}</div>
+      <div className="text-sm text-muted-foreground">
+        {formatLaunchDate(launch.net)}
+      </div>
     </div>
   );
 };

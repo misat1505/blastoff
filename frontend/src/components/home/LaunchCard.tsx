@@ -9,7 +9,6 @@ import { buildGoogleMapsURL } from "../../utils/googleMaps";
 import { ROUTES } from "../../lib/routes";
 import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
 import { CgDetailsMore } from "react-icons/cg";
-import { useLaunchCountdown } from "../../hooks/useLaunchCountdown";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
 
@@ -19,7 +18,7 @@ type LaunchCardProps = {
 
 const LaunchCard = ({ launch }: LaunchCardProps) => {
   return (
-    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-300 transition-all hover:shadow-sm dark:bg-slate-700 sm:grid sm:h-[500px]">
+    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-100 transition-all hover:shadow-sm dark:bg-slate-900 sm:grid sm:h-[500px]">
       <LaunchProvider launch={launch}>
         <Image />
         <Info />
@@ -76,7 +75,7 @@ const LaunchSiteDisplayer = () => {
 
   return (
     <div className="flex items-center justify-center space-x-2">
-      <p>
+      <p className="text-sm text-muted-foreground">
         {launch.site.name}, {launch.site.country}
       </p>
       <Tooltip content="Open Launch Site in Google Maps">
@@ -99,7 +98,7 @@ const Countdown = () => {
     <div>
       <LaunchCountdown
         date={launch.net}
-        className="text-nowrap text-2xl font-semibold sm:text-4xl 2xl:text-4xl"
+        className="text-nowrap text-2xl font-semibold sm:text-xl 2xl:text-3xl"
       />
       <div>{formatLaunchDate(launch.net)}</div>
     </div>
