@@ -9,7 +9,6 @@ import {
   SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -18,7 +17,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Switch } from "./ui/switch";
 import { useCountdownFormat } from "../hooks/useCountdownFormat";
 import { useTooltipSwitch } from "../hooks/useTooltipSwitch";
-import { cn } from "../lib/utils";
+import { PropsWithChildren } from "react";
 
 const Navbar = () => {
   return (
@@ -73,35 +72,33 @@ const SettingsSheet = () => {
         </SheetHeader>
         <div className="mb-4 flex h-[calc(100%-2rem)] w-full flex-col items-center justify-between py-4">
           <div>
-            <div className="mb-4 flex w-full items-center justify-between space-x-2 rounded-sm border p-4">
-              <div>
-                <h3 className="font-semibold">
-                  Prefers Simplified Launch Countdown Format
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Choose how the rocket launch countdown is displayed. If turned
-                  on launch countdown will not include days.
-                </p>
-              </div>
+            <SwitchCard
+              title="Prefers Simplified Launch Countdown Format"
+              description="Choose how the rocket launch countdown is displayed. If turned
+                  on launch countdown will not include days."
+            >
               <Switch
                 checked={isSimplified}
                 onClick={() => setIsSimplified((prev) => !prev)}
               />
-            </div>
-
-            <div className="mb-4 flex w-full items-center justify-between space-x-2 rounded-sm border p-4">
-              <div>
-                <h3 className="font-semibold">Prefers Tooltips</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Choose whether tooltips are displayed.
-                </p>
-              </div>
+            </SwitchCard>
+            <SwitchCard
+              title="Tooltips Preference"
+              description="Choose whether tooltips are displayed."
+            >
               <Switch
                 checked={areVisible}
                 onClick={() => setAreVisible((prev) => !prev)}
               />
-            </div>
+            </SwitchCard>
+            <SwitchCard
+              title="Theme Preference"
+              description="Choose theme for the app."
+            >
+              <ThemeSwitch />
+            </SwitchCard>
           </div>
+
           <SheetClose className="w-full">
             <Link
               className={buttonVariants({
@@ -116,6 +113,23 @@ const SettingsSheet = () => {
         </div>
       </SheetContent>
     </Sheet>
+  );
+};
+
+type SwicthCardProps = PropsWithChildren & {
+  title: string;
+  description: string;
+};
+
+const SwitchCard = ({ children, title, description }: SwicthCardProps) => {
+  return (
+    <div className="mb-4 flex w-full items-center justify-between space-x-2 rounded-sm border p-4">
+      <div>
+        <h3 className="font-semibold">{title}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+      </div>
+      {children}
+    </div>
   );
 };
 
