@@ -40,7 +40,7 @@ const RocketLandings = () => {
   ];
 
   return (
-    <section className="w-full bg-slate-300 py-8 dark:bg-slate-700">
+    <section className="w-full bg-slate-100/80 py-8 dark:bg-slate-900/80">
       <h2 className="mb-6 text-center text-4xl font-semibold">Landings</h2>
       <div className="mx-auto grid w-full grid-cols-2 gap-y-6 sm:w-4/5 sm:grid-cols-4">
         {items.map((item, idx) => (

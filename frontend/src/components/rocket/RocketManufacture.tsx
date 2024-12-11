@@ -25,7 +25,7 @@ const ManufacturerDisplay = () => {
   const { rocket } = useRocketContext();
 
   return (
-    <div className="flex h-full flex-col items-center justify-between gap-y-12 rounded-md bg-slate-100 p-4 transition-all hover:shadow-lg dark:bg-slate-900">
+    <div className="flex h-full flex-col items-center justify-between gap-y-12 rounded-md border border-slate-300 bg-slate-100 p-4 transition-all hover:shadow-lg dark:border-slate-700 dark:bg-slate-900">
       <div className="flex items-center space-x-4">
         <MdFactory size={20} />
         <h2 className="text-2xl font-semibold">Manufacturer</h2>
@@ -40,7 +40,7 @@ const RocketDimensions = () => {
   const { rocket } = useRocketContext();
 
   return (
-    <div className="flex h-full flex-col items-center justify-between gap-y-12 rounded-md bg-slate-100 p-4 transition-all hover:shadow-lg dark:bg-slate-900">
+    <div className="flex h-full flex-col items-center justify-between gap-y-12 rounded-md border border-slate-300 bg-slate-100 p-4 transition-all hover:shadow-lg dark:border-slate-700 dark:bg-slate-900">
       <div className="flex items-center space-x-4">
         <TbDimensions size={20} />
         <h2 className="text-2xl font-semibold">Dimensions</h2>
@@ -58,9 +58,9 @@ const RocketDimensions = () => {
           }
 
           return (
-            <div key={key} className="space-x-2 text-lg">
+            <div key={key} className="text-md space-x-2">
               <span className="font-bold capitalize">{key}:</span>
-              <span>{displayValue}</span>
+              <span className="text-muted-foreground">{displayValue}</span>
             </div>
           );
         })}
