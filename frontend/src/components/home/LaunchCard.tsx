@@ -54,29 +54,40 @@ const Info = () => {
 const Header = () => {
   const { launch } = useLaunchContext();
 
+  return (
+    <div>
+      <h2 className="text-xl font-extrabold">{launch.name}</h2>
+      <p>{launch.agency.name}</p>
+      <LaunchSiteDisplayer />
+    </div>
+  );
+};
+
+const LaunchSiteDisplayer = () => {
+  const { launch } = useLaunchContext();
+
+  if (!launch.site)
+    return <div className="text-center">Launch site unknown.</div>;
+
   const launchSiteGoogleMapsURL = buildGoogleMapsURL({
     latitude: launch.site.latitude,
     longitude: launch.site.longitude,
   });
 
   return (
-    <div>
-      <h2 className="text-xl font-extrabold">{launch.name}</h2>
-      <p>{launch.agency.name}</p>
-      <div className="flex items-center justify-center space-x-2">
-        <p>
-          {launch.site.name}, {launch.site.country}
-        </p>
-        <Tooltip content="Open Launch Site in Google Maps">
-          <Link to={launchSiteGoogleMapsURL} target="_blank">
-            <img
-              src={GOOGLE_MAPS_LOGO_PATH}
-              alt="Google Maps"
-              className="h-8 w-8 rounded-full object-cover"
-            />
-          </Link>
-        </Tooltip>
-      </div>
+    <div className="flex items-center justify-center space-x-2">
+      <p>
+        {launch.site.name}, {launch.site.country}
+      </p>
+      <Tooltip content="Open Launch Site in Google Maps">
+        <Link to={launchSiteGoogleMapsURL} target="_blank">
+          <img
+            src={GOOGLE_MAPS_LOGO_PATH}
+            alt="Google Maps"
+            className="h-8 w-8 rounded-full object-cover"
+          />
+        </Link>
+      </Tooltip>
     </div>
   );
 };

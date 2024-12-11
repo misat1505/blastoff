@@ -4,12 +4,13 @@ import Tooltip from "../Tooltip";
 import { ROUTES } from "../../lib/routes";
 import { FaPlay, FaRocket } from "react-icons/fa";
 import { buildGoogleMapsURL } from "../../utils/googleMaps";
-import { GOOGLE_MAPS_LOGO_PATH } from "../../constants";
+import { GOOGLE_MAPS_LOGO_PATH, LOGO_PATH } from "../../constants";
 import { formatLaunchDate } from "../../utils/formatLaunchDate";
 import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
 import { cn } from "../../lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
+import NotFound from "../NotFound";
 
 const LaunchInfo = () => {
   return (
@@ -73,6 +74,18 @@ const TimeDisplay = () => {
 
 const SiteInfo = () => {
   const { launch } = useLaunchContext();
+
+  if (!launch.site)
+    return (
+      <div className="mt-4 flex flex-grow flex-col items-center justify-center gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900 sm:mt-0">
+        <img
+          src={LOGO_PATH}
+          alt="logo"
+          className="h-36 w-36 rounded-full object-cover"
+        />
+        <h2 className="text-xl font-semibold">Launch site unknown.</h2>
+      </div>
+    );
 
   const link = buildGoogleMapsURL({
     latitude: launch.site.latitude,

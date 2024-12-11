@@ -36,5 +36,5 @@ export type Launch = {
     latitude: number;
     longitude: number;
     image_map: string;
-  };
+  } | null;
 };
