@@ -1,3 +1,4 @@
+import { useCountdownFormat } from "../hooks/useCountdownFormat";
 import { useLaunchCountdown } from "../hooks/useLaunchCountdown";
 import { cn } from "../lib/utils";
 
@@ -10,19 +11,27 @@ const LaunchCountdown = ({
   className,
   ...rest
 }: LaunchCountdownProps) => {
+  const [isSimplified] = useCountdownFormat();
   const timeLeft = useLaunchCountdown(date);
 
   function formatTimeUnit(unit: number) {
     return unit.toString().padStart(2, "0");
   }
 
-  const timeText = `NET - ${formatTimeUnit(timeLeft.days)} : ${formatTimeUnit(timeLeft.hours)}
+  const getText = (): string => {
+    if (isSimplified)
+      return `NET - ${formatTimeUnit(timeLeft.days * 24 + timeLeft.hours)}
         : ${formatTimeUnit(timeLeft.minutes)} :
         ${formatTimeUnit(timeLeft.seconds)}`;
 
+    return `NET - ${formatTimeUnit(timeLeft.days)} : ${formatTimeUnit(timeLeft.hours)}
+        : ${formatTimeUnit(timeLeft.minutes)} :
+        ${formatTimeUnit(timeLeft.seconds)}`;
+  };
+
   return (
     <div className={cn("text-nowrap", className)} {...rest}>
-      {timeText}
+      {getText()}
     </div>
   );
 };

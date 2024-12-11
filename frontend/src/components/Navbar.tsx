@@ -4,7 +4,6 @@ import Tooltip from "./Tooltip";
 import ThemeSwitch from "./ThemeSwitch";
 import { LOGO_PATH } from "../constants";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 import {
   Sheet,
   SheetClose,
@@ -17,6 +16,8 @@ import {
 } from "./ui/sheet";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Switch } from "./ui/switch";
+import { useCountdownFormat } from "../hooks/useCountdownFormat";
+import { useTooltipSwitch } from "../hooks/useTooltipSwitch";
 
 const Navbar = () => {
   return (
@@ -48,6 +49,9 @@ const Logo = () => {
 };
 
 const SettingsSheet = () => {
+  const [isSimplified, setIsSimplified] = useCountdownFormat();
+  const [areVisible, setAreVisible] = useTooltipSwitch();
+
   return (
     <Sheet>
       <SheetTrigger asChild className="hover:cursor-pointer">
@@ -73,22 +77,28 @@ const SettingsSheet = () => {
                 <h3 className="font-semibold">
                   Prefers Simplified Launch Countdown Format
                 </h3>
-                <p className="mt-2 text-sm">
+                <p className="mt-2 text-sm text-muted-foreground">
                   Choose how the rocket launch countdown is displayed. If turned
                   on launch countdown will not include days.
                 </p>
               </div>
-              <Switch />
+              <Switch
+                checked={isSimplified}
+                onClick={() => setIsSimplified((prev) => !prev)}
+              />
             </div>
 
             <div className="mb-4 flex w-full items-center justify-between space-x-2 rounded-sm border p-4">
               <div>
                 <h3 className="font-semibold">Prefers Tooltips</h3>
-                <p className="mt-2 text-sm">
+                <p className="mt-2 text-sm text-muted-foreground">
                   Choose whether tooltips are displayed.
                 </p>
               </div>
-              <Switch />
+              <Switch
+                checked={areVisible}
+                onClick={() => setAreVisible((prev) => !prev)}
+              />
             </div>
           </div>
           <Button type="submit">Save changes</Button>
