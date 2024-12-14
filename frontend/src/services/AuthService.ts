@@ -10,4 +10,11 @@ export class AuthService {
     });
     return response.data;
   }
+
+  static async me(): Promise<User | null> {
+    const response = await axios.get(`${API_URL}/users/me`, {
+      withCredentials: true,
+    });
+    return response.data;
+  }
 }

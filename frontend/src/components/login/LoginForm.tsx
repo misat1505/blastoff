@@ -8,6 +8,7 @@ import {
 } from "../../validators/LoginForm.validators";
 import { AuthService } from "../../services/AuthService";
 import { useToast } from "../../hooks/use-toast";
+import { useSessionContext } from "../../context/SessionContext";
 
 const LoginForm = () => {
   const {
@@ -18,10 +19,12 @@ const LoginForm = () => {
     resolver: zodResolver(loginFormSchema),
   });
   const { toast } = useToast();
+  const { setUser } = useSessionContext();
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
       const user = await AuthService.login(data);
+      setUser(user);
     } catch (e: any) {
       toast({
         title: "Cannot log in.",

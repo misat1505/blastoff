@@ -8,4 +8,5 @@ export const queryKeysBuilder = {
   launch: (id: Launch["id"]) => ["launch", { id }] as const,
   commentsGroup: (launchId: Launch["id"], replyId?: Comment["id"]) =>
     ["comments", { launchId, replyId }] as const,
+  me: () => ["me"] as const,
 };

@@ -18,13 +18,17 @@ import { Switch } from "./ui/switch";
 import { useCountdownFormat } from "../hooks/useCountdownFormat";
 import { useTooltipSwitch } from "../hooks/useTooltipSwitch";
 import { PropsWithChildren } from "react";
+import { useSessionContext } from "../context/SessionContext";
 
 const Navbar = () => {
+  const { user } = useSessionContext();
+
   return (
     <>
       <header className="fixed z-50 flex h-20 w-full items-center justify-between bg-slate-100 px-4 transition-all dark:bg-slate-900">
         <Logo />
         <div className="flex items-center space-x-4">
+          <div>{user ? user.username : ""}</div>
           <ThemeSwitch />
           <SettingsSheet />
         </div>

@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ThemeProvider from "./context/ThemeContext";
 import { Toaster } from "./components/ui/toaster";
+import SessionProvider from "./context/SessionContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,8 +24,10 @@ root.render(
   <React.StrictMode>
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <App />
-        <Toaster />
+        <SessionProvider>
+          <App />
+          <Toaster />
+        </SessionProvider>
       </QueryClientProvider>
     </ThemeProvider>
   </React.StrictMode>
