@@ -10,6 +10,7 @@ type SessionContextProvidedValues = {
   user: User | null | undefined;
   setUser: (user: User | null) => void;
   isLoading: boolean;
+  isLoggedIn: boolean;
 };
 
 const SessionContext = createContext<SessionContextProvidedValues | undefined>(
@@ -34,6 +35,7 @@ const SessionProvider = ({ children }: SessionContextProps) => {
   const setUser = (user: User | null) => {
     queryClient.setQueryData(queryKeysBuilder.me(), user);
   };
+  const isLoggedIn = !!user;
 
   return (
     <SessionContext.Provider
@@ -41,6 +43,7 @@ const SessionProvider = ({ children }: SessionContextProps) => {
         user,
         setUser,
         isLoading,
+        isLoggedIn,
       }}
     >
       {children}

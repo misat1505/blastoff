@@ -19,6 +19,19 @@ import { useCountdownFormat } from "../hooks/useCountdownFormat";
 import { useTooltipSwitch } from "../hooks/useTooltipSwitch";
 import { PropsWithChildren } from "react";
 import { useSessionContext } from "../context/SessionContext";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
+import { AuthService } from "../services/AuthService";
+import { useToast } from "../hooks/use-toast";
 
 const Navbar = () => {
   const { user } = useSessionContext();
@@ -55,6 +68,7 @@ const Logo = () => {
 const SettingsSheet = () => {
   const [isSimplified, setIsSimplified] = useCountdownFormat();
   const [areVisible, setAreVisible] = useTooltipSwitch();
+  const { isLoggedIn } = useSessionContext();
 
   return (
     <Sheet>
@@ -103,17 +117,7 @@ const SettingsSheet = () => {
             </SwitchCard>
           </div>
 
-          <SheetClose className="w-full">
-            <Link
-              className={buttonVariants({
-                variant: "outline",
-                className: "w-full",
-              })}
-              to={ROUTES.LOGIN.path}
-            >
-              Log in to Blastoff
-            </Link>
-          </SheetClose>
+          {isLoggedIn ? <LogoutDialog /> : <LoginButton />}
         </div>
       </SheetContent>
     </Sheet>
@@ -134,6 +138,56 @@ const SwitchCard = ({ children, title, description }: SwicthCardProps) => {
       </div>
       {children}
     </div>
+  );
+};
+
+const LoginButton = () => {
+  return (
+    <SheetClose className="w-full">
+      <Link
+        className={buttonVariants({
+          variant: "outline",
+          className: "w-full",
+        })}
+        to={ROUTES.LOGIN.path}
+      >
+        Log in to Blastoff
+      </Link>
+    </SheetClose>
+  );
+};
+
+const LogoutDialog = () => {
+  const { setUser } = useSessionContext();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    await AuthService.logout();
+    setUser(null);
+    toast({ title: "Successfully logged out." });
+  };
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive" className="w-full">
+          Logout
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Logging out will sign you out of your account. Please confirm if
+            you'd like to proceed.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleLogout}>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 

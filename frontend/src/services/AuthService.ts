@@ -19,6 +19,16 @@ export class AuthService {
     return response.data;
   }
 
+  static async logout(): Promise<void> {
+    await axios.post(
+      `${API_URL}/users/logout`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
   static async me(): Promise<User | null> {
     const response = await axios.get(`${API_URL}/users/me`, {
       withCredentials: true,
