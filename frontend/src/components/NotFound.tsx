@@ -17,7 +17,7 @@ const NotFound = ({ title, text }: NotFoundPageProps) => {
       <img src={LOGO_PATH} alt="App Logo" className="mb-4 h-24 w-24" />
       <h1 className="mb-2 text-3xl font-semibold">{displayTitle}</h1>
       <p className="mb-6 text-lg text-gray-600">{displayText}</p>
-      <StyledLink to={ROUTES.HOME.path} className="font-semibold">
+      <StyledLink to={ROUTES.HOME.$path()} className="font-semibold">
         Go Back to Home
       </StyledLink>
     </div>

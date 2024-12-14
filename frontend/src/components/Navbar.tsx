@@ -54,7 +54,7 @@ const Navbar = () => {
 const Logo = () => {
   return (
     <Tooltip content="Home">
-      <Link to={ROUTES.HOME.path}>
+      <Link to={ROUTES.HOME.$path()}>
         <img
           src={LOGO_PATH}
           alt="Blastoff Logo"
@@ -149,7 +149,7 @@ const LoginButton = () => {
           variant: "outline",
           className: "w-full",
         })}
-        to={ROUTES.LOGIN.path}
+        to={ROUTES.LOGIN.$path()}
       >
         Log in to Blastoff
       </Link>

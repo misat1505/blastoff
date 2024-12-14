@@ -1,4 +1,4 @@
-import { GOOGLE_MAPS_URL } from "../constants";
+import { GOOGLE_MAPS_URL } from "@/constants";
 
 type buildGoogleMapsURLArgs = {
   latitude: number;

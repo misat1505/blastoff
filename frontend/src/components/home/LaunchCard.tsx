@@ -4,7 +4,7 @@ import { Launch } from "../../types/Launch";
 import { cn } from "../../lib/utils";
 import { formatLaunchDate } from "../../utils/formatLaunchDate";
 import Tooltip from "../Tooltip";
-import { GOOGLE_MAPS_LOGO_PATH } from "../../constants";
+import { GOOGLE_MAPS_LOGO_PATH } from "@/constants";
 import { buildGoogleMapsURL } from "../../utils/googleMaps";
 import { ROUTES } from "../../lib/routes";
 import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
@@ -131,7 +131,7 @@ const Links = () => {
   return (
     <div className="flex items-center justify-around">
       <StyledLink
-        to={ROUTES.LAUNCH.buildPath({ launchId: launch.id })}
+        to={ROUTES.LAUNCH.$buildPath({ params: { launchId: launch.id } })}
         tooltip="Launch Details"
       >
         <CgDetailsMore />

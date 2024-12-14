@@ -4,13 +4,12 @@ import Tooltip from "../Tooltip";
 import { ROUTES } from "../../lib/routes";
 import { FaPlay, FaRocket } from "react-icons/fa";
 import { buildGoogleMapsURL } from "../../utils/googleMaps";
-import { GOOGLE_MAPS_LOGO_PATH, LOGO_PATH } from "../../constants";
+import { GOOGLE_MAPS_LOGO_PATH, LOGO_PATH } from "@/constants";
 import { formatLaunchDate } from "../../utils/formatLaunchDate";
 import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
 import { cn } from "../../lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
-import NotFound from "../NotFound";
 
 const LaunchInfo = () => {
   return (
@@ -125,8 +124,8 @@ const SiteInfo = () => {
 
 const RocketPreview = () => {
   const { launch } = useLaunchContext();
-  const rocketPageLink = ROUTES.ROCKET.buildPath({
-    rocketId: launch.rocket.id.toString(),
+  const rocketPageLink = ROUTES.ROCKET.$buildPath({
+    params: { rocketId: launch.rocket.id.toString() },
   });
 
   return (

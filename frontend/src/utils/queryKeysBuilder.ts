@@ -1,6 +1,6 @@
 import { Comment } from "@/types/Comment";
-import { Launch } from "../types/Launch";
-import { Rocket } from "../types/Rocket";
+import { Launch } from "@/types/Launch";
+import { Rocket } from "@/types/Rocket";
 
 export const queryKeysBuilder = {
   upcomingLaunches: () => ["upcoming-launches"] as const,

@@ -129,7 +129,7 @@ const CommentForm = () => {
               className={buttonVariants({
                 variant: "default",
               })}
-              to={ROUTES.LOGIN.path}
+              to={ROUTES.LOGIN.$path()}
             >
               Log in to comment
             </Link>
