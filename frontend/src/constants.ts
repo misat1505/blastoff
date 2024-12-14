@@ -10,3 +10,5 @@ export const SATTELITES_IMAGES = {
   TV: `${process.env.PUBLIC_URL}/tv_satellite.jpg`,
   WHEATHER: `${process.env.PUBLIC_URL}/wheather_satellite.jpeg`,
 };
+
+export const API_URL = process.env.REACT_APP_API_URL;

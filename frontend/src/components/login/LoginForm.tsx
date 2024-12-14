@@ -7,6 +7,7 @@ import {
   LoginFormValues,
 } from "../../validators/LoginForm.validators";
 import { AuthService } from "../../services/AuthService";
+import { useToast } from "../../hooks/use-toast";
 
 const LoginForm = () => {
   const {
@@ -16,9 +17,18 @@ const LoginForm = () => {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
   });
+  const { toast } = useToast();
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    await AuthService.login(data);
+    try {
+      const user = await AuthService.login(data);
+    } catch (e: any) {
+      toast({
+        title: "Cannot log in.",
+        description: e.response.data.detail,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
