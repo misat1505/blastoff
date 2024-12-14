@@ -6,6 +6,7 @@ import {
   loginFormSchema,
   LoginFormValues,
 } from "../../validators/LoginForm.validators";
+import { AuthService } from "../../services/AuthService";
 
 const LoginForm = () => {
   const {
@@ -17,12 +18,7 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    await new Promise((res) =>
-      setTimeout(() => {
-        console.log("Form Data:", data);
-        res(null);
-      }, 1000)
-    );
+    await AuthService.login(data);
   };
 
   return (

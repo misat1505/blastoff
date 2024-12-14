@@ -11,7 +11,7 @@ from app.crud import (
 from app.dependencies import get_db
 from app.schemas import UserResponse, UserCreate, UserEmailUpdate, UserLogin
 from app.security import verify_password
-from app.authentication import create_access_token, decode_access_token
+from app.authentication import create_access_token, decode_access_token, get_expires_timestamp
 from app.models import User
 
 router = APIRouter()
@@ -50,7 +50,12 @@ async def register_user(user: UserCreate, response: Response, db: AsyncSession =
 
     db_user = await create_user(db, user)
     token = create_access_token({"id": db_user.id})
-    response.set_cookie(key="token", value=token, httponly=True)
+    response.set_cookie(
+        key="token",
+        value=token,
+        httponly=True,
+        expires=get_expires_timestamp()
+    )
     return db_user
 
 
@@ -69,7 +74,12 @@ async def login_user(user: UserLogin, response: Response, db: AsyncSession = Dep
         raise http_error
 
     token = create_access_token({"id": db_user.id})
-    response.set_cookie(key="token", value=token, httponly=True)
+    response.set_cookie(
+        key="token",
+        value=token,
+        httponly=True,
+        expires=get_expires_timestamp()
+    )
     return db_user
 
 
