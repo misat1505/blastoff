@@ -25,6 +25,9 @@ const LoginForm = () => {
     try {
       const user = await AuthService.login(data);
       setUser(user);
+      toast({
+        title: "Logged in successfully.",
+      });
     } catch (e: any) {
       toast({
         title: "Cannot log in.",

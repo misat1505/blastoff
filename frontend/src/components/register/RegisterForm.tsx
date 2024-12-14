@@ -24,6 +24,10 @@ const RegisterForm = () => {
     try {
       const user = await AuthService.register(data);
       setUser(user);
+      toast({
+        title: "Registered successfully.",
+        description: `Successfully registered as ${user.username}.`,
+      });
     } catch (e: any) {
       toast({
         title: "Cannot register.",
