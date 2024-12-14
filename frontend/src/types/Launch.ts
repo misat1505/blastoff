@@ -1,6 +1,7 @@
-export type Mission = {
+export type Launch = {
   id: string;
   name: string;
+  description: string;
   net: Date;
   image: string;
   window: {
@@ -23,6 +24,10 @@ export type Mission = {
   agency: {
     id: number;
     name: string;
+    image_url: string;
+    country: string;
+    website: string;
+    description: string;
   };
   site: {
     id: number;
@@ -30,5 +35,6 @@ export type Mission = {
     country: string;
     latitude: number;
     longitude: number;
-  };
+    image_map: string;
+  } | null;
 };

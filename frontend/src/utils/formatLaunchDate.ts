@@ -1,4 +1,4 @@
-export function formatMissionDate(date: Date): string {
+export function formatLaunchDate(date: Date): string {
   const dateFormatter = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
