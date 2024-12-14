@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { SATTELITES_IMAGES } from "../../constants";
-import { useRocketContext } from "../../context/RocketContext";
+import { SATTELITES_IMAGES } from "@/constants";
+import { useRocketContext } from "@/context/RocketContext";
 import Tooltip from "../Tooltip";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 
 const RocketCapacity = () => {
   const { rocket } = useRocketContext();

@@ -1,4 +1,4 @@
-import { Rocket } from "../types/Rocket";
+import { Rocket } from "@/types/Rocket";
 
 export class RocketService {
   static async getRocketById(id: Rocket["id"]): Promise<Rocket | null> {

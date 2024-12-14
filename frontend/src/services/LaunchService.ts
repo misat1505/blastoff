@@ -1,4 +1,4 @@
-import { Launch } from "../types/Launch";
+import { Launch } from "@/types/Launch";
 
 // const launch: Launch = {
 //   id: "83ba001e-9bca-48ac-84cb-ccea96bfe9c1",

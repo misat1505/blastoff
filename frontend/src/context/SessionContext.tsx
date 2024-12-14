@@ -1,6 +1,6 @@
-import { User } from "../types/User";
-import { AuthService } from "../services/AuthService";
-import { queryKeysBuilder } from "../utils/queryKeysBuilder";
+import { User } from "@/types/User";
+import { AuthService } from "@/services/AuthService";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
 import { createContext, PropsWithChildren, useContext } from "react";
 import { useQuery, useQueryClient } from "react-query";
 

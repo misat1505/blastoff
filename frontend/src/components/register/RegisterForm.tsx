@@ -5,10 +5,10 @@ import SubmitButton from "../SubmitButton";
 import {
   registerFormSchema,
   RegisterFormValues,
-} from "../../validators/RegisterForm.validators";
-import { AuthService } from "../../services/AuthService";
-import { toast } from "../../hooks/use-toast";
-import { useSessionContext } from "../../context/SessionContext";
+} from "@/validators/RegisterForm.validators";
+import { AuthService } from "@/services/AuthService";
+import { toast } from "@/hooks/use-toast";
+import { useSessionContext } from "@/context/SessionContext";
 
 const RegisterForm = () => {
   const {

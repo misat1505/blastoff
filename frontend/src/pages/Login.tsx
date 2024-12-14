@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { LOGO_PATH } from "@/constants";
 import { ROUTES } from "@/lib/routes";
-import LoginForm from "../components/login/LoginForm";
+import LoginForm from "@/components/login/LoginForm";
 
 const LoginPage = () => {
   return (

@@ -2,7 +2,7 @@ import { ROUTES } from "../lib/routes";
 import { Link } from "react-router-dom";
 import Tooltip from "./Tooltip";
 import ThemeSwitch from "./ThemeSwitch";
-import { LOGO_PATH } from "../constants";
+import { LOGO_PATH } from "@/constants";
 import { Button, buttonVariants } from "./ui/button";
 import {
   Sheet,
@@ -30,8 +30,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
-import { AuthService } from "../services/AuthService";
-import { useToast } from "../hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { AuthService } from "@/services/AuthService";
 
 const Navbar = () => {
   const { user } = useSessionContext();

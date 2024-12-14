@@ -1,6 +1,6 @@
-import { useCountdownFormat } from "../hooks/useCountdownFormat";
-import { useLaunchCountdown } from "../hooks/useLaunchCountdown";
-import { cn } from "../lib/utils";
+import { useCountdownFormat } from "@/hooks/useCountdownFormat";
+import { useLaunchCountdown } from "@/hooks/useLaunchCountdown";
+import { cn } from "@/lib/utils";
 
 type LaunchCountdownProps = React.HTMLAttributes<HTMLDivElement> & {
   date: Date;
@@ -24,7 +24,9 @@ const LaunchCountdown = ({
         : ${formatTimeUnit(timeLeft.minutes)} :
         ${formatTimeUnit(timeLeft.seconds)}`;
 
-    return `NET - ${formatTimeUnit(timeLeft.days)} : ${formatTimeUnit(timeLeft.hours)}
+    return `NET - ${formatTimeUnit(timeLeft.days)} : ${formatTimeUnit(
+      timeLeft.hours
+    )}
         : ${formatTimeUnit(timeLeft.minutes)} :
         ${formatTimeUnit(timeLeft.seconds)}`;
   };

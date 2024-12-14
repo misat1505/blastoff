@@ -1,5 +1,5 @@
 import CountUp from "react-countup";
-import { useRocketContext } from "../../context/RocketContext";
+import { useRocketContext } from "@/context/RocketContext";
 import { FaCheck } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { useInView } from "react-intersection-observer";

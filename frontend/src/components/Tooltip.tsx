@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "./ui/tooltip";
-import { useTooltipSwitch } from "../hooks/useTooltipSwitch";
+import { useTooltipSwitch } from "@/hooks/useTooltipSwitch";
 
 type TooltipProps = PropsWithChildren & {
   content: React.ReactNode;

@@ -1,4 +1,4 @@
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 import { PropsWithChildren } from "react";
 import { Link, LinkProps } from "react-router-dom";
 import Tooltip from "./Tooltip";

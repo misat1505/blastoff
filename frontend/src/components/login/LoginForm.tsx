@@ -5,10 +5,10 @@ import SubmitButton from "../SubmitButton";
 import {
   loginFormSchema,
   LoginFormValues,
-} from "../../validators/LoginForm.validators";
-import { AuthService } from "../../services/AuthService";
-import { useToast } from "../../hooks/use-toast";
-import { useSessionContext } from "../../context/SessionContext";
+} from "@/validators/LoginForm.validators";
+import { AuthService } from "@/services/AuthService";
+import { useToast } from "@/hooks/use-toast";
+import { useSessionContext } from "@/context/SessionContext";
 
 const LoginForm = () => {
   const {

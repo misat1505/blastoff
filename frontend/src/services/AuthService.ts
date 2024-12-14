@@ -1,8 +1,8 @@
 import axios from "axios";
-import { LoginFormValues } from "../validators/LoginForm.validators";
-import { User } from "../types/User";
-import { API_URL } from "../constants";
-import { RegisterFormValues } from "../validators/RegisterForm.validators";
+import { LoginFormValues } from "@/validators/LoginForm.validators";
+import { User } from "@/types/User";
+import { API_URL } from "@/constants";
+import { RegisterFormValues } from "@/validators/RegisterForm.validators";
 
 export class AuthService {
   static async login(data: LoginFormValues): Promise<User> {

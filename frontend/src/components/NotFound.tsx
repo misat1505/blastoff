@@ -1,6 +1,6 @@
-import { LOGO_PATH } from "../constants";
+import { LOGO_PATH } from "@/constants";
 import StyledLink from "./StyledLink";
-import { ROUTES } from "../lib/routes";
+import { ROUTES } from "@/lib/routes";
 
 type NotFoundPageProps = {
   title?: string;

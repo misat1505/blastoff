@@ -1,6 +1,6 @@
-import { Comment } from "../types/Comment";
-import { Launch } from "../types/Launch";
-import { CommentFormType } from "../validators/CommentForm.validators";
+import { Comment } from "@/types/Comment";
+import { Launch } from "@/types/Launch";
+import { CommentFormType } from "@/validators/CommentForm.validators";
 
 export const directComments: Comment[] = [
   {

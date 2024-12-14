@@ -1,16 +1,16 @@
-import { LaunchService } from "../services/LaunchService";
-import NotFound from "../components/NotFound";
-import { Launch } from "../types/Launch";
+import { LaunchService } from "@/services/LaunchService";
+import NotFound from "@/components/NotFound";
+import { Launch } from "@/types/Launch";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { queryKeysBuilder } from "../utils/queryKeysBuilder";
-import Loading from "../components/Loading";
-import Error from "../components/Error";
-import LaunchProvider from "../context/LaunchContext";
-import LaunchHeader from "../components/launch/LaunchHeader";
-import LaunchInfo from "../components/launch/LaunchInfo";
-import CommentSection from "../components/launch/CommentSection";
-import CommentSectionProvider from "../context/CommentSectionContext";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import Loading from "@/components/Loading";
+import Error from "@/components/Error";
+import LaunchProvider from "@/context/LaunchContext";
+import LaunchHeader from "@/components/launch/LaunchHeader";
+import LaunchInfo from "@/components/launch/LaunchInfo";
+import CommentSection from "@/components/launch/CommentSection";
+import CommentSectionProvider from "@/context/CommentSectionContext";
 
 const LaunchPage = () => {
   const { launchId } = useParams();

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { useLaunchContext } from "../../context/LaunchContext";
+import { useLaunchContext } from "@/context/LaunchContext";
 import Tooltip from "../Tooltip";
-import { ROUTES } from "../../lib/routes";
+import { ROUTES } from "@/lib/routes";
 import { FaPlay, FaRocket } from "react-icons/fa";
-import { buildGoogleMapsURL } from "../../utils/googleMaps";
+import { buildGoogleMapsURL } from "@/utils/googleMaps";
 import { GOOGLE_MAPS_LOGO_PATH, LOGO_PATH } from "@/constants";
-import { formatLaunchDate } from "../../utils/formatLaunchDate";
-import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
-import { cn } from "../../lib/utils";
+import { formatLaunchDate } from "@/utils/formatLaunchDate";
+import { getLaunchStatusType } from "@/utils/getLaunchStatusType";
+import { cn } from "@/lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
 

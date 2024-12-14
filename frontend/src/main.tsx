@@ -3,9 +3,9 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Toaster } from "./components/ui/toaster.tsx";
-import ThemeProvider from "./context/ThemeContext.tsx";
-import SessionProvider from "./context/SessionContext.tsx";
+import { Toaster } from "@/components/ui/toaster.tsx";
+import ThemeProvider from "@/context/ThemeContext.tsx";
+import SessionProvider from "@/context/SessionContext.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {

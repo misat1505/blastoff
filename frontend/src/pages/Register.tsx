@@ -1,5 +1,5 @@
 import { LOGO_PATH } from "@/constants";
-import RegisterForm from "../components/register/RegisterForm";
+import RegisterForm from "@/components/register/RegisterForm";
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/lib/routes";
 

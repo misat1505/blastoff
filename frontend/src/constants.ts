@@ -1,9 +1,9 @@
-import logo from "./assets/logo.png";
-import googleMapsLogo from "./assets/google-maps-logo.png";
-import hubbleTelescope from "./assets/hubble_telescope.webp";
-import landsat from "./assets/landsat.jpg";
-import tvSatellite from "./assets/tv_satellite.jpg";
-import wheatherSatellite from "./assets/wheather_satellite.jpeg";
+import logo from "@/assets/logo.png";
+import googleMapsLogo from "@/assets/google-maps-logo.png";
+import hubbleTelescope from "@/assets/hubble_telescope.webp";
+import landsat from "@/assets/landsat.jpg";
+import tvSatellite from "@/assets/tv_satellite.jpg";
+import wheatherSatellite from "@/assets/wheather_satellite.jpeg";
 
 export const LOGO_PATH = logo;
 

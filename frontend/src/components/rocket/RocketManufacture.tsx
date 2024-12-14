@@ -1,8 +1,8 @@
 import { MdFactory } from "react-icons/md";
 import { TbDimensions } from "react-icons/tb";
-import { useRocketContext } from "../../context/RocketContext";
+import { useRocketContext } from "@/context/RocketContext";
 import { useInView } from "react-intersection-observer";
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 
 const RocketManufacture = () => {
   return (

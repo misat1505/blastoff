@@ -1,8 +1,8 @@
 import { Suspense } from "react";
-import { routes } from "./lib/routes";
+import { routes } from "@/lib/routes";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Loading from "./components/Loading";
-import Navbar from "./components/Navbar";
+import Loading from "@/components/Loading";
+import Navbar from "@/components/Navbar";
 
 const App = () => {
   return (

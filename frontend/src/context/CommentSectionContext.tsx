@@ -4,17 +4,17 @@ import {
   UseFormRegister,
   useForm,
 } from "react-hook-form";
-import { Comment } from "../types/Comment";
+import { Comment } from "@/types/Comment";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   commentFormSchema,
   CommentFormType,
-} from "../validators/CommentForm.validators";
-import { CommentService } from "../services/CommentService";
-import { queryKeysBuilder } from "../utils/queryKeysBuilder";
+} from "@/validators/CommentForm.validators";
+import { CommentService } from "@/services/CommentService";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
 import { useQueryClient } from "react-query";
-import { Launch } from "../types/Launch";
+import { Launch } from "@/types/Launch";
 
 type CommentSectionContextProps = PropsWithChildren & {
   launchId: Launch["id"];

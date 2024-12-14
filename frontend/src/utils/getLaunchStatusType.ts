@@ -1,4 +1,4 @@
-import { Launch } from "../types/Launch";
+import { Launch } from "@/types/Launch";
 
 type LaunchStatusType = "success" | "failure" | "other";
 
