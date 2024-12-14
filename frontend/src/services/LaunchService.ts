@@ -52,7 +52,7 @@ const launch: Launch = {
   name: "Starlink Group 11-2",
   description:
     "A batch of satellites for the Starlink mega-constellation - SpaceX's project for space-based Internet communication system.",
-  net: new Date("2024-12-12T19:33:00Z"),
+  net: new Date("2025-12-12T19:33:00Z"),
   image:
     "https://thespacedevs-prod.nyc3.digitaloceanspaces.com/media/images/falcon2520925_image_20221009234147.png",
   window: {
