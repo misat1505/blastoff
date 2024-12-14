@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.crud import (
     create_user,
@@ -11,9 +11,32 @@ from app.crud import (
 from app.dependencies import get_db
 from app.schemas import UserResponse, UserCreate, UserEmailUpdate, UserLogin
 from app.security import verify_password
-from app.authentication import create_access_token
+from app.authentication import create_access_token, decode_access_token
+from app.models import User
 
 router = APIRouter()
+
+
+async def get_current_user(request: Request, db: AsyncSession = Depends(get_db)) -> User:
+    """Extracts user from JWT token stored in cookies."""
+    token = request.cookies.get("token")
+    if not token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    try:
+        payload = decode_access_token(token)
+        user_id = payload.get("id")
+    except HTTPException:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+    if not user_id:
+        raise HTTPException(status_code=401, detail="User not found in token")
+
+    db_user = await db.get(User, user_id)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return db_user
 
 
 @router.post("/register", response_model=UserResponse)
@@ -54,6 +77,11 @@ async def login_user(user: UserLogin, response: Response, db: AsyncSession = Dep
 async def logout_user(response: Response):
     response.delete_cookie(key="token")
     return {"message": "Successfully logged out"}
+
+
+@router.get("/me", response_model=UserResponse)
+async def get_user_data(current_user: User = Depends(get_current_user)):
+    return current_user
 
 
 @router.get("/all", response_model=list[UserResponse])
