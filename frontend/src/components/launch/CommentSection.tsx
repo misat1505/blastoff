@@ -1,6 +1,5 @@
 import { PropsWithChildren, useState } from "react";
 import { ROUTES } from "../../lib/routes";
-import StyledLink from "../StyledLink";
 import Tooltip from "../Tooltip";
 import { FaArrowDown } from "react-icons/fa";
 import { cn } from "../../lib/utils";
@@ -19,6 +18,7 @@ import { ClipLoader } from "react-spinners";
 import { useThemeContext } from "../../context/ThemeContext";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "../ui/button";
+import { useSessionContext } from "../../context/SessionContext";
 
 const CommentSection = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,7 +67,7 @@ const CommentForm = () => {
   const { submitForm, response, errors, register, setResponse, isSubmitting } =
     useCommentSectionContext();
   const { theme } = useThemeContext();
-  const isLoggedIn = true;
+  const { isLoggedIn } = useSessionContext();
 
   return (
     <form
@@ -165,7 +165,7 @@ type CommentProps = { comment: CommentType; indent: number };
 const Comment = ({ comment, indent }: CommentProps) => {
   const { setResponse } = useCommentSectionContext();
   const [isExpanded, setIsExpanded] = useState(false);
-  const isLoggedIn = true;
+  const { isLoggedIn } = useSessionContext();
 
   return (
     <>

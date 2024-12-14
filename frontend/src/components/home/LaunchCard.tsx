@@ -18,7 +18,7 @@ type LaunchCardProps = {
 
 const LaunchCard = ({ launch }: LaunchCardProps) => {
   return (
-    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-100 transition-all hover:shadow-sm dark:bg-slate-900 sm:grid sm:h-[500px]">
+    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-100/80 transition-all hover:shadow-sm dark:bg-slate-900/80 sm:grid sm:h-[500px]">
       <LaunchProvider launch={launch}>
         <Image />
         <Info />
