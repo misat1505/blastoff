@@ -50,6 +50,12 @@ async def login_user(user: UserLogin, response: Response, db: AsyncSession = Dep
     return db_user
 
 
+@router.post("/logout")
+async def logout_user(response: Response):
+    response.delete_cookie(key="token")
+    return {"message": "Successfully logged out"}
+
+
 @router.get("/all", response_model=list[UserResponse])
 async def get_users(db: AsyncSession = Depends(get_db)):
     users = await get_all_users(db)
