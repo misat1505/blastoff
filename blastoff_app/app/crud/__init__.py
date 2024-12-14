@@ -4,6 +4,7 @@ from .user import (
     get_all_users,
     get_user_by_id,
     update_user_email,
+    get_user_by_email
 )
 from .favourite_agency import (
     create_favourite_agency,
