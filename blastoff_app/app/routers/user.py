@@ -10,14 +10,24 @@ from app.crud import (
 )
 from app.dependencies import get_db
 from app.schemas import UserResponse, UserCreate, UserEmailUpdate, UserLogin
-from app.security import get_password_hash, verify_password
+from app.security import verify_password
+from app.authentication import create_access_token
 
 router = APIRouter()
 
 
 @router.post("/register", response_model=UserResponse)
-async def register_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
+async def register_user(user: UserCreate, response: Response, db: AsyncSession = Depends(get_db)):
+    user_with_email = await get_user_by_email(db, user.email)
+    if user_with_email:
+        raise HTTPException(
+            status_code=409,
+            detail="User with this email already exists."
+        )
+
     db_user = await create_user(db, user)
+    token = create_access_token({"id": db_user.id})
+    response.set_cookie(key="token", value=token, httponly=True)
     return db_user
 
 
@@ -35,8 +45,8 @@ async def login_user(user: UserLogin, response: Response, db: AsyncSession = Dep
     if not verify_password(user.password, db_user.hashed_password):
         raise http_error
 
-    token = "example_token"
-    response.set_cookie(key="access_token", value=token, httponly=True)
+    token = create_access_token({"id": db_user.id})
+    response.set_cookie(key="token", value=token, httponly=True)
     return db_user
 
 
