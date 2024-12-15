@@ -98,13 +98,19 @@ const CommentForm = () => {
           </div>
         )}
         <div className="flex w-full items-center space-x-4">
-          <FormField
-            {...register("text")}
-            error={errors.text}
-            placeholder="Type a comment..."
-            className="flex-grow"
-            disabled={isSubmitting}
-          />
+          <div className="w-full [&_p]:hidden">
+            <FormField
+              {...register("text")}
+              error={errors.text}
+              placeholder={
+                errors.text ? errors.text.message : "Type a comment..."
+              }
+              className={cn("flex-grow", {
+                "placeholder:text-red-500": errors.text,
+              })}
+              disabled={isSubmitting}
+            />
+          </div>
           <Tooltip content="Send message">
             <button
               type="submit"
