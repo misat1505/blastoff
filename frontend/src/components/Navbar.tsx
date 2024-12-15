@@ -6,7 +6,6 @@ import { LOGO_PATH } from "@/constants";
 import { Button, buttonVariants } from "./ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -72,15 +71,13 @@ const SettingsSheet = () => {
 
   return (
     <Sheet>
-      <SheetTrigger asChild className="hover:cursor-pointer">
-        <span>
-          <Tooltip content="Settings">
-            <span>
-              <GiHamburgerMenu size={20} />
-            </span>
-          </Tooltip>
-        </span>
-      </SheetTrigger>
+      <Tooltip content="Settings">
+        <SheetTrigger className="hover:cursor-pointer">
+          <span>
+            <GiHamburgerMenu size={20} />
+          </span>
+        </SheetTrigger>
+      </Tooltip>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Settings</SheetTitle>
@@ -104,10 +101,16 @@ const SettingsSheet = () => {
               title="Tooltips Preference"
               description="Choose whether tooltips are displayed."
             >
-              <Switch
-                checked={areVisible}
-                onClick={() => setAreVisible((prev) => !prev)}
-              />
+              <Tooltip
+                content={areVisible ? "Disable tooltips" : "Enable tooltips"}
+              >
+                <span>
+                  <Switch
+                    checked={areVisible}
+                    onClick={() => setAreVisible((prev) => !prev)}
+                  />
+                </span>
+              </Tooltip>
             </SwitchCard>
             <SwitchCard
               title="Theme Preference"
@@ -143,7 +146,7 @@ const SwitchCard = ({ children, title, description }: SwicthCardProps) => {
 
 const LoginButton = () => {
   return (
-    <SheetClose className="w-full">
+    <Tooltip content="Login page">
       <Link
         className={buttonVariants({
           variant: "outline",
@@ -153,7 +156,7 @@ const LoginButton = () => {
       >
         Log in to Blastoff
       </Link>
-    </SheetClose>
+    </Tooltip>
   );
 };
 
@@ -170,9 +173,13 @@ const LogoutDialog = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" className="w-full">
-          Logout
-        </Button>
+        <span className="w-full">
+          <Tooltip content="Show logout modal">
+            <Button variant="destructive" className="w-full">
+              Logout
+            </Button>
+          </Tooltip>
+        </span>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

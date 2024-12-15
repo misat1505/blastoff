@@ -47,5 +47,3 @@ export const routes: Route[] = [
     component: NotFoundPage,
   },
 ];
-
-console.log(routes);
