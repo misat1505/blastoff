@@ -72,7 +72,7 @@ const SettingsSheet = () => {
   return (
     <Sheet>
       <Tooltip content="Settings">
-        <SheetTrigger className="hover:cursor-pointer">
+        <SheetTrigger className="hover:cursor-pointer p-1">
           <span>
             <GiHamburgerMenu size={20} />
           </span>
