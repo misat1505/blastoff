@@ -1,12 +1,12 @@
 from app.database import Base
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
 
 
 class Agency(Base):
     __tablename__ = "agencies"
 
-    id = Column(String(500), primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, default=1)
     name = Column(String(100), unique=True, index=True)
     country = Column(String(50))
     description = Column(String(500))

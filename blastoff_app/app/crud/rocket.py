@@ -1,8 +1,8 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 from app.models import Rocket
 from app.schemas import RocketCreate, RocketResponse
 from fastapi import HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 
 async def create_rocket(db: AsyncSession, rocket_data: RocketCreate) -> RocketResponse:
@@ -36,7 +36,7 @@ async def create_rocket(db: AsyncSession, rocket_data: RocketCreate) -> RocketRe
     return db_rocket
 
 
-async def get_rocket_by_id(db: AsyncSession, rocket_id: str) -> RocketResponse:
+async def get_rocket_by_id(db: AsyncSession, rocket_id: int) -> RocketResponse:
     result = await db.execute(select(Rocket).filter(Rocket.id == rocket_id))
     rocket = result.scalar_one_or_none()
     if rocket is None:
@@ -50,7 +50,7 @@ async def get_all_rockets(db: AsyncSession) -> list[RocketResponse]:
     return rockets
 
 
-async def delete_rocket(db: AsyncSession, rocket_id: str):
+async def delete_rocket(db: AsyncSession, rocket_id: int):
     rocket = await get_rocket_by_id(db, rocket_id)
     if not rocket:
         return None

@@ -1,5 +1,6 @@
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel
 
 
 class SiteBase(BaseModel):
@@ -13,11 +14,11 @@ class SiteBase(BaseModel):
 
 
 class SiteCreate(SiteBase):
-    id: str
+    id: int
 
 
 class SiteResponse(SiteBase):
-    id: str
+    id: int
 
     class Config:
         from_attributes = True

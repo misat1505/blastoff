@@ -1,8 +1,8 @@
-from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.schemas import SiteCreate, SiteResponse
 from app.crud import create_site, get_all_sites, get_site_by_id, delete_site
 from app.dependencies import get_db
+from app.schemas import SiteCreate, SiteResponse
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
@@ -20,7 +20,7 @@ async def get_sites(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/{site_id}", response_model=SiteResponse)
-async def get_site(site_id: str, db: AsyncSession = Depends(get_db)):
+async def get_site(site_id: int, db: AsyncSession = Depends(get_db)):
     site = await get_site_by_id(db=db, site_id=site_id)
     if not site:
         raise HTTPException(status_code=404, detail="Site not found")
@@ -28,7 +28,7 @@ async def get_site(site_id: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.delete("/{site_id}", response_model=SiteResponse)
-async def delete_site_route(site_id: str, db: AsyncSession = Depends(get_db)):
+async def delete_site_route(site_id: int, db: AsyncSession = Depends(get_db)):
     deleted_site = await delete_site(db=db, site_id=site_id)
     if not deleted_site:
         raise HTTPException(status_code=404, detail="Site not found")

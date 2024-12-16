@@ -25,13 +25,13 @@ async def get_all_agencies(db: AsyncSession) -> list[AgencyResponse]:
     return agencies
 
 
-async def get_agency_by_id(db: AsyncSession, agency_id: str) -> AgencyResponse:
+async def get_agency_by_id(db: AsyncSession, agency_id: int) -> AgencyResponse:
     result = await db.execute(select(Agency).filter(Agency.id == agency_id))
     agency = result.scalar_one_or_none()
     return agency
 
 
-async def update_agency(db: AsyncSession, agency_id: str, agency_data: AgencyCreate):
+async def update_agency(db: AsyncSession, agency_id: int, agency_data: AgencyCreate):
     agency = await get_agency_by_id(db, agency_id)
     if not agency:
         return None
@@ -47,7 +47,7 @@ async def update_agency(db: AsyncSession, agency_id: str, agency_data: AgencyCre
     return agency
 
 
-async def delete_agency(db: AsyncSession, agency_id: str):
+async def delete_agency(db: AsyncSession, agency_id: int):
     agency = await get_agency_by_id(db, agency_id)
     if not agency:
         return None

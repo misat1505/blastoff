@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field
 from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
 class RocketBase(BaseModel):
@@ -42,13 +43,13 @@ class RocketBase(BaseModel):
 
 
 class RocketCreate(RocketBase):
-    id: str
-    agency_id: str
+    id: int
+    agency_id: int
 
 
 class RocketResponse(RocketBase):
-    id: str
-    agency_id: str
+    id: int
+    agency_id: int
 
     class Config:
         from_attributes = True

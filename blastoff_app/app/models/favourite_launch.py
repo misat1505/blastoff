@@ -1,7 +1,7 @@
+from app.database import Base
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.database import Base
 
 
 class FavouriteLaunch(Base):

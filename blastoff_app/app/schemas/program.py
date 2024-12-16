@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field
 from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
 class ProgramBase(BaseModel):
@@ -10,11 +11,11 @@ class ProgramBase(BaseModel):
 
 
 class ProgramCreate(ProgramBase):
-    id: str
+    id: int
 
 
 class ProgramResponse(ProgramBase):
-    id: str
+    id: int
 
     class Config:
         from_attributes = True

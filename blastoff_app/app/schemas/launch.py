@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
 class LaunchBase(BaseModel):
@@ -16,16 +17,16 @@ class LaunchBase(BaseModel):
 
 class LaunchCreate(LaunchBase):
     id: str
-    rocket_id: str = Field(..., description="ID of the associated rocket")
-    program_id: Optional[str] = Field(..., description="ID of the associated program")
-    site_id: Optional[str] = Field(..., description="ID of the associated site")
+    rocket_id: int = Field(..., description="ID of the associated rocket")
+    program_id: Optional[int] = Field(..., description="ID of the associated program")
+    site_id: Optional[int] = Field(..., description="ID of the associated site")
 
 
 class LaunchResponse(LaunchBase):
     id: str
-    rocket_id: str
-    program_id: Optional[str]
-    site_id: Optional[str]
+    rocket_id: int
+    program_id: Optional[int]
+    site_id: Optional[int]
 
     class Config:
         from_attributes = True

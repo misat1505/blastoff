@@ -10,11 +10,11 @@ class AgencyBase(BaseModel):
 
 
 class AgencyCreate(AgencyBase):
-    id: str
+    id: int
 
 
 class AgencyResponse(AgencyBase):
-    id: str
+    id: int
 
     class Config:
         from_attributes = True

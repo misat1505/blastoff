@@ -1,12 +1,12 @@
-from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
 from app.database import Base
+from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import relationship
 
 
 class Program(Base):
     __tablename__ = "programs"
 
-    id = Column(String(500), primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, default=1)
     name = Column(String(100), nullable=False, unique=True)
     description = Column(String(500))
     website = Column(String(250))

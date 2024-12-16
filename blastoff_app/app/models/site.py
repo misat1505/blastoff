@@ -1,12 +1,12 @@
 from app.database import Base
-from sqlalchemy import Column, String, Float
+from sqlalchemy import Column, String, Float, Integer
 from sqlalchemy.orm import relationship
 
 
 class Site(Base):
     __tablename__ = "sites"
 
-    id = Column(String(500), primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, default=1)
     name = Column(String(100), unique=True, index=True, nullable=False)
     country = Column(String(100), nullable=False)
     latitude = Column(Float, nullable=False)
