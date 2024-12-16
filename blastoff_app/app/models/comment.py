@@ -1,7 +1,7 @@
+from app.database import Base
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.database import Base
 
 
 class Comment(Base):
@@ -24,4 +24,3 @@ class Comment(Base):
     launch = relationship("Launch", back_populates="comments")
     parent_comment = relationship("Comment", back_populates="replies", remote_side=[id])
     replies = relationship("Comment", back_populates="parent_comment", cascade="all, delete-orphan")
-

@@ -1,12 +1,12 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 from app.models import Comment
 from app.schemas import CommentCreate, CommentResponse
 from fastapi import HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 
 async def create_comment(
-    db: AsyncSession, comment_data: CommentCreate
+        db: AsyncSession, comment_data: CommentCreate
 ) -> CommentResponse:
     db_comment = Comment(
         text=comment_data.text,

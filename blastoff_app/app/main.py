@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from app.database import Base
+from app.database import engine
 from app.routers import (
     user,
     agency,
@@ -9,8 +10,7 @@ from app.routers import (
     site,
     favourite_launch,
 )
-from app.database import engine
-from app.database import Base
+from fastapi import FastAPI
 
 app = FastAPI()
 
