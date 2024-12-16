@@ -20,10 +20,13 @@ class Rocket(Base):
     landings_count = Column(Integer)
     successful_landings_count = Column(Integer)
     failed_landings_count = Column(Integer)
+    pending_launches = Column(Integer)
     leo_capacity = Column(Float)
     gto_capacity = Column(Float)
     geo_capacity = Column(Float)
     sso_capacity = Column(Float)
+    rocket_thrust = Column(Float)
+    launch_cost = Column(Float)
     image_url = Column(String(250))
 
     agency = relationship("Agency", back_populates="rockets")

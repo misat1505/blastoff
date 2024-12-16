@@ -29,10 +29,15 @@ class RocketBase(BaseModel):
     failed_landings_count: Optional[int] = Field(
         0, ge=0, description="Number of failed landings"
     )
+    pending_launches: Optional[int] = Field(
+        0, ge=0, description="Total number of pending launches"
+    )
     leo_capacity: Optional[float] = None
     gto_capacity: Optional[float] = None
     geo_capacity: Optional[float] = None
     sso_capacity: Optional[float] = None
+    rocket_thrust: Optional[float] = None
+    launch_cost: Optional[float] = None
     image_url: Optional[str] = None
 
 
