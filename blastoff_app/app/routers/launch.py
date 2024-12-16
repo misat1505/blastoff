@@ -14,7 +14,7 @@ async def create_launch_route(launch: LaunchCreate, db: AsyncSession = Depends(g
 
 
 @router.get("/{launch_id}", response_model=LaunchResponse)
-async def get_launch(launch_id: int, db: AsyncSession = Depends(get_db)):
+async def get_launch(launch_id: str, db: AsyncSession = Depends(get_db)):
     launch = await get_launch_by_id(db=db, launch_id=launch_id)
     if not launch:
         raise HTTPException(status_code=404, detail="Launch not found")
@@ -27,7 +27,7 @@ async def get_launches(db: AsyncSession = Depends(get_db)):
 
 
 @router.delete("/{launch_id}", response_model=LaunchResponse)
-async def delete_launch_route(launch_id: int, db: AsyncSession = Depends(get_db)):
+async def delete_launch_route(launch_id: str, db: AsyncSession = Depends(get_db)):
     deleted_launch = await delete_launch(db=db, launch_id=launch_id)
     if not deleted_launch:
         raise HTTPException(status_code=404, detail="Launch not found")

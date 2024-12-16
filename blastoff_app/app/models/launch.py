@@ -6,8 +6,7 @@ from sqlalchemy.orm import relationship
 class Launch(Base):
     __tablename__ = "launches"
 
-    id = Column(Integer, primary_key=True, index=True)
-    api_id = Column(String(500), index=True, nullable=False)
+    id = Column(String(500), primary_key=True, index=True)
     last_updated = Column(DateTime, nullable=False)
     mission_name = Column(String(100))
     status_name = Column(String(50))
@@ -17,9 +16,9 @@ class Launch(Base):
     url = Column(String(250))
     image_url = Column(String(250))
 
-    rocket_id = Column(Integer, ForeignKey("rockets.id"), nullable=False)
-    program_id = Column(Integer, ForeignKey("programs.id"))
-    site_id = Column(Integer, ForeignKey("sites.id"))
+    rocket_id = Column(String(500), ForeignKey("rockets.id"), nullable=False)
+    program_id = Column(String(500), ForeignKey("programs.id"))
+    site_id = Column(String(500), ForeignKey("sites.id"))
 
     rocket = relationship("Rocket", back_populates="launches")
     program = relationship("Program", back_populates="launches")

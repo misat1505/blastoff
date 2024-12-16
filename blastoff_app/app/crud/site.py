@@ -7,6 +7,7 @@ from app.schemas import SiteCreate
 
 async def create_site(db: AsyncSession, site_data: SiteCreate):
     db_site = Site(
+        id=site_data.id,
         name=site_data.name,
         country=site_data.country,
         latitude=site_data.latitude,
@@ -27,13 +28,13 @@ async def get_all_sites(db: AsyncSession):
     return sites
 
 
-async def get_site_by_id(db: AsyncSession, site_id: int):
+async def get_site_by_id(db: AsyncSession, site_id: str):
     result = await db.execute(select(Site).filter(Site.id == site_id))
     site = result.scalar_one_or_none()
     return site
 
 
-async def delete_site(db: AsyncSession, site_id: int):
+async def delete_site(db: AsyncSession, site_id: str):
     site = await get_site_by_id(db, site_id)
     if not site:
         return None

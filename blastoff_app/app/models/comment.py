@@ -14,7 +14,7 @@ class Comment(Base):
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
     launch_id = Column(
-        Integer, ForeignKey("launches.id", ondelete="CASCADE"), nullable=False
+        String(500), ForeignKey("launches.id", ondelete="CASCADE"), nullable=False
     )
     parent_comment_id = Column(
         Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=True

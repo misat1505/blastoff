@@ -9,7 +9,7 @@ class CommentBase(BaseModel):
 
 class CommentCreate(CommentBase):
     user_id: int
-    launch_id: int
+    launch_id: str
     parent_comment_id: Optional[int] = None
 
 
@@ -17,7 +17,7 @@ class CommentResponse(CommentBase):
     id: int
     added_at: datetime
     user_id: int
-    launch_id: int
+    launch_id: str
     parent_comment_id: Optional[int] = None
     replies: Optional[List["CommentResponse"]] = None
 

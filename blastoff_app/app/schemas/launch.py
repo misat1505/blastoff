@@ -4,7 +4,6 @@ from typing import Optional
 
 
 class LaunchBase(BaseModel):
-    api_id: str = Field(..., description="ID from external API")
     last_updated: datetime = Field(..., description="Timestamp of last update")
     mission_name: Optional[str] = None
     status_name: Optional[str] = None
@@ -16,16 +15,17 @@ class LaunchBase(BaseModel):
 
 
 class LaunchCreate(LaunchBase):
-    rocket_id: int = Field(..., description="ID of the associated rocket")
-    program_id: Optional[int] = Field(..., description="ID of the associated program")
-    site_id: Optional[int] = Field(..., description="ID of the associated site")
+    id: str
+    rocket_id: str = Field(..., description="ID of the associated rocket")
+    program_id: Optional[str] = Field(..., description="ID of the associated program")
+    site_id: Optional[str] = Field(..., description="ID of the associated site")
 
 
 class LaunchResponse(LaunchBase):
-    id: int
-    rocket_id: int
-    program_id: Optional[int]
-    site_id: Optional[int]
+    id: str
+    rocket_id: str
+    program_id: Optional[str]
+    site_id: Optional[str]
 
     class Config:
         from_attributes = True

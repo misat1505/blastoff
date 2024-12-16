@@ -37,12 +37,13 @@ class RocketBase(BaseModel):
 
 
 class RocketCreate(RocketBase):
-    agency_id: int
+    id: str
+    agency_id: str
 
 
 class RocketResponse(RocketBase):
-    id: int
-    agency_id: int
+    id: str
+    agency_id: str
 
     class Config:
         from_attributes = True

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, ForeignKey, DateTime, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database import Base
@@ -13,7 +13,7 @@ class FavouriteAgency(Base):
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
     agency_id = Column(
-        Integer, ForeignKey("agencies.id", ondelete="CASCADE"), nullable=False
+        String(500), ForeignKey("agencies.id", ondelete="CASCADE"), nullable=False
     )
 
     user = relationship("User", back_populates="favourite_agencies")

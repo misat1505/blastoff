@@ -13,11 +13,11 @@ class SiteBase(BaseModel):
 
 
 class SiteCreate(SiteBase):
-    pass
+    id: str
 
 
 class SiteResponse(SiteBase):
-    id: int
+    id: str
 
     class Config:
         from_attributes = True

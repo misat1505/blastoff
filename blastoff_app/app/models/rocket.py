@@ -6,9 +6,9 @@ from app.database import Base
 class Rocket(Base):
     __tablename__ = "rockets"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(String(500), primary_key=True, index=True)
     name = Column(String(100), unique=True, index=True)
-    agency_id = Column(Integer, ForeignKey("agencies.id"), nullable=False)
+    agency_id = Column(String(500), ForeignKey("agencies.id"), nullable=False)
     no_stages = Column(Integer)
     height = Column(Float)
     mass = Column(Float)

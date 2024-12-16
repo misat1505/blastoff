@@ -5,7 +5,7 @@ from typing import Optional
 
 class FavouriteAgencyBase(BaseModel):
     user_id: int
-    agency_id: int
+    agency_id: str
 
 
 class FavouriteAgencyCreate(FavouriteAgencyBase):
@@ -22,4 +22,4 @@ class FavouriteAgency(FavouriteAgencyBase):
 
 class FavouriteAgencyDelete(BaseModel):
     user_id: Optional[int] = None
-    agency_id: Optional[int] = None
+    agency_id: Optional[str] = None

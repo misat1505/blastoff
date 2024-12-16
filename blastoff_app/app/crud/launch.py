@@ -7,7 +7,7 @@ from sqlalchemy.future import select
 
 async def create_launch(db: AsyncSession, launch_data: LaunchCreate) -> LaunchResponse:
     db_launch = Launch(
-        api_id=launch_data.api_id,
+        id=launch_data.id,
         last_updated=launch_data.last_updated,
         mission_name=launch_data.mission_name,
         status_name=launch_data.status_name,
@@ -26,7 +26,7 @@ async def create_launch(db: AsyncSession, launch_data: LaunchCreate) -> LaunchRe
     return db_launch
 
 
-async def get_launch_by_id(db: AsyncSession, launch_id: int) -> LaunchResponse:
+async def get_launch_by_id(db: AsyncSession, launch_id: str) -> LaunchResponse:
     result = await db.execute(select(Launch).filter(Launch.id == launch_id))
     launch = result.scalar_one_or_none()
     if launch is None:
@@ -40,7 +40,7 @@ async def get_all_launches(db: AsyncSession) -> list[LaunchResponse]:
     return launches
 
 
-async def delete_launch(db: AsyncSession, launch_id: int):
+async def delete_launch(db: AsyncSession, launch_id: str):
     launch = await get_launch_by_id(db, launch_id)
     if not launch:
         return None

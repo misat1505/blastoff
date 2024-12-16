@@ -5,7 +5,7 @@ from typing import Optional
 
 class FavouriteLaunchBase(BaseModel):
     user_id: int
-    launch_id: int
+    launch_id: str
 
 
 class FavouriteLaunchCreate(FavouriteLaunchBase):
@@ -22,4 +22,4 @@ class FavouriteLaunch(FavouriteLaunchBase):
 
 class FavouriteLaunchDelete(BaseModel):
     user_id: Optional[int] = None
-    launch_id: Optional[int] = None
+    launch_id: Optional[str] = None

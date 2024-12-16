@@ -8,6 +8,7 @@ from fastapi import HTTPException
 
 async def create_rocket(db: AsyncSession, rocket_data: RocketCreate) -> RocketResponse:
     db_rocket = Rocket(
+        id=rocket_data.id,
         name=rocket_data.name,
         no_stages=rocket_data.no_stages,
         height=rocket_data.height,
@@ -33,7 +34,7 @@ async def create_rocket(db: AsyncSession, rocket_data: RocketCreate) -> RocketRe
     return db_rocket
 
 
-async def get_rocket_by_id(db: AsyncSession, rocket_id: int) -> RocketResponse:
+async def get_rocket_by_id(db: AsyncSession, rocket_id: str) -> RocketResponse:
     result = await db.execute(select(Rocket).filter(Rocket.id == rocket_id))
     rocket = result.scalar_one_or_none()
     if rocket is None:
@@ -47,7 +48,7 @@ async def get_all_rockets(db: AsyncSession) -> list[RocketResponse]:
     return rockets
 
 
-async def delete_rocket(db: AsyncSession, rocket_id: int):
+async def delete_rocket(db: AsyncSession, rocket_id: str):
     rocket = await get_rocket_by_id(db, rocket_id)
     if not rocket:
         return None

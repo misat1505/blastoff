@@ -9,6 +9,7 @@ async def create_program(
     db: AsyncSession, program_data: ProgramCreate
 ) -> ProgramResponse:
     db_program = Program(
+        id=program_data.id,
         name=program_data.name,
         description=program_data.description,
         website=program_data.website,
@@ -20,7 +21,7 @@ async def create_program(
     return db_program
 
 
-async def get_program_by_id(db: AsyncSession, program_id: int) -> ProgramResponse:
+async def get_program_by_id(db: AsyncSession, program_id: str) -> ProgramResponse:
     result = await db.execute(select(Program).filter(Program.id == program_id))
     program = result.scalar_one_or_none()
     if program is None:
@@ -34,7 +35,7 @@ async def get_all_programs(db: AsyncSession) -> list[ProgramResponse]:
     return programs
 
 
-async def delete_program(db: AsyncSession, program_id: int):
+async def delete_program(db: AsyncSession, program_id: str):
     program = await get_program_by_id(db, program_id)
     if not program:
         return None
