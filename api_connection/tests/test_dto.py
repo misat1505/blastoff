@@ -8,7 +8,7 @@ from api_connection.src.dto import LaunchDTO, InvalidAPIData
 
 @given(
     st.dictionaries(st.text(), st.one_of(st.text(), st.integers(), st.booleans(), st.none())),
-    st.fixed_dictionaries({"api_id": st.text(min_size=1)}),
+    st.fixed_dictionaries({"id": st.text(min_size=1)}),
     st.dictionaries(st.text(), st.one_of(st.text(), st.integers(), st.booleans(), st.none())),
     st.dictionaries(st.text(), st.one_of(st.text(), st.integers(), st.booleans(), st.none())),
     st.dictionaries(st.text(), st.one_of(st.text(), st.integers(), st.booleans(), st.none()))
@@ -24,7 +24,7 @@ def test_dto_init(agency, launch, program, rocket, site):
 
 @given(
     st.dictionaries(st.text(), st.one_of(st.text(), st.integers(), st.booleans(), st.none())),
-    st.fixed_dictionaries({"api_id": st.text(max_size=0)}),
+    st.fixed_dictionaries({"id": st.text(max_size=0)}),
     st.dictionaries(st.text(), st.one_of(st.text(), st.integers(), st.booleans(), st.none())),
     st.dictionaries(st.text(), st.one_of(st.text(), st.integers(), st.booleans(), st.none())),
     st.dictionaries(st.text(), st.one_of(st.text(), st.integers(), st.booleans(), st.none()))
@@ -83,6 +83,7 @@ def test_dto_init_invalid(agency, launch, program, rocket, site):
             "image_url": st.text(),
         }),
         "launch_service_provider": st.fixed_dictionaries({
+            "id": st.integers(),
             "name": st.text(),
             "country": st.text(),
             "description": st.text(),
@@ -92,6 +93,7 @@ def test_dto_init_invalid(agency, launch, program, rocket, site):
             }),
         }),
         "program": st.lists(st.fixed_dictionaries({
+            "id": st.integers(),
             "name": st.text(),
             "description": st.text(),
             "info_url": st.text(),
@@ -100,6 +102,7 @@ def test_dto_init_invalid(agency, launch, program, rocket, site):
             }),
         })),
         "rocket": st.fixed_dictionaries({
+            "id": st.integers(),
             "configuration": st.fixed_dictionaries({
                 "name": st.text(),
                 "max_stage": st.integers(min_value=1),
@@ -123,6 +126,7 @@ def test_dto_init_invalid(agency, launch, program, rocket, site):
             }),
         }),
         "pad": st.fixed_dictionaries({
+            "id": st.integers(),
             "name": st.text(),
             "latitude": st.floats(),
             "longitude": st.floats(),
@@ -137,7 +141,7 @@ def test_dto_init_invalid(agency, launch, program, rocket, site):
 )
 def test_dto_from_api(api_details):
     ld = LaunchDTO.from_api(api_details)
-    assert ld.launch["api_id"] == api_details["id"]
+    assert ld.launch["id"] == api_details["id"]
 
 
 @given(
@@ -165,6 +169,7 @@ def test_dto_from_api(api_details):
             "image_url": st.text(),
         }),
         "launch_service_provider": st.fixed_dictionaries({
+            "id": st.integers(),
             "name": st.text(),
             "country": st.text(),
             "description": st.text(),
@@ -174,6 +179,7 @@ def test_dto_from_api(api_details):
             }),
         }),
         "program": st.lists(st.fixed_dictionaries({
+            "id": st.integers(),
             "name": st.text(),
             "description": st.text(),
             "info_url": st.text(),
@@ -182,6 +188,7 @@ def test_dto_from_api(api_details):
             }),
         })),
         "rocket": st.fixed_dictionaries({
+            "id": st.integers(),
             "configuration": st.fixed_dictionaries({
                 "name": st.text(),
                 "max_stage": st.integers(min_value=1),
@@ -205,6 +212,7 @@ def test_dto_from_api(api_details):
             }),
         }),
         "pad": st.fixed_dictionaries({
+            "id": st.integers(),
             "name": st.text(),
             "latitude": st.floats(),
             "longitude": st.floats(),
@@ -224,6 +232,7 @@ def test_dto_from_invalid_api(api_details):
 
 api_data_strategy = st.fixed_dictionaries({
     "agency": st.fixed_dictionaries({
+        "id": st.integers(),
         "name": st.text(min_size=1),
         "country": st.text(min_size=1),
         "description": st.text(),
@@ -231,7 +240,7 @@ api_data_strategy = st.fixed_dictionaries({
         "image_url": st.text(),
     }),
     "launch": st.fixed_dictionaries({
-        "api_id": st.text(min_size=1),
+        "id": st.text(min_size=1),
         "last_updated": st.datetimes().map(lambda dt: dt.isoformat()),
         "date": st.datetimes().map(lambda dt: dt.isoformat()),
         "url": st.none() | st.text(),
@@ -242,12 +251,14 @@ api_data_strategy = st.fixed_dictionaries({
         "description": st.text(),
     }),
     "program": st.none() | st.fixed_dictionaries({
+        "id": st.integers(),
         "name": st.text(),
         "description": st.text(),
         "info_url": st.text(),
         "image_url": st.text(),
     }),
     "rocket": st.fixed_dictionaries({
+        "id": st.integers(),
         "name": st.text(),
         "no_stages": st.integers(min_value=1),
         "height": st.floats(min_value=1.0),
@@ -267,6 +278,7 @@ api_data_strategy = st.fixed_dictionaries({
         "image_url": st.text(),
     }),
     "site": st.fixed_dictionaries({
+        "id": st.integers(),
         "name": st.text(),
         "latitude": st.floats(),
         "longitude": st.floats(),
@@ -293,7 +305,7 @@ def test_dto_from_file(api_data, create_temp_file):
     temp_file = create_temp_file(api_data)
 
     ld = LaunchDTO.from_file(str(temp_file))
-    assert ld.launch["api_id"] == api_data["launch"]["api_id"]
+    assert ld.launch["id"] == api_data["launch"]["id"]
 
 
 wrong_api_data_strategy = st.fixed_dictionaries({
@@ -305,7 +317,7 @@ wrong_api_data_strategy = st.fixed_dictionaries({
         "image_url": st.text(),
     })),
     "launch": st.fixed_dictionaries({
-        "api_id": st.text(min_size=1),
+        "id": st.text(min_size=1),
         "last_updated": st.datetimes().map(lambda dt: dt.isoformat()),
         "date": st.datetimes().map(lambda dt: dt.isoformat()),
         "url": st.none() | st.text(),
