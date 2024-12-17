@@ -45,7 +45,7 @@ class LaunchDTO:
             value = getattr(self, field)
             if value is not None and not isinstance(value, dict):
                 raise ValueError(f"{field} must be a dictionary or None, got {type(value)}")
-        if not self.launch or not self.launch.get("api_id"):
+        if not self.launch or not self.launch.get("id"):
             raise ValueError("Launch data must be provided")
 
     @classmethod
@@ -61,7 +61,7 @@ class LaunchDTO:
         launch = cls._create_launch(details)
         agency = cls._create_agency(details.get("launch_service_provider", {}))
         program = cls._create_program(extract_nested(details, "program", 0))
-        rocket = cls._create_rocket(extract_nested(details, "rocket", "configuration"))
+        rocket = cls._create_rocket(details.get("rocket"))
         site = cls._create_site(details.get("pad", {}))
         return cls(agency, launch, program, rocket, site)
 
@@ -126,7 +126,7 @@ class LaunchDTO:
         :return: dict with necessary launch data
         """
         return {
-            "api_id": details.get("id"),
+            "id": details.get("id"),
             "last_updated": details.get("last_updated"),
             "date": details.get("net"),
             "url": LaunchDTO._get_launch_url(details.get("info_urls"), details.get("vid_urls")),
@@ -148,6 +148,7 @@ class LaunchDTO:
         if not agency_details:
             return None
         return {
+            "id": agency_details.get("id"),
             "name": agency_details.get("name"),
             "country": extract_nested(agency_details, "country", 0, "name"),
             "description": agency_details.get("description"),
@@ -166,6 +167,7 @@ class LaunchDTO:
         if not program_details:
             return None
         return {
+            "id": program_details.get("id"),
             "name": program_details.get("name"),
             "description": program_details.get("description"),
             "website": program_details.get("info_url"),
@@ -173,16 +175,21 @@ class LaunchDTO:
         }
 
     @staticmethod
-    def _create_rocket(rocket_configuration_details: dict[str, Any]) -> dict[str, Any] | None:
+    def _create_rocket(rocket_details: dict[str, Any]) -> dict[str, Any] | None:
         """
         Gets necessary data about rocket from api details
 
-        :param rocket_configuration_details: rocket section of api query for details of specific launch
+        :param rocket_details: rocket section of api query for details of specific launch
         :return: dict with necessary rocket data
         """
+        if not rocket_details:
+            return None
+
+        rocket_configuration_details = rocket_details.get("configuration")
         if not rocket_configuration_details:
             return None
         return {
+            "id": rocket_details.get("id"),
             "name": rocket_configuration_details.get("name"),
             "no_stages": rocket_configuration_details.get("max_stage"),
             "height": rocket_configuration_details.get("length"),
@@ -195,10 +202,13 @@ class LaunchDTO:
             "landings_count": rocket_configuration_details.get("attempted_landings"),
             "successful_landings_count": rocket_configuration_details.get("successful_landings"),
             "failed_landings_count": rocket_configuration_details.get("failed_landings"),
+            "pending_launches": rocket_configuration_details.get("pending_launches"),
             "leo_capacity": rocket_configuration_details.get("leo_capacity"),
             "gto_capacity": rocket_configuration_details.get("gto_capacity"),
             "geo_capacity": rocket_configuration_details.get("geo_capacity"),
             "sso_capacity": rocket_configuration_details.get("sso_capacity"),
+            "rocket_thrust": rocket_configuration_details.get("to_thrust"),
+            "launch_cost": rocket_configuration_details.get("launch_cost"),
             "image_url": extract_nested(rocket_configuration_details, "image", "image_url"),
         }
 
@@ -213,6 +223,7 @@ class LaunchDTO:
         if not pad_details:
             return None
         return {
+            "id": pad_details.get("id"),
             "name": pad_details.get("name"),
             "latitude": pad_details.get("latitude"),
             "longitude": pad_details.get("longitude"),
