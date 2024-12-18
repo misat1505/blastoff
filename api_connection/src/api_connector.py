@@ -1,7 +1,7 @@
 from typing import Generator
 
-from api_connection.src.get_api_data import GetLaunchesAPIData, GetAPIData, APIError
-from api_connection.src.launch_data import LaunchDataList
+from get_api_data import GetLaunchesAPIData, GetAPIData, APIError
+from launch_data import LaunchDataList
 from dto import LaunchDTO
 
 

@@ -2,7 +2,7 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
-from api_connection.src.launch_data import InvalidAPIData
+from launch_data import InvalidAPIData
 
 
 class CouldNotReadFile(Exception):
