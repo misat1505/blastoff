@@ -1,11 +1,11 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from app.models import FavouriteLaunch
 from app.schemas import FavouriteLaunchCreate, FavouriteLaunchDelete
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 
 async def create_favourite_launch(
-    db: AsyncSession, favourite_launch: FavouriteLaunchCreate
+        db: AsyncSession, favourite_launch: FavouriteLaunchCreate
 ):
     db_fav = FavouriteLaunch(
         user_id=favourite_launch.user_id, launch_id=favourite_launch.launch_id
@@ -44,7 +44,7 @@ async def delete_favourite_launch_by_id(db: AsyncSession, favourite_launch_id: i
 
 
 async def delete_favourite_launch_by_user_or_launch(
-    db: AsyncSession, fav_delete: FavouriteLaunchDelete
+        db: AsyncSession, fav_delete: FavouriteLaunchDelete
 ):
     result = await db.execute(
         select(FavouriteLaunch)

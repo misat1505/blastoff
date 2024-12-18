@@ -1,11 +1,11 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.models import FavouriteAgency, User, Agency
+from app.models import FavouriteAgency
 from app.schemas import FavouriteAgencyCreate, FavouriteAgencyDelete
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 
 async def create_favourite_agency(
-    db: AsyncSession, favourite_agency: FavouriteAgencyCreate
+        db: AsyncSession, favourite_agency: FavouriteAgencyCreate
 ):
     db_fav = FavouriteAgency(
         user_id=favourite_agency.user_id, agency_id=favourite_agency.agency_id
@@ -31,7 +31,7 @@ async def get_all_favourite_agencies(db: AsyncSession, skip: int = 0, limit: int
 
 
 async def get_favourite_agencies_by_user_id(
-    db: AsyncSession, user_id: int, skip: int = 0, limit: int = 100
+        db: AsyncSession, user_id: int, skip: int = 0, limit: int = 100
 ):
     result = await db.execute(
         select(FavouriteAgency)
@@ -57,7 +57,7 @@ async def delete_favourite_agency_by_id(db: AsyncSession, favourite_agency_id: i
 
 
 async def delete_favourite_agency_by_user_or_agency(
-    db: AsyncSession, fav_delete: FavouriteAgencyDelete
+        db: AsyncSession, fav_delete: FavouriteAgencyDelete
 ):
     result = await db.execute(
         select(FavouriteAgency)

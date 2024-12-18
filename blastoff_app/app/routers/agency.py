@@ -1,6 +1,3 @@
-from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.schemas import AgencyCreate, AgencyResponse
 from app.crud import (
     create_agency,
     get_all_agencies,
@@ -9,6 +6,9 @@ from app.crud import (
     delete_agency,
 )
 from app.dependencies import get_db
+from app.schemas import AgencyCreate, AgencyResponse
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
@@ -35,7 +35,7 @@ async def get_agency(agency_id: int, db: AsyncSession = Depends(get_db)):
 
 @router.put("/{agency_id}", response_model=AgencyResponse)
 async def update_agency_route(
-    agency_id: int, agency: AgencyCreate, db: AsyncSession = Depends(get_db)
+        agency_id: int, agency: AgencyCreate, db: AsyncSession = Depends(get_db)
 ):
     updated_agency = await update_agency(db=db, agency_id=agency_id, agency_data=agency)
     if not updated_agency:
