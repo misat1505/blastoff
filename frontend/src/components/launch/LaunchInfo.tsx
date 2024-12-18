@@ -145,10 +145,14 @@ const LaunchLinks = () => {
   return (
     <div>
       <h2 className="mb-8 text-xl font-semibold">Links</h2>
-      <StyledLink to={launch.links.live} tooltip="Open video" target="_blank">
-        <FaPlay />
-        <span className="text-sm font-semibold">Video</span>
-      </StyledLink>
+      {launch.links.live ? (
+        <StyledLink to={launch.links.live} tooltip="Open video" target="_blank">
+          <FaPlay />
+          <span className="text-sm font-semibold">Video</span>
+        </StyledLink>
+      ) : (
+        <p className="text-sm text-muted-foreground">No available video.</p>
+      )}
     </div>
   );
 };

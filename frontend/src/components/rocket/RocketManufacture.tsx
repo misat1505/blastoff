@@ -52,6 +52,13 @@ const RocketDimensions = () => {
       <div className="my-1 self-start px-4 text-start">
         {Object.entries(rocket.dimensions).map(([key, value]) => {
           let displayValue: any = value;
+          if (displayValue === null)
+            return (
+              <div key={key} className="text-md space-x-2">
+                <span className="font-bold capitalize">{key}:</span>
+                <span className="text-muted-foreground">N/A</span>
+              </div>
+            );
 
           if (key === "diameter" || key === "length") {
             displayValue = `${value} m`;
