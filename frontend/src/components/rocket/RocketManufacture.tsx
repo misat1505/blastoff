@@ -30,7 +30,11 @@ const ManufacturerDisplay = () => {
         <MdFactory size={20} />
         <h2 className="text-2xl font-semibold">Manufacturer</h2>
       </div>
-      <img src={rocket.agency.image_url} alt={rocket.agency.name} />
+      <img
+        src={rocket.agency.image_url}
+        alt={rocket.agency.name}
+        className="max-h-12"
+      />
       <p className="text-xl">{rocket.agency.name}</p>
     </div>
   );
