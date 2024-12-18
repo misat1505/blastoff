@@ -8,7 +8,7 @@ class Comment(Base):
     __tablename__ = "comments"
 
     id = Column(Integer, primary_key=True, index=True)
-    text = Column(String(500), nullable=False)
+    text = Column(String(5000), nullable=False)
     added_at = Column(DateTime, default=func.now())
     user_id = Column(
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False

@@ -13,7 +13,7 @@ class Rocket(Base):
     height = Column(Float)
     mass = Column(Float)
     diameter = Column(Float)
-    description = Column(String(250))
+    description = Column(String(5000))
     launches_count = Column(Integer)
     successful_launches_count = Column(Integer)
     failed_launches_count = Column(Integer)
@@ -27,7 +27,7 @@ class Rocket(Base):
     sso_capacity = Column(Float)
     rocket_thrust = Column(Float)
     launch_cost = Column(Float)
-    image_url = Column(String(250))
+    image_url = Column(String(500))
 
     agency = relationship("Agency", back_populates="rockets")
     launches = relationship(

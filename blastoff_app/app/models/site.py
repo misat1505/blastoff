@@ -11,7 +11,7 @@ class Site(Base):
     country = Column(String(100), nullable=False)
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
-    description = Column(String(500))
+    description = Column(String(5000))
     image_url = Column(String(500))
     map_image_url = Column(String(500))
 
