@@ -1,16 +1,17 @@
+from app.models import Agency
+from app.schemas import AgencyCreate, AgencyResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy.exc import NoResultFound
-from app.models import Agency
-from app.schemas import AgencyCreate
 
 
-async def create_agency(db: AsyncSession, agency_data: AgencyCreate):
+async def create_agency(db: AsyncSession, agency_data: AgencyCreate) -> AgencyResponse:
     db_agency = Agency(
+        id=agency_data.id,
         name=agency_data.name,
         country=agency_data.country,
         description=agency_data.description,
         website=agency_data.website,
+        image_url=agency_data.image_url,
     )
     db.add(db_agency)
     await db.commit()
@@ -18,13 +19,13 @@ async def create_agency(db: AsyncSession, agency_data: AgencyCreate):
     return db_agency
 
 
-async def get_all_agencies(db: AsyncSession):
+async def get_all_agencies(db: AsyncSession) -> list[AgencyResponse]:
     result = await db.execute(select(Agency))
     agencies = result.scalars().all()
     return agencies
 
 
-async def get_agency_by_id(db: AsyncSession, agency_id: int):
+async def get_agency_by_id(db: AsyncSession, agency_id: int) -> AgencyResponse:
     result = await db.execute(select(Agency).filter(Agency.id == agency_id))
     agency = result.scalar_one_or_none()
     return agency
@@ -39,6 +40,7 @@ async def update_agency(db: AsyncSession, agency_id: int, agency_data: AgencyCre
     agency.country = agency_data.country
     agency.description = agency_data.description
     agency.website = agency_data.website
+    agency.image_url = agency_data.image_url
 
     await db.commit()
     await db.refresh(agency)

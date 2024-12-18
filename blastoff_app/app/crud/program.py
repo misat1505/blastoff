@@ -1,14 +1,15 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 from app.models import Program
 from app.schemas import ProgramCreate, ProgramResponse
 from fastapi import HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 
 async def create_program(
-    db: AsyncSession, program_data: ProgramCreate
+        db: AsyncSession, program_data: ProgramCreate
 ) -> ProgramResponse:
     db_program = Program(
+        id=program_data.id,
         name=program_data.name,
         description=program_data.description,
         website=program_data.website,

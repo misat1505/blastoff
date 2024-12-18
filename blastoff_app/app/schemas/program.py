@@ -1,5 +1,6 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field
-from typing import Optional, List
 
 
 class ProgramBase(BaseModel):
@@ -10,7 +11,7 @@ class ProgramBase(BaseModel):
 
 
 class ProgramCreate(ProgramBase):
-    pass
+    id: int
 
 
 class ProgramResponse(ProgramBase):
