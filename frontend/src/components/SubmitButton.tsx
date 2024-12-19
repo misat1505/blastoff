@@ -1,8 +1,8 @@
 import { PropsWithChildren } from "react";
 import { Button } from "./ui/button";
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 import { ClipLoader } from "react-spinners";
-import { useThemeContext } from "../context/ThemeContext";
+import { useThemeContext } from "@/context/ThemeContext";
 
 type SubmitButtonProps = PropsWithChildren &
   React.ButtonHTMLAttributes<HTMLButtonElement> & {

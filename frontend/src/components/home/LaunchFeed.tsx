@@ -1,4 +1,4 @@
-import { Launch } from "../../types/Launch";
+import { Launch } from "@/types/Launch";
 import LaunchCard from "./LaunchCard";
 
 type LaunchFeedProps = {

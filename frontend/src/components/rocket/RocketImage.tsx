@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useRocketContext } from "../../context/RocketContext";
-import { cn } from "../../lib/utils";
-import { useThemeContext } from "../../context/ThemeContext";
+import { cn } from "@/lib/utils";
+import { useThemeContext } from "@/context/ThemeContext";
+import { useRocketContext } from "@/context/RocketContext";
 
 const RocketImage = () => {
   const { rocket } = useRocketContext();

@@ -1,7 +1,7 @@
-import { useLaunchContext } from "../../context/LaunchContext";
-import { useThemeContext } from "../../context/ThemeContext";
+import { useLaunchContext } from "@/context/LaunchContext";
+import { useThemeContext } from "@/context/ThemeContext";
 import { useInView } from "react-intersection-observer";
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
 
 const LaunchHeader = () => {

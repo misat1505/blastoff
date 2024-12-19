@@ -19,7 +19,7 @@ export type Launch = {
     description: string;
   };
   links: {
-    live: string;
+    live: string | null;
   };
   agency: {
     id: number;

@@ -5,7 +5,10 @@ import SubmitButton from "../SubmitButton";
 import {
   loginFormSchema,
   LoginFormValues,
-} from "../../validators/LoginForm.validators";
+} from "@/validators/LoginForm.validators";
+import { AuthService } from "@/services/AuthService";
+import { useToast } from "@/hooks/use-toast";
+import { useSessionContext } from "@/context/SessionContext";
 
 const LoginForm = () => {
   const {
@@ -15,14 +18,23 @@ const LoginForm = () => {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
   });
+  const { toast } = useToast();
+  const { setUser } = useSessionContext();
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    await new Promise((res) =>
-      setTimeout(() => {
-        console.log("Form Data:", data);
-        res(null);
-      }, 1000)
-    );
+    try {
+      const user = await AuthService.login(data);
+      setUser(user);
+      toast({
+        title: "Logged in successfully.",
+      });
+    } catch (e: any) {
+      toast({
+        title: "Cannot log in.",
+        description: e.response.data.detail,
+        variant: "destructive",
+      });
+    }
   };
 
   return (

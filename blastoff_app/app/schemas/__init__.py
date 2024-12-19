@@ -1,3 +1,10 @@
+from .user import (
+    UserCreate,
+    UserBase,
+    UserEmailUpdate,
+    UserResponse,
+    UserLogin
+)
 from .agency import AgencyBase, AgencyCreate, AgencyResponse
 from .comment import CommentBase, CommentCreate, CommentResponse
 from .favourite_agency import (

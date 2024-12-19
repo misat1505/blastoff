@@ -1,5 +1,6 @@
 from app.database import Base
 from app.database import engine
+from fastapi.middleware.cors import CORSMiddleware
 from app.routers import (
     user,
     agency,
@@ -13,6 +14,18 @@ from app.routers import (
 from fastapi import FastAPI
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(user.router, prefix="/users", tags=["Users"])
 app.include_router(agency.router, prefix="/agencies", tags=["Agencies"])
@@ -30,7 +43,6 @@ app.include_router(
 
 @app.on_event("startup")
 async def startup():
-    # Use SQLAlchemy's create_all to create tables
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 

@@ -9,11 +9,11 @@ export type Rocket = {
     image_url: string;
   };
   dimensions: {
-    diameter: number;
-    length: number;
-    stages: number;
-    mass: number;
-    thrust: number;
+    diameter: number | null;
+    length: number | null;
+    stages: number | null;
+    mass: number | null;
+    thrust: number | null;
   };
   capacity: {
     leo_capacity: number | null;

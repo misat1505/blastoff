@@ -1,5 +1,5 @@
-import { cn } from "../lib/utils";
-import { LOGO_PATH } from "../constants";
+import { cn } from "@/lib/utils";
+import { LOGO_PATH } from "@/constants";
 import { Button } from "./ui/button";
 
 type ErrorProps = {

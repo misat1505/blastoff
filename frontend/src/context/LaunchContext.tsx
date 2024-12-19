@@ -1,4 +1,4 @@
-import { Launch } from "../types/Launch";
+import { Launch } from "@/types/Launch";
 import { createContext, PropsWithChildren, useContext } from "react";
 
 type LaunchContextProps = PropsWithChildren & {

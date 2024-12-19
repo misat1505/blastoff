@@ -5,7 +5,10 @@ import SubmitButton from "../SubmitButton";
 import {
   registerFormSchema,
   RegisterFormValues,
-} from "../../validators/RegisterForm.validators";
+} from "@/validators/RegisterForm.validators";
+import { AuthService } from "@/services/AuthService";
+import { toast } from "@/hooks/use-toast";
+import { useSessionContext } from "@/context/SessionContext";
 
 const RegisterForm = () => {
   const {
@@ -15,14 +18,23 @@ const RegisterForm = () => {
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
   });
+  const { setUser } = useSessionContext();
 
   const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
-    await new Promise((res) =>
-      setTimeout(() => {
-        console.log("Form Data:", data);
-        res(null);
-      }, 1000)
-    );
+    try {
+      const user = await AuthService.register(data);
+      setUser(user);
+      toast({
+        title: "Registered successfully.",
+        description: `Successfully registered as ${user.username}.`,
+      });
+    } catch (e: any) {
+      toast({
+        title: "Cannot register.",
+        description: e.response?.data?.detail,
+        variant: "destructive",
+      });
+    }
   };
 
   return (

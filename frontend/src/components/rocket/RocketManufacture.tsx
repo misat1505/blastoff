@@ -1,8 +1,8 @@
 import { MdFactory } from "react-icons/md";
 import { TbDimensions } from "react-icons/tb";
-import { useRocketContext } from "../../context/RocketContext";
+import { useRocketContext } from "@/context/RocketContext";
 import { useInView } from "react-intersection-observer";
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 
 const RocketManufacture = () => {
   return (
@@ -30,7 +30,11 @@ const ManufacturerDisplay = () => {
         <MdFactory size={20} />
         <h2 className="text-2xl font-semibold">Manufacturer</h2>
       </div>
-      <img src={rocket.agency.image_url} alt={rocket.agency.name} />
+      <img
+        src={rocket.agency.image_url}
+        alt={rocket.agency.name}
+        className="max-h-12"
+      />
       <p className="text-xl">{rocket.agency.name}</p>
     </div>
   );
@@ -48,6 +52,13 @@ const RocketDimensions = () => {
       <div className="my-1 self-start px-4 text-start">
         {Object.entries(rocket.dimensions).map(([key, value]) => {
           let displayValue: any = value;
+          if (displayValue === null)
+            return (
+              <div key={key} className="text-md space-x-2">
+                <span className="font-bold capitalize">{key}:</span>
+                <span className="text-muted-foreground">N/A</span>
+              </div>
+            );
 
           if (key === "diameter" || key === "length") {
             displayValue = `${value} m`;

@@ -1,4 +1,4 @@
-import { Rocket } from "../types/Rocket";
+import { Rocket } from "@/types/Rocket";
 import { createContext, PropsWithChildren, useContext } from "react";
 
 type RocketContextProps = PropsWithChildren & {
