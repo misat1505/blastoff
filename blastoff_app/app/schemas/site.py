@@ -1,15 +1,20 @@
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel
 
 
 class SiteBase(BaseModel):
     name: str
-    location: Optional[str] = None
+    country: str
+    latitude: float
+    longitude: float
     description: Optional[str] = None
+    image_url: Optional[str] = None
+    map_image_url: Optional[str] = None
 
 
 class SiteCreate(SiteBase):
-    pass
+    id: int
 
 
 class SiteResponse(SiteBase):

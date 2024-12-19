@@ -120,7 +120,7 @@ async def delete_user_route(user_id: int, db: AsyncSession = Depends(get_db)):
 
 @router.put("/users/{user_id}/email", response_model=UserResponse)
 async def update_user_email_route(
-    user_id: int, email_update: UserEmailUpdate, db: AsyncSession = Depends(get_db)
+        user_id: int, email_update: UserEmailUpdate, db: AsyncSession = Depends(get_db)
 ):
     user = await update_user_email(db, user_id, email_update.email)
     if not user:

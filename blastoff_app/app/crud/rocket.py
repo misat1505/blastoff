@@ -1,13 +1,13 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
-from sqlalchemy.exc import NoResultFound
 from app.models import Rocket
 from app.schemas import RocketCreate, RocketResponse
 from fastapi import HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 
 async def create_rocket(db: AsyncSession, rocket_data: RocketCreate) -> RocketResponse:
     db_rocket = Rocket(
+        id=rocket_data.id,
         name=rocket_data.name,
         no_stages=rocket_data.no_stages,
         height=rocket_data.height,
@@ -20,10 +20,13 @@ async def create_rocket(db: AsyncSession, rocket_data: RocketCreate) -> RocketRe
         landings_count=rocket_data.landings_count,
         successful_landings_count=rocket_data.successful_landings_count,
         failed_landings_count=rocket_data.failed_landings_count,
+        pending_launches=rocket_data.pending_launches,
         leo_capacity=rocket_data.leo_capacity,
         gto_capacity=rocket_data.gto_capacity,
         geo_capacity=rocket_data.geo_capacity,
         sso_capacity=rocket_data.sso_capacity,
+        rocket_thrust=rocket_data.rocket_thrust,
+        launch_cost=rocket_data.launch_cost,
         image_url=rocket_data.image_url,
         agency_id=rocket_data.agency_id,
     )

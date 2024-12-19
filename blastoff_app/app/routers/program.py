@@ -1,16 +1,17 @@
-from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
-from app.schemas import ProgramCreate, ProgramResponse
+
 from app.crud import create_program, get_program_by_id, get_all_programs, delete_program
 from app.dependencies import get_db
+from app.schemas import ProgramCreate, ProgramResponse
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
 
 @router.post("/", response_model=ProgramResponse, status_code=201)
 async def create_program_route(
-    program: ProgramCreate, db: AsyncSession = Depends(get_db)
+        program: ProgramCreate, db: AsyncSession = Depends(get_db)
 ):
     return await create_program(db=db, program_data=program)
 
