@@ -67,7 +67,7 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
       />
     );
 
-  const landings = rocket.landings.attempted_landings;
+  const landings = rocket.landings_count;
   const isReusable = landings ? landings > 0 : false;
 
   return (
