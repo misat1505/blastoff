@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { LOGO_PATH } from "../constants";
-import { ROUTES } from "../lib/routes";
-import LoginForm from "../components/login/LoginForm";
+import { LOGO_PATH } from "@/constants";
+import { ROUTES } from "@/lib/routes";
+import LoginForm from "@/components/login/LoginForm";
 
 const LoginPage = () => {
   return (
@@ -15,7 +15,7 @@ const LoginPage = () => {
       <LoginForm />
       <p className="mt-4 text-sm">
         Don&apos;t have an account? Create it{" "}
-        <Link className="text-blue-500 underline" to={ROUTES.REGISTER.path}>
+        <Link className="text-blue-500 underline" to={ROUTES.REGISTER.$path()}>
           here
         </Link>
         .

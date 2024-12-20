@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import LaunchProvider, { useLaunchContext } from "../../context/LaunchContext";
-import { Launch } from "../../types/Launch";
-import { cn } from "../../lib/utils";
-import { formatLaunchDate } from "../../utils/formatLaunchDate";
+import LaunchProvider, { useLaunchContext } from "@/context/LaunchContext";
+import { Launch } from "@/types/Launch";
+import { cn } from "@/lib/utils";
+import { formatLaunchDate } from "@/utils/formatLaunchDate";
 import Tooltip from "../Tooltip";
-import { GOOGLE_MAPS_LOGO_PATH } from "../../constants";
-import { buildGoogleMapsURL } from "../../utils/googleMaps";
-import { ROUTES } from "../../lib/routes";
-import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
+import { GOOGLE_MAPS_LOGO_PATH } from "@/constants";
+import { buildGoogleMapsURL } from "@/utils/googleMaps";
+import { ROUTES } from "@/lib/routes";
+import { getLaunchStatusType } from "@/utils/getLaunchStatusType";
 import { CgDetailsMore } from "react-icons/cg";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
@@ -18,7 +18,7 @@ type LaunchCardProps = {
 
 const LaunchCard = ({ launch }: LaunchCardProps) => {
   return (
-    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-100 transition-all hover:shadow-sm dark:bg-slate-900 sm:grid sm:h-[500px]">
+    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-100/80 transition-all hover:shadow-sm dark:bg-slate-900/80 sm:grid sm:h-[500px]">
       <LaunchProvider launch={launch}>
         <Image />
         <Info />
@@ -131,7 +131,7 @@ const Links = () => {
   return (
     <div className="flex items-center justify-around">
       <StyledLink
-        to={ROUTES.LAUNCH.buildPath({ launchId: launch.id })}
+        to={ROUTES.LAUNCH.$buildPath({ params: { launchId: launch.id } })}
         tooltip="Launch Details"
       >
         <CgDetailsMore />

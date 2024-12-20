@@ -1,24 +1,24 @@
 import { PropsWithChildren, useState } from "react";
-import { ROUTES } from "../../lib/routes";
-import StyledLink from "../StyledLink";
+import { ROUTES } from "@/lib/routes";
 import Tooltip from "../Tooltip";
 import { FaArrowDown } from "react-icons/fa";
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 import FormField from "../FormField";
 import { BiSolidSend } from "react-icons/bi";
-import { Comment as CommentType } from "../../types/Comment";
+import { Comment as CommentType } from "@/types/Comment";
 import { useQuery } from "react-query";
-import { queryKeysBuilder } from "../../utils/queryKeysBuilder";
-import { CommentService } from "../../services/CommentService";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import { CommentService } from "@/services/CommentService";
 import { IoIosArrowDown } from "react-icons/io";
 import { HiReply } from "react-icons/hi";
-import { formatCommentDate } from "../../utils/formatCommentDate";
-import { useCommentSectionContext } from "../../context/CommentSectionContext";
+import { formatCommentDate } from "@/utils/formatCommentDate";
+import { useCommentSectionContext } from "@/context/CommentSectionContext";
 import { RxCross1 } from "react-icons/rx";
 import { ClipLoader } from "react-spinners";
-import { useThemeContext } from "../../context/ThemeContext";
+import { useThemeContext } from "@/context/ThemeContext";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "../ui/button";
+import { useSessionContext } from "@/context/SessionContext";
 
 const CommentSection = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,7 +67,7 @@ const CommentForm = () => {
   const { submitForm, response, errors, register, setResponse, isSubmitting } =
     useCommentSectionContext();
   const { theme } = useThemeContext();
-  const isLoggedIn = true;
+  const { isLoggedIn } = useSessionContext();
 
   return (
     <form
@@ -98,13 +98,19 @@ const CommentForm = () => {
           </div>
         )}
         <div className="flex w-full items-center space-x-4">
-          <FormField
-            {...register("text")}
-            error={errors.text}
-            placeholder="Type a comment..."
-            className="flex-grow"
-            disabled={isSubmitting}
-          />
+          <div className="w-full [&_p]:hidden">
+            <FormField
+              {...register("text")}
+              error={errors.text}
+              placeholder={
+                errors.text ? errors.text.message : "Type a comment..."
+              }
+              className={cn("flex-grow", {
+                "placeholder:text-red-500": errors.text,
+              })}
+              disabled={isSubmitting}
+            />
+          </div>
           <Tooltip content="Send message">
             <button
               type="submit"
@@ -129,7 +135,7 @@ const CommentForm = () => {
               className={buttonVariants({
                 variant: "default",
               })}
-              to={ROUTES.LOGIN.path}
+              to={ROUTES.LOGIN.$path()}
             >
               Log in to comment
             </Link>
@@ -165,7 +171,7 @@ type CommentProps = { comment: CommentType; indent: number };
 const Comment = ({ comment, indent }: CommentProps) => {
   const { setResponse } = useCommentSectionContext();
   const [isExpanded, setIsExpanded] = useState(false);
-  const isLoggedIn = true;
+  const { isLoggedIn } = useSessionContext();
 
   return (
     <>

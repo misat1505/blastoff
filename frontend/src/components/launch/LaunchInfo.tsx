@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom";
-import { useLaunchContext } from "../../context/LaunchContext";
+import { useLaunchContext } from "@/context/LaunchContext";
 import Tooltip from "../Tooltip";
-import { ROUTES } from "../../lib/routes";
+import { ROUTES } from "@/lib/routes";
 import { FaPlay, FaRocket } from "react-icons/fa";
-import { buildGoogleMapsURL } from "../../utils/googleMaps";
-import { GOOGLE_MAPS_LOGO_PATH, LOGO_PATH } from "../../constants";
-import { formatLaunchDate } from "../../utils/formatLaunchDate";
-import { getLaunchStatusType } from "../../utils/getLaunchStatusType";
-import { cn } from "../../lib/utils";
+import { buildGoogleMapsURL } from "@/utils/googleMaps";
+import { GOOGLE_MAPS_LOGO_PATH, LOGO_PATH } from "@/constants";
+import { formatLaunchDate } from "@/utils/formatLaunchDate";
+import { getLaunchStatusType } from "@/utils/getLaunchStatusType";
+import { cn } from "@/lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
-import NotFound from "../NotFound";
 
 const LaunchInfo = () => {
   return (
@@ -125,8 +124,8 @@ const SiteInfo = () => {
 
 const RocketPreview = () => {
   const { launch } = useLaunchContext();
-  const rocketPageLink = ROUTES.ROCKET.buildPath({
-    rocketId: launch.rocket.id.toString(),
+  const rocketPageLink = ROUTES.ROCKET.$buildPath({
+    params: { rocketId: launch.rocket.id.toString() },
   });
 
   return (
@@ -146,10 +145,14 @@ const LaunchLinks = () => {
   return (
     <div>
       <h2 className="mb-8 text-xl font-semibold">Links</h2>
-      <StyledLink to={launch.links.live} tooltip="Open video" target="_blank">
-        <FaPlay />
-        <span className="text-sm font-semibold">Video</span>
-      </StyledLink>
+      {launch.links.live ? (
+        <StyledLink to={launch.links.live} tooltip="Open video" target="_blank">
+          <FaPlay />
+          <span className="text-sm font-semibold">Video</span>
+        </StyledLink>
+      ) : (
+        <p className="text-sm text-muted-foreground">No available video.</p>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import CountUp from "react-countup";
-import { useRocketContext } from "../../context/RocketContext";
+import { useRocketContext } from "@/context/RocketContext";
 import { FaCheck } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { useInView } from "react-intersection-observer";
@@ -67,8 +67,8 @@ const RocketLandingCard = ({ icon, title, value }: RocketLaunchCardProps) => {
 
   const getComponent = () => {
     if (typeof value === "string") return value;
-    if (value && inView) return <CountUp end={value} duration={1.5} />;
-    if (value) return "";
+    if (value !== null && inView) return <CountUp end={value} duration={1.5} />;
+    if (value !== null) return "";
     return <p className="text-muted-foreground">N/A</p>;
   };
 
