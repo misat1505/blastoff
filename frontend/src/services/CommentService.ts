@@ -10,6 +10,7 @@ export const directComments: Comment[] = [
     user: {
       id: 101,
       username: "john_doe",
+      email: "email@gmail.com",
     },
   },
   {
@@ -19,6 +20,7 @@ export const directComments: Comment[] = [
     user: {
       id: 102,
       username: "jane_smith",
+      email: "email@gmail.com",
     },
   },
   {
@@ -28,6 +30,7 @@ export const directComments: Comment[] = [
     user: {
       id: 103,
       username: "dev_guru",
+      email: "email@gmail.com",
     },
   },
 ];
@@ -40,6 +43,7 @@ export const replyComments: Comment[] = [
     user: {
       id: 104,
       username: "critical_thinker",
+      email: "email@gmail.com",
     },
   },
   {
@@ -49,6 +53,7 @@ export const replyComments: Comment[] = [
     user: {
       id: 105,
       username: "curious_reader",
+      email: "email@gmail.com",
     },
   },
   {
@@ -58,6 +63,7 @@ export const replyComments: Comment[] = [
     user: {
       id: 106,
       username: "visual_learner",
+      email: "email@gmail.com",
     },
   },
 ];
@@ -90,6 +96,7 @@ export class CommentService {
           user: {
             id: 106,
             username: "visual_learner",
+            email: "email@gmail.com",
           },
         };
         return res(newComment);
