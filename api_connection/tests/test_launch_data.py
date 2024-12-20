@@ -4,7 +4,7 @@ import random
 import pytest
 from hypothesis import given, strategies as st
 
-from api_connection.src.launch_data import LaunchData, LaunchDataList, InvalidAPIData, InvalidDBData
+from launch_data import LaunchData, LaunchDataList, InvalidAPIData, InvalidDBData
 
 
 @given(st.text(min_size=1), st.datetimes().map(lambda dt: dt.isoformat()), st.text())
