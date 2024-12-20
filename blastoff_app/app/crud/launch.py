@@ -1,8 +1,10 @@
-from app.models import Launch
+from app.models import Launch, Site, Agency, Rocket
 from app.schemas import LaunchCreate, LaunchResponse
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
 from sqlalchemy.future import select
+from datetime import datetime, timezone
 
 
 async def create_launch(db: AsyncSession, launch_data: LaunchCreate) -> LaunchResponse:
@@ -47,3 +49,21 @@ async def delete_launch(db: AsyncSession, launch_id: str):
     await db.delete(launch)
     await db.commit()
     return launch
+
+
+async def get_future_launches_sorted(db: AsyncSession):
+    current_time = datetime.now(timezone.utc)
+
+    result = await db.execute(
+        select(Launch)
+        .join(Rocket, Rocket.id == Launch.rocket_id)
+        .join(Agency, Agency.id == Rocket.agency_id)
+        .join(Site, Site.id == Launch.site_id)
+        .where(Launch.date > current_time)
+        .order_by(Launch.date.asc())
+        .options(
+            joinedload(Launch.rocket).joinedload(Rocket.agency),
+            joinedload(Launch.site),
+        )
+    )
+    return result.scalars().all()

@@ -21,7 +21,7 @@ from .favourite_launch import (
     delete_favourite_launch_by_id,
     delete_favourite_launch_by_user_or_launch,
 )
-from .launch import get_all_launches, get_launch_by_id, create_launch, delete_launch
+from .launch import get_all_launches, get_launch_by_id, create_launch, delete_launch, get_future_launches_sorted
 from .program import get_all_programs, get_program_by_id, create_program, delete_program
 from .rocket import get_all_rockets, get_rocket_by_id, create_rocket, delete_rocket
 from .site import get_all_sites, get_site_by_id, create_site, delete_site
