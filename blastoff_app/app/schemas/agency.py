@@ -6,10 +6,11 @@ class AgencyBase(BaseModel):
     country: str
     description: str
     website: str
+    image_url: str
 
 
 class AgencyCreate(AgencyBase):
-    pass
+    id: int
 
 
 class AgencyResponse(AgencyBase):

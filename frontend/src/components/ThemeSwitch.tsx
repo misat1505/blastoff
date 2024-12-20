@@ -1,8 +1,8 @@
-import { Switch } from "./ui/switch";
+import { Switch } from "./ui/theme-switch";
 import { MdSunny } from "react-icons/md";
 import { IoMoon } from "react-icons/io5";
 import Tooltip from "./Tooltip";
-import { useThemeContext, Theme } from "../context/ThemeContext";
+import { useThemeContext, Theme } from "@/context/ThemeContext";
 
 type ThemeIconProps = {
   theme: Theme;

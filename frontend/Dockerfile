@@ -1,8 +1,13 @@
-FROM node:14-alpine
+FROM node:18
 
 WORKDIR /frontend
 COPY package*.json ./
 RUN npm install
 COPY . .
 
-CMD ["npm", "start"]
+ENV VITE_API_URL=http://localhost:8000
+EXPOSE 3000
+
+RUN npm run build
+
+CMD ["npm", "run", "preview"]

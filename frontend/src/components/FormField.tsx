@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 import { FieldError } from "react-hook-form";
 import { Input } from "./ui/input";
 
@@ -10,7 +10,7 @@ type FormFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
 const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
   ({ error, className, ...rest }, ref) => {
     return (
-      <div>
+      <div className="w-full">
         <Input
           ref={ref}
           {...rest}

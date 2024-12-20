@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { SATTELITES_IMAGES } from "../../constants";
-import { useRocketContext } from "../../context/RocketContext";
+import { SATTELITES_IMAGES } from "@/constants";
+import { useRocketContext } from "@/context/RocketContext";
 import Tooltip from "../Tooltip";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 
 const RocketCapacity = () => {
   const { rocket } = useRocketContext();
@@ -52,7 +52,7 @@ const RocketCapacity = () => {
   const isReusable = landings && landings > 0;
 
   return (
-    <section className="w-full bg-slate-300 py-8 dark:bg-slate-700">
+    <section className="w-full bg-slate-100/80 py-8 dark:bg-slate-900/80">
       <h2 className="mb-8 text-center text-4xl font-semibold">
         Payload Capacity (kg)
       </h2>
@@ -142,19 +142,19 @@ const RocketCapacityDisplayer = ({
     capacity && inView ? (
       <CountUp end={capacity} duration={1.5} separator="," />
     ) : (
-      "N/A"
+      <p className="text-muted-foreground">N/A</p>
     );
 
   return (
-    <p className="my-8 text-4xl font-bold" ref={ref}>
+    <div className="my-8 text-4xl font-bold" ref={ref}>
       {component}
-    </p>
+    </div>
   );
 };
 
 const ReusabilityNote = () => {
   return (
-    <div className="mt-8 px-2 text-center">
+    <div className="mt-8 px-2 text-center text-muted-foreground">
       <span className="font-semibold">Note:</span> These values represent
       vehicle capacity in its reusable mode.
     </div>

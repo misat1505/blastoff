@@ -1,16 +1,17 @@
-from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
-from app.schemas import CommentCreate, CommentResponse
+
 from app.crud import create_comment, get_comment_by_id, get_all_comments, delete_comment
 from app.dependencies import get_db
+from app.schemas import CommentCreate, CommentResponse
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
 
 @router.post("/", response_model=CommentResponse, status_code=201)
 async def create_comment_route(
-    comment: CommentCreate, db: AsyncSession = Depends(get_db)
+        comment: CommentCreate, db: AsyncSession = Depends(get_db)
 ):
     return await create_comment(db=db, comment_data=comment)
 
