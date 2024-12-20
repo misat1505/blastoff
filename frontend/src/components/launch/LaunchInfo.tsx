@@ -40,7 +40,7 @@ const GeneralLaunchInfo = () => {
 
   return (
     <div className="my-4 rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
-      <h2 className="text-2xl font-semibold">{launch.name}</h2>
+      <h2 className="text-2xl font-semibold">{launch.mission_name}</h2>
       <p className="text-sm text-muted-foreground">{launch.description}</p>
       <TimeDisplay />
       <div className="mt-8">
@@ -89,8 +89,8 @@ const SiteInfo = () => {
   return (
     <div className="mt-4 flex flex-col gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900 sm:mt-0">
       <h2>
-        <span className="font-semibold">{launch.name}</span> is schedule for
-        blastoff from {launch.site.name}, {launch.site.country}
+        <span className="font-semibold">{launch.mission_name}</span> is schedule
+        for blastoff from {launch.site.name}, {launch.site.country}
       </h2>
       <div className="relative flex-grow">
         <div className="absolute right-4 top-4">

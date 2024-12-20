@@ -15,7 +15,7 @@ const LaunchHeader = () => {
       <div className="relative">
         <img
           src={launch.image_url}
-          alt={launch.name}
+          alt={launch.mission_name}
           className="w-full rounded-sm object-cover shadow-lg"
         />
         <div
@@ -29,7 +29,7 @@ const LaunchHeader = () => {
               theme === "dark" ? "2px 2px 4px black" : "2px 2px 4px white",
           }}
         >
-          <h2>{launch.name}</h2>
+          <h2>{launch.mission_name}</h2>
           <LaunchCountdown
             date={launch.date}
             className="text-2xl font-semibold sm:text-4xl 2xl:text-4xl"
@@ -57,7 +57,7 @@ const LaunchBar = ({ isVisible }: LaunchBarProps) => {
         }
       )}
     >
-      <p>{launch.name}</p>
+      <p>{launch.mission_name}</p>
       <LaunchCountdown date={launch.date} />
     </div>
   );

@@ -32,7 +32,7 @@ const Image = () => {
     <img
       className="col-span-1 max-h-40 w-full object-cover sm:h-full sm:max-h-full"
       src={launch.image_url}
-      alt={launch.name}
+      alt={launch.mission_name}
     />
   );
 };
@@ -53,7 +53,7 @@ const Header = () => {
 
   return (
     <div>
-      <h2 className="text-xl font-extrabold">{launch.name}</h2>
+      <h2 className="text-xl font-extrabold">{launch.mission_name}</h2>
       <p>{launch.rocket.agency.name}</p>
       <LaunchSiteDisplayer />
     </div>

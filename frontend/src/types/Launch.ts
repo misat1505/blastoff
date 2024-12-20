@@ -3,7 +3,7 @@ import { Site } from "./Site";
 
 export type Launch = {
   id: string;
-  name: string;
+  mission_name: string;
   description: string | null;
   date: Date;
   image_url: string;
