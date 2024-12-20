@@ -1,4 +1,4 @@
-from app.crud import create_rocket, get_all_rockets, get_rocket_by_id, delete_rocket
+from app.crud import create_rocket, get_all_rockets, get_rocket_by_id, delete_rocket, get_detailed_rocket_by_id
 from app.dependencies import get_db
 from app.schemas import RocketCreate, RocketResponse
 from fastapi import APIRouter, HTTPException, Depends
@@ -17,6 +17,14 @@ async def create_rocket_route(rocket: RocketCreate, db: AsyncSession = Depends(g
 async def get_rockets(db: AsyncSession = Depends(get_db)):
     rockets = await get_all_rockets(db=db)
     return rockets
+
+
+@router.get("/{rocket_id}/details")
+async def get_detailed_rocket(rocket_id: int, db: AsyncSession = Depends(get_db)):
+    rocket = await get_detailed_rocket_by_id(db=db, rocket_id=rocket_id)
+    if rocket is None:
+        raise HTTPException(status_code=404, detail="Rocket not found")
+    return rocket
 
 
 @router.get("/{rocket_id}", response_model=RocketResponse)

@@ -1,8 +1,9 @@
-from app.models import Rocket
+from app.models import Rocket, Agency
 from app.schemas import RocketCreate, RocketResponse
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.orm import joinedload
 
 
 async def create_rocket(db: AsyncSession, rocket_data: RocketCreate) -> RocketResponse:
@@ -57,3 +58,13 @@ async def delete_rocket(db: AsyncSession, rocket_id: int):
     await db.delete(rocket)
     await db.commit()
     return rocket
+
+
+async def get_detailed_rocket_by_id(db: AsyncSession, rocket_id: int):
+    result = await db.execute(
+        select(Rocket)
+        .join(Agency, Agency.id == Rocket.agency_id)
+        .where(Rocket.id == rocket_id)
+        .options(joinedload(Rocket.agency))
+    )
+    return result.scalar_one_or_none()

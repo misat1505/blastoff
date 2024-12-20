@@ -23,7 +23,7 @@ from .favourite_launch import (
 )
 from .launch import get_all_launches, get_launch_by_id, create_launch, delete_launch, get_future_launches_sorted, get_detailed_launch
 from .program import get_all_programs, get_program_by_id, create_program, delete_program
-from .rocket import get_all_rockets, get_rocket_by_id, create_rocket, delete_rocket
+from .rocket import get_all_rockets, get_rocket_by_id, create_rocket, delete_rocket, get_detailed_rocket_by_id
 from .site import get_all_sites, get_site_by_id, create_site, delete_site
 from .user import (
     create_user,
