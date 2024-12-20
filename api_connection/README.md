@@ -1,6 +1,15 @@
 # Description
 This module enables communication with external API. 
 
+# Install
+To install all dependencies, simply type:
+```bash
+poetry shell
+poetry install
+```
+
+Use `poetry install --only main` to skip development dependencies
+
 # Use case:
 ```python
 from api_connector import APIDataConnector
