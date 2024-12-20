@@ -67,3 +67,20 @@ async def get_future_launches_sorted(db: AsyncSession):
         )
     )
     return result.scalars().all()
+
+
+async def get_detailed_launch(db: AsyncSession, launch_id: str):
+    current_time = datetime.now(timezone.utc)
+
+    result = await db.execute(
+        select(Launch)
+        .join(Rocket, Rocket.id == Launch.rocket_id)
+        .join(Agency, Agency.id == Rocket.agency_id)
+        .join(Site, Site.id == Launch.site_id)
+        .where(Launch.id == launch_id, Launch.date > current_time)
+        .options(
+            joinedload(Launch.rocket).joinedload(Rocket.agency),
+            joinedload(Launch.site),
+        )
+    )
+    return result.scalars().first()

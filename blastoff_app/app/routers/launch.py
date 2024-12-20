@@ -1,6 +1,6 @@
 from typing import List
 
-from app.crud import create_launch, get_launch_by_id, get_all_launches, delete_launch, get_future_launches_sorted
+from app.crud import create_launch, get_launch_by_id, get_all_launches, delete_launch, get_future_launches_sorted, get_detailed_launch
 from app.dependencies import get_db
 from app.schemas import LaunchCreate, LaunchResponse
 from fastapi import APIRouter, HTTPException, Depends
@@ -17,10 +17,17 @@ async def create_launch_route(launch: LaunchCreate, db: AsyncSession = Depends(g
 @router.get("/future")
 async def get_future_launches(db: AsyncSession = Depends(get_db)):
     launches = await get_future_launches_sorted(db=db)
-    print(launches)
     if not launches:
         raise HTTPException(status_code=404, detail="No future launches found")
     return launches
+
+
+@router.get("/{launch_id}/details")
+async def get_detailed_launch_by_id(launch_id: str, db: AsyncSession = Depends(get_db)):
+    launch = await get_detailed_launch(db=db, launch_id=launch_id)
+    if not launch:
+        raise HTTPException(status_code=404, detail="Launch not found")
+    return launch
 
 
 @router.get("/{launch_id}", response_model=LaunchResponse)
