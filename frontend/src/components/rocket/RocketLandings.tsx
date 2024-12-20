@@ -25,17 +25,17 @@ const RocketLandings = () => {
     {
       icon: <PiAirplaneLandingFill size={iconSize} />,
       title: "Attempts",
-      value: rocket.landings.attempted_landings,
+      value: rocket.landings_count,
     },
     {
       icon: <FaCheck size={iconSize} className="text-green-500" />,
       title: "Successes",
-      value: rocket.landings.successful_landings,
+      value: rocket.successful_landings_count,
     },
     {
       icon: <RxCross2 size={iconSize} className="text-red-500" />,
       title: "Failures",
-      value: rocket.landings.failed_landings,
+      value: rocket.failed_landings_count,
     },
   ];
 

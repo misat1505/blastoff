@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import LaunchProvider, { useLaunchContext } from "@/context/LaunchContext";
 import { Launch } from "@/types/Launch";
-import { cn } from "@/lib/utils";
 import { formatLaunchDate } from "@/utils/formatLaunchDate";
 import Tooltip from "../Tooltip";
 import { GOOGLE_MAPS_LOGO_PATH } from "@/constants";
 import { buildGoogleMapsURL } from "@/utils/googleMaps";
 import { ROUTES } from "@/lib/routes";
-import { getLaunchStatusType } from "@/utils/getLaunchStatusType";
 import { CgDetailsMore } from "react-icons/cg";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
@@ -33,7 +31,7 @@ const Image = () => {
   return (
     <img
       className="col-span-1 max-h-40 w-full object-cover sm:h-full sm:max-h-full"
-      src={launch.image}
+      src={launch.image_url}
       alt={launch.name}
     />
   );
@@ -56,7 +54,7 @@ const Header = () => {
   return (
     <div>
       <h2 className="text-xl font-extrabold">{launch.name}</h2>
-      <p>{launch.agency.name}</p>
+      <p>{launch.rocket.agency.name}</p>
       <LaunchSiteDisplayer />
     </div>
   );
@@ -97,10 +95,10 @@ const Countdown = () => {
   return (
     <div>
       <LaunchCountdown
-        date={launch.net}
+        date={launch.date}
         className="text-nowrap text-2xl font-semibold sm:text-xl 2xl:text-3xl"
       />
-      <div>{formatLaunchDate(launch.net)}</div>
+      <div>{formatLaunchDate(launch.date)}</div>
     </div>
   );
 };
@@ -108,19 +106,9 @@ const Countdown = () => {
 const Status = () => {
   const { launch } = useLaunchContext();
 
-  const statusType = getLaunchStatusType(launch.status.id);
-
-  const getColor = (): string => {
-    if (statusType === "success") return "text-green-500";
-    if (statusType === "failure") return "text-red-500";
-    return "";
-  };
-
   return (
-    <Tooltip content={launch.status.description}>
-      <h2 className={cn("text-2xl font-bold", getColor())}>
-        {launch.status.name}
-      </h2>
+    <Tooltip content={launch.status_description}>
+      <h2 className="text-2xl font-bold">{launch.status_name}</h2>
     </Tooltip>
   );
 };

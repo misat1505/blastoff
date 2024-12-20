@@ -23,7 +23,7 @@ const RocketImage = () => {
       )}
     >
       <img
-        src={rocket.image_url}
+        src={rocket.image_url || undefined}
         alt={rocket.name}
         className="h-full w-full object-cover transition-all duration-1000 ease-out"
       />

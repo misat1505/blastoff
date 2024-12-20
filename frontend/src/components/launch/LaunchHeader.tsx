@@ -14,7 +14,7 @@ const LaunchHeader = () => {
       <LaunchBar isVisible={!inView} />
       <div className="relative">
         <img
-          src={launch.image}
+          src={launch.image_url}
           alt={launch.name}
           className="w-full rounded-sm object-cover shadow-lg"
         />
@@ -31,7 +31,7 @@ const LaunchHeader = () => {
         >
           <h2>{launch.name}</h2>
           <LaunchCountdown
-            date={launch.net}
+            date={launch.date}
             className="text-2xl font-semibold sm:text-4xl 2xl:text-4xl"
           />
         </div>
@@ -58,7 +58,7 @@ const LaunchBar = ({ isVisible }: LaunchBarProps) => {
       )}
     >
       <p>{launch.name}</p>
-      <LaunchCountdown date={launch.net} />
+      <LaunchCountdown date={launch.date} />
     </div>
   );
 };

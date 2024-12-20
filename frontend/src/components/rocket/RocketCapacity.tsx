@@ -12,7 +12,7 @@ const RocketCapacity = () => {
     {
       name: "Low Earth Orbit",
       wiki: "https://en.wikipedia.org/wiki/Low_Earth_orbit",
-      capacity: rocket.capacity.leo_capacity,
+      capacity: rocket.leo_capacity,
       image: {
         url: SATTELITES_IMAGES.HUBBLE,
         description: "Hubble Space Telescope",
@@ -21,7 +21,7 @@ const RocketCapacity = () => {
     {
       name: "Geostationary Earth Orbit",
       wiki: "https://en.wikipedia.org/wiki/Geostationary_orbit",
-      capacity: rocket.capacity.gto_capacity,
+      capacity: rocket.gto_capacity,
       image: {
         url: SATTELITES_IMAGES.WHEATHER,
         description: "GOES-16 Weather Satellite",
@@ -30,7 +30,7 @@ const RocketCapacity = () => {
     {
       name: "Direct Geostationary",
       wiki: "https://en.wikipedia.org/wiki/Geostationary_orbit",
-      capacity: rocket.capacity.geo_capacity,
+      capacity: rocket.geo_capacity,
       image: {
         url: SATTELITES_IMAGES.TV,
         description: "DirecTV Satellite",
@@ -39,7 +39,7 @@ const RocketCapacity = () => {
     {
       name: "Sun-Synchronous",
       wiki: "https://en.wikipedia.org/wiki/Sun-synchronous_orbit",
-      capacity: rocket.capacity.sso_capacity,
+      capacity: rocket.sso_capacity,
       image: {
         url: SATTELITES_IMAGES.LANDSAT,
         description: "Landsat 8",
@@ -47,7 +47,7 @@ const RocketCapacity = () => {
     },
   ];
 
-  const landings = rocket.landings.attempted_landings;
+  const landings = rocket.landings_count;
 
   const isReusable = landings && landings > 0;
 
