@@ -23,5 +23,6 @@ class Comment(Base):
     user = relationship("User", back_populates="comments")
     launch = relationship("Launch", back_populates="comments")
     parent_comment = relationship("Comment", back_populates="replies", remote_side=[id])
-    replies = relationship("Comment", back_populates="parent_comment", cascade="all, delete-orphan")
-
+    replies = relationship(
+        "Comment", back_populates="parent_comment", cascade="all, delete-orphan"
+    )
