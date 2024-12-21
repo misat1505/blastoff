@@ -1,7 +1,8 @@
-from app.models import Site
-from app.schemas import SiteCreate
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+
+from app.models import Site
+from app.schemas import SiteCreate
 
 
 async def create_site(db: AsyncSession, site_data: SiteCreate):

@@ -1,6 +1,8 @@
-import jwt
 from datetime import datetime, timedelta, timezone
+
+import jwt
 from fastapi import HTTPException
+
 from app.env import JWT_SECRET
 
 ALGORITHM = "HS256"
@@ -8,7 +10,9 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 def get_expires_timestamp() -> datetime:
-    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.now(timezone.utc) + timedelta(
+        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+    )
     return expire
 
 

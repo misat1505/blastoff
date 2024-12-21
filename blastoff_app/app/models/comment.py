@@ -1,7 +1,8 @@
-from app.database import Base
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
+from app.database import Base
 
 
 class Comment(Base):
@@ -14,7 +15,9 @@ class Comment(Base):
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
     launch_id = Column(
-        String(500), ForeignKey("launches.id", ondelete="CASCADE"), nullable=False
+        String(500),
+        ForeignKey("launches.id", ondelete="CASCADE"),
+        nullable=False,
     )
     parent_comment_id = Column(
         Integer, ForeignKey("comments.id", ondelete="CASCADE"), nullable=True
@@ -22,5 +25,11 @@ class Comment(Base):
 
     user = relationship("User", back_populates="comments")
     launch = relationship("Launch", back_populates="comments")
-    parent_comment = relationship("Comment", back_populates="replies", remote_side=[id])
-    replies = relationship("Comment", back_populates="parent_comment", cascade="all, delete-orphan")
+    parent_comment = relationship(
+        "Comment", back_populates="replies", remote_side=[id]
+    )
+    replies = relationship(
+        "Comment",
+        back_populates="parent_comment",
+        cascade="all, delete-orphan",
+    )

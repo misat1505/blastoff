@@ -1,10 +1,13 @@
-from app.models import Agency
-from app.schemas import AgencyCreate, AgencyResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
+from app.models import Agency
+from app.schemas import AgencyCreate, AgencyResponse
 
-async def create_agency(db: AsyncSession, agency_data: AgencyCreate) -> AgencyResponse:
+
+async def create_agency(
+    db: AsyncSession, agency_data: AgencyCreate
+) -> AgencyResponse:
     db_agency = Agency(
         id=agency_data.id,
         name=agency_data.name,
@@ -31,7 +34,9 @@ async def get_agency_by_id(db: AsyncSession, agency_id: int) -> AgencyResponse:
     return agency
 
 
-async def update_agency(db: AsyncSession, agency_id: int, agency_data: AgencyCreate):
+async def update_agency(
+    db: AsyncSession, agency_id: int, agency_data: AgencyCreate
+):
     agency = await get_agency_by_id(db, agency_id)
     if not agency:
         return None
