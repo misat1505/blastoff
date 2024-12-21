@@ -12,14 +12,24 @@ from .favourite_launch import (
     get_all_favourite_launches_route,
     get_favourite_launch,
 )
-from .launch import create_launch_route, delete_launch_route, get_launch, get_launches
+from .launch import (
+    create_launch_route,
+    delete_launch_route,
+    get_launch,
+    get_launches,
+)
 from .program import (
     create_program_route,
     delete_program_route,
     get_program,
     get_programs,
 )
-from .rocket import create_rocket_route, delete_rocket_route, get_rocket, get_rockets
+from .rocket import (
+    create_rocket_route,
+    delete_rocket_route,
+    get_rocket,
+    get_rockets,
+)
 from .site import create_site_route, delete_site_route, get_site, get_sites
 from .user import (
     delete_user_route,

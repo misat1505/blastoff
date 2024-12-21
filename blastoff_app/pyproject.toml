@@ -55,4 +55,4 @@ distribution = false
 [tool.pdm.scripts]
 black = "black ."
 isort = "isort ."
-format = {composite = ["black", "isort"]}
+format = {composite = ["isort", "black"]}

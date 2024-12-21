@@ -3,7 +3,12 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.crud import create_comment, delete_comment, get_all_comments, get_comment_by_id
+from app.crud import (
+    create_comment,
+    delete_comment,
+    get_all_comments,
+    get_comment_by_id,
+)
 from app.dependencies import get_db
 from app.schemas import CommentCreate, CommentResponse
 

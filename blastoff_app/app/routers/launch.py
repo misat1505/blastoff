@@ -3,7 +3,12 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.crud import create_launch, delete_launch, get_all_launches, get_launch_by_id
+from app.crud import (
+    create_launch,
+    delete_launch,
+    get_all_launches,
+    get_launch_by_id,
+)
 from app.dependencies import get_db
 from app.schemas import LaunchCreate, LaunchResponse
 

@@ -1,7 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.crud import create_rocket, delete_rocket, get_all_rockets, get_rocket_by_id
+from app.crud import (
+    create_rocket,
+    delete_rocket,
+    get_all_rockets,
+    get_rocket_by_id,
+)
 from app.dependencies import get_db
 from app.schemas import RocketCreate, RocketResponse
 
