@@ -1,11 +1,14 @@
-from app.models import Launch
-from app.schemas import LaunchCreate, LaunchResponse
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
+from app.models import Launch
+from app.schemas import LaunchCreate, LaunchResponse
 
-async def create_launch(db: AsyncSession, launch_data: LaunchCreate) -> LaunchResponse:
+
+async def create_launch(
+    db: AsyncSession, launch_data: LaunchCreate
+) -> LaunchResponse:
     db_launch = Launch(
         id=launch_data.id,
         last_updated=launch_data.last_updated,

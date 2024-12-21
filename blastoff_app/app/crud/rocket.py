@@ -1,11 +1,14 @@
-from app.models import Rocket
-from app.schemas import RocketCreate, RocketResponse
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
+from app.models import Rocket
+from app.schemas import RocketCreate, RocketResponse
 
-async def create_rocket(db: AsyncSession, rocket_data: RocketCreate) -> RocketResponse:
+
+async def create_rocket(
+    db: AsyncSession, rocket_data: RocketCreate
+) -> RocketResponse:
     db_rocket = Rocket(
         id=rocket_data.id,
         name=rocket_data.name,

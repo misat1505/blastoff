@@ -1,14 +1,17 @@
-from app.crud import create_site, get_all_sites, get_site_by_id, delete_site
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.crud import create_site, delete_site, get_all_sites, get_site_by_id
 from app.dependencies import get_db
 from app.schemas import SiteCreate, SiteResponse
-from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
 
 @router.post("/", response_model=SiteResponse)
-async def create_site_route(site: SiteCreate, db: AsyncSession = Depends(get_db)):
+async def create_site_route(
+    site: SiteCreate, db: AsyncSession = Depends(get_db)
+):
     db_site = await create_site(db=db, site_data=site)
     return db_site
 

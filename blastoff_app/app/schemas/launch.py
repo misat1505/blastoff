@@ -18,8 +18,12 @@ class LaunchBase(BaseModel):
 class LaunchCreate(LaunchBase):
     id: str
     rocket_id: int = Field(..., description="ID of the associated rocket")
-    program_id: Optional[int] = Field(..., description="ID of the associated program")
-    site_id: Optional[int] = Field(..., description="ID of the associated site")
+    program_id: Optional[int] = Field(
+        ..., description="ID of the associated program"
+    )
+    site_id: Optional[int] = Field(
+        ..., description="ID of the associated site"
+    )
 
 
 class LaunchResponse(LaunchBase):

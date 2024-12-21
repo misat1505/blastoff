@@ -1,7 +1,8 @@
-from app.database import Base
-from sqlalchemy import Column, Integer, ForeignKey, DateTime, String
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
+from app.database import Base
 
 
 class FavouriteLaunch(Base):
@@ -13,7 +14,9 @@ class FavouriteLaunch(Base):
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
     launch_id = Column(
-        String(500), ForeignKey("launches.id", ondelete="CASCADE"), nullable=False
+        String(500),
+        ForeignKey("launches.id", ondelete="CASCADE"),
+        nullable=False,
     )
 
     user = relationship("User", back_populates="favourite_launches")
