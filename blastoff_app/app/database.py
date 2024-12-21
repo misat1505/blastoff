@@ -1,8 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
-DATABASE_URL = "mysql+aiomysql://root:@database/blastoff_db"
+from app.env import DATABASE_URL
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 

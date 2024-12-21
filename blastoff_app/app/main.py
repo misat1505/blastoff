@@ -12,11 +12,12 @@ from app.routers import (
     favourite_launch,
 )
 from fastapi import FastAPI
+from app.env import FRONTEND_URL
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",
+    FRONTEND_URL,
 ]
 
 app.add_middleware(

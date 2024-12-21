@@ -29,6 +29,7 @@ dependencies = [
     "uvicorn==0.32.0",
     "pip==24.3.1",
     "PyJWT>=2.10.1",
+    "python-dotenv>=1.0.1",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
