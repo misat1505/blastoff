@@ -5,6 +5,7 @@ from app.database import Base, engine
 from app.env import FRONTEND_URL
 from app.routers import (
     agency,
+    comment,
     favourite_agency,
     favourite_launch,
     launch,
@@ -29,6 +30,7 @@ app.add_middleware(
 )
 
 app.include_router(user.router, prefix="/users", tags=["Users"])
+app.include_router(comment.router, prefix="/comments", tags=["Comments"])
 app.include_router(agency.router, prefix="/agencies", tags=["Agencies"])
 app.include_router(
     favourite_agency.router,

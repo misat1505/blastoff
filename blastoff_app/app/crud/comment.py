@@ -5,6 +5,9 @@ from sqlalchemy.future import select
 from app.models import Comment
 from app.schemas import CommentCreate, CommentResponse
 
+from typing import Optional
+from sqlalchemy.orm import joinedload
+
 
 async def create_comment(
     db: AsyncSession, comment_data: CommentCreate
@@ -44,3 +47,16 @@ async def delete_comment(db: AsyncSession, comment_id: int):
     await db.delete(comment)
     await db.commit()
     return comment
+
+
+async def get_comments_by_launch_id_and_parent(
+    db: AsyncSession, launch_id: str, parent_comment_id: Optional[int] = None
+):
+    query = (
+        select(Comment)
+        .where(Comment.launch_id == launch_id)
+        .where(Comment.parent_comment_id == parent_comment_id)
+        .options(joinedload(Comment.replies))
+    )
+    result = await db.execute(query)
+    return result.scalars().all()

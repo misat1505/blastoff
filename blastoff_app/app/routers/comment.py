@@ -1,13 +1,13 @@
-from typing import List
+from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud import (
     create_comment,
     delete_comment,
-    get_all_comments,
     get_comment_by_id,
+    get_comments_by_launch_id_and_parent
 )
 from app.dependencies import get_db
 from app.schemas import CommentCreate, CommentResponse
@@ -31,8 +31,17 @@ async def get_comment(comment_id: int, db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/", response_model=List[CommentResponse])
-async def get_comments(db: AsyncSession = Depends(get_db)):
-    return await get_all_comments(db=db)
+async def get_comments(
+    launch_id: str,
+    parent_comment_id: Optional[int] = Query(
+        None, description="Parent comment ID to filter replies. None for top-level comments."
+    ),
+    db: AsyncSession = Depends(get_db),
+):
+    comments = await get_comments_by_launch_id_and_parent(
+        db=db, launch_id=launch_id, parent_comment_id=parent_comment_id
+    )
+    return comments
 
 
 @router.delete("/{comment_id}", response_model=CommentResponse)
