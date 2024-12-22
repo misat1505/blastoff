@@ -1,7 +1,6 @@
-import sentry_sdk
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
+from app.config import init_sentry, setup_cors
 from app.database import Base, engine
 from app.routers import (
     agency,
@@ -14,25 +13,12 @@ from app.routers import (
     site,
     user,
 )
-from app.settings import settings
 
-sentry_sdk.init(
-    dsn=settings.sentry_dsn,
-    traces_sample_rate=1.0,
-    _experiments={
-        "continuous_profiling_auto_start": True,
-    },
-)
+init_sentry()
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[settings.frontend_url],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+setup_cors(app)
 
 app.include_router(user.router, prefix="/users", tags=["Users"])
 app.include_router(comment.router, prefix="/comments", tags=["Comments"])
