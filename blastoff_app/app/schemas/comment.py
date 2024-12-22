@@ -1,7 +1,9 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel
+
+from app.schemas.user import UserResponse
 
 
 class CommentBase(BaseModel):
@@ -17,10 +19,9 @@ class CommentCreate(CommentBase):
 class CommentResponse(CommentBase):
     id: int
     added_at: datetime
-    user_id: int
+    user: UserResponse
     launch_id: str
     parent_comment_id: Optional[int] = None
-    replies: Optional[List["CommentResponse"]] = None
 
     class Config:
         from_attributes = True

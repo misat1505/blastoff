@@ -1,12 +1,12 @@
+from typing import Optional
+
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.orm import joinedload
 
 from app.models import Comment
 from app.schemas import CommentCreate, CommentResponse
-
-from typing import Optional
-from sqlalchemy.orm import joinedload
 
 
 async def create_comment(
@@ -56,7 +56,7 @@ async def get_comments_by_launch_id_and_parent(
         select(Comment)
         .where(Comment.launch_id == launch_id)
         .where(Comment.parent_comment_id == parent_comment_id)
-        .options(joinedload(Comment.replies))
+        .options(joinedload(Comment.user))
     )
     result = await db.execute(query)
-    return result.scalars().all()
+    return result.unique().scalars().all()

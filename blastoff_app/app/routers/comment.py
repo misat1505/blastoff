@@ -7,7 +7,7 @@ from app.crud import (
     create_comment,
     delete_comment,
     get_comment_by_id,
-    get_comments_by_launch_id_and_parent
+    get_comments_by_launch_id_and_parent,
 )
 from app.dependencies import get_db
 from app.schemas import CommentCreate, CommentResponse
@@ -34,7 +34,8 @@ async def get_comment(comment_id: int, db: AsyncSession = Depends(get_db)):
 async def get_comments(
     launch_id: str,
     parent_comment_id: Optional[int] = Query(
-        None, description="Parent comment ID to filter replies. None for top-level comments."
+        None,
+        description="Parent comment ID to filter replies. None for top-level comments.",
     ),
     db: AsyncSession = Depends(get_db),
 ):
