@@ -70,11 +70,6 @@ const CommentSectionProvider = ({
 
   const onSubmit: SubmitHandler<CommentFormType> = async (data) => {
     try {
-      await new Promise((res) =>
-        setTimeout(() => {
-          res(null);
-        }, 1000)
-      );
       const comment = await CommentService.createComment(launchId, data);
       reset();
       queryClient.setQueryData<Comment[]>(
