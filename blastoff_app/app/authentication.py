@@ -5,13 +5,10 @@ from fastapi import HTTPException
 
 from app.settings import settings
 
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
 
 def get_expires_timestamp() -> datetime:
     expire = datetime.now(timezone.utc) + timedelta(
-        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        minutes=settings.token_expiration_minutes
     )
     return expire
 
@@ -21,7 +18,7 @@ def create_access_token(data: dict) -> str:
     to_encode = data.copy()
     to_encode.update({"exp": get_expires_timestamp()})
     encoded_jwt = jwt.encode(
-        to_encode, settings.jwt_secret, algorithm=ALGORITHM
+        to_encode, settings.jwt_secret, algorithm=settings.jwt_algorithm
     )
     return encoded_jwt
 
@@ -30,7 +27,7 @@ def decode_access_token(token: str) -> dict:
     """Decode and validate the JWT token."""
     try:
         payload = jwt.decode(
-            token, settings.jwt_secret, algorithms=[ALGORITHM]
+            token, settings.jwt_secret, algorithms=[settings.jwt_algorithm]
         )
         return payload
     except jwt.ExpiredSignatureError:
