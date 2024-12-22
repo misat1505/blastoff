@@ -2,6 +2,8 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
+from app.schemas.agency import AgencyResponse
+
 
 class RocketBase(BaseModel):
     name: str
@@ -50,6 +52,14 @@ class RocketCreate(RocketBase):
 class RocketResponse(RocketBase):
     id: int
     agency_id: int
+
+    class Config:
+        from_attributes = True
+
+
+class DetailedRocketResponse(RocketBase):
+    id: int
+    agency: AgencyResponse
 
     class Config:
         from_attributes = True

@@ -12,7 +12,7 @@ from app.crud import (
     get_launch_by_id,
 )
 from app.dependencies import get_db
-from app.schemas import LaunchCreate, LaunchResponse
+from app.schemas import DetailedLaunchResponse, LaunchCreate, LaunchResponse
 
 router = APIRouter()
 
@@ -24,7 +24,7 @@ async def create_launch_route(
     return await create_launch(db=db, launch_data=launch)
 
 
-@router.get("/future")
+@router.get("/future", response_model=list[DetailedLaunchResponse])
 async def get_future_launches(db: AsyncSession = Depends(get_db)):
     launches = await get_future_launches_sorted(db=db)
     if not launches:
@@ -32,7 +32,7 @@ async def get_future_launches(db: AsyncSession = Depends(get_db)):
     return launches
 
 
-@router.get("/{launch_id}/details")
+@router.get("/{launch_id}/details", response_model=DetailedLaunchResponse)
 async def get_detailed_launch_by_id(
     launch_id: str, db: AsyncSession = Depends(get_db)
 ):

@@ -11,9 +11,19 @@ from .favourite_launch import (
     FavouriteLaunchCreate,
     FavouriteLaunchDelete,
 )
-from .launch import LaunchBase, LaunchCreate, LaunchResponse
+from .launch import (
+    DetailedLaunchResponse,
+    LaunchBase,
+    LaunchCreate,
+    LaunchResponse,
+)
 from .program import ProgramBase, ProgramCreate, ProgramResponse
-from .rocket import RocketBase, RocketCreate, RocketResponse
+from .rocket import (
+    DetailedRocketResponse,
+    RocketBase,
+    RocketCreate,
+    RocketResponse,
+)
 from .site import SiteBase, SiteCreate, SiteResponse
 from .user import (
     UserBase,

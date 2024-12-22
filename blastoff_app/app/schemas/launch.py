@@ -3,6 +3,9 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
+from app.schemas.rocket import DetailedRocketResponse
+from app.schemas.site import SiteResponse
+
 
 class LaunchBase(BaseModel):
     last_updated: datetime = Field(..., description="Timestamp of last update")
@@ -31,6 +34,15 @@ class LaunchResponse(LaunchBase):
     rocket_id: int
     program_id: Optional[int]
     site_id: Optional[int]
+
+    class Config:
+        from_attributes = True
+
+
+class DetailedLaunchResponse(LaunchResponse):
+    id: str
+    rocket: Optional[DetailedRocketResponse]
+    site: Optional[SiteResponse]
 
     class Config:
         from_attributes = True

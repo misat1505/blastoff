@@ -9,7 +9,7 @@ from app.crud import (
     get_rocket_by_id,
 )
 from app.dependencies import get_db
-from app.schemas import RocketCreate, RocketResponse
+from app.schemas import DetailedRocketResponse, RocketCreate, RocketResponse
 
 router = APIRouter()
 
@@ -28,7 +28,7 @@ async def get_rockets(db: AsyncSession = Depends(get_db)):
     return rockets
 
 
-@router.get("/{rocket_id}/details")
+@router.get("/{rocket_id}/details", response_model=DetailedRocketResponse)
 async def get_detailed_rocket(
     rocket_id: int, db: AsyncSession = Depends(get_db)
 ):
