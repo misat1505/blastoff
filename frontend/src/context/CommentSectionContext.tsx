@@ -15,6 +15,7 @@ import { CommentService } from "@/services/CommentService";
 import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
 import { useQueryClient } from "react-query";
 import { Launch } from "@/types/Launch";
+import { useToast } from "@/hooks/use-toast";
 
 type CommentSectionContextProps = PropsWithChildren & {
   launchId: Launch["id"];
@@ -68,6 +69,8 @@ const CommentSectionProvider = ({
     resolver: zodResolver(commentFormSchema),
   });
 
+  const { toast } = useToast();
+
   const onSubmit: SubmitHandler<CommentFormType> = async (data) => {
     try {
       const comment = await CommentService.createComment(launchId, data);
@@ -80,8 +83,12 @@ const CommentSectionProvider = ({
         }
       );
       setResponseInner(null);
-    } catch (e: unknown) {
-      console.error(e);
+    } catch (e: any) {
+      toast({
+        variant: "destructive",
+        title: "Cannot send a comment",
+        description: e?.response?.data?.detail,
+      });
     }
   };
 

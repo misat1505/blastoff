@@ -4,6 +4,11 @@ import { Launch } from "@/types/Launch";
 import { CommentFormType } from "@/validators/CommentForm.validators";
 import axios from "axios";
 
+function processComment(data: any): Comment {
+  const { added_at, ...rest } = data;
+  return { added_at: new Date(added_at + "Z"), ...rest };
+}
+
 export class CommentService {
   static async getComments(
     launchId: Launch["id"],
@@ -16,7 +21,7 @@ export class CommentService {
     }
 
     const response = await axios.get(url.toString());
-    return response.data;
+    return response.data.map(processComment);
   }
 
   static async createComment(
@@ -32,6 +37,6 @@ export class CommentService {
     const response = await axios.post(`${API_URL}/comments`, payload, {
       withCredentials: true,
     });
-    return response.data;
+    return processComment(response.data);
   }
 }
