@@ -1,8 +1,9 @@
+import sentry_sdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
-from app.env import FRONTEND_URL
+from app.env import FRONTEND_URL, SENTRY_DSN
 from app.routers import (
     agency,
     comment,
@@ -13,6 +14,14 @@ from app.routers import (
     rocket,
     site,
     user,
+)
+
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    traces_sample_rate=1.0,
+    _experiments={
+        "continuous_profiling_auto_start": True,
+    },
 )
 
 app = FastAPI()
