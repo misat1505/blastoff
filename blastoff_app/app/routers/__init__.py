@@ -1,40 +1,35 @@
-from .agency import (
-    create_agency_route,
-    delete_agency_route,
-    get_agencies,
-    get_agency,
-    update_agency_route,
+from fastapi import APIRouter
+
+from .agency import router as agency_router
+from .comment import router as comment_router
+from .favourite_agency import router as favourite_agency_router
+from .favourite_launch import router as favourite_launch_router
+from .launch import router as launch_router
+from .program import router as program_router
+from .rocket import router as rocket_router
+from .site import router as site_router
+from .user import router as user_router
+
+api_router = APIRouter()
+
+api_router.include_router(user_router, prefix="/users", tags=["Users"])
+api_router.include_router(
+    comment_router, prefix="/comments", tags=["Comments"]
 )
-from .favourite_launch import (
-    create_favourite_launch,
-    delete_favourite_launch_by_id_route,
-    delete_favourite_launch_by_user_or_launch_route,
-    get_all_favourite_launches_route,
-    get_favourite_launch,
+api_router.include_router(agency_router, prefix="/agencies", tags=["Agencies"])
+api_router.include_router(
+    favourite_agency_router,
+    prefix="/favourite-agencies",
+    tags=["FavouriteAgencies"],
 )
-from .launch import (
-    create_launch_route,
-    delete_launch_route,
-    get_launch,
-    get_launches,
+api_router.include_router(rocket_router, prefix="/rockets", tags=["Rockets"])
+api_router.include_router(launch_router, prefix="/launches", tags=["Launches"])
+api_router.include_router(
+    program_router, prefix="/programs", tags=["Programs"]
 )
-from .program import (
-    create_program_route,
-    delete_program_route,
-    get_program,
-    get_programs,
-)
-from .rocket import (
-    create_rocket_route,
-    delete_rocket_route,
-    get_rocket,
-    get_rockets,
-)
-from .site import create_site_route, delete_site_route, get_site, get_sites
-from .user import (
-    delete_user_route,
-    get_user_by_id_route,
-    get_users,
-    register_user,
-    update_user_email_route,
+api_router.include_router(site_router, prefix="/sites", tags=["Sites"])
+api_router.include_router(
+    favourite_launch_router,
+    prefix="/favourite-launches",
+    tags=["FavouriteLaunches"],
 )
