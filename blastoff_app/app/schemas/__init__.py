@@ -1,5 +1,10 @@
 from .agency import AgencyBase, AgencyCreate, AgencyResponse
-from .comment import CommentBase, CommentCreate, CommentResponse
+from .comment import (
+    CommentBase,
+    CommentCreate,
+    CommentCreateBody,
+    CommentResponse,
+)
 from .favourite_agency import (
     FavouriteAgency,
     FavouriteAgencyBase,

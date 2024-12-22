@@ -1,11 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.authentication import (
-    create_access_token,
-    decode_access_token,
-    get_expires_timestamp,
-)
+from app.authentication import create_access_token, get_expires_timestamp
 from app.crud import (
     create_user,
     delete_user,
@@ -14,36 +10,12 @@ from app.crud import (
     get_user_by_id,
     update_user_email,
 )
-from app.dependencies import get_db
+from app.dependencies import get_current_user, get_db
 from app.models import User
 from app.schemas import UserCreate, UserEmailUpdate, UserLogin, UserResponse
 from app.security import verify_password
 
 router = APIRouter()
-
-
-async def get_current_user(
-    request: Request, db: AsyncSession = Depends(get_db)
-) -> User:
-    """Extracts user from JWT token stored in cookies."""
-    token = request.cookies.get("token")
-    if not token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-
-    try:
-        payload = decode_access_token(token)
-        user_id = payload.get("id")
-    except HTTPException:
-        raise HTTPException(status_code=401, detail="Invalid or expired token")
-
-    if not user_id:
-        raise HTTPException(status_code=401, detail="User not found in token")
-
-    db_user = await db.get(User, user_id)
-    if not db_user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    return db_user
 
 
 @router.post("/register", response_model=UserResponse)

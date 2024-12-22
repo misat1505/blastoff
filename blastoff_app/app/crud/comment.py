@@ -21,7 +21,16 @@ async def create_comment(
     db.add(db_comment)
     await db.commit()
     await db.refresh(db_comment)
-    return db_comment
+
+    query = (
+        select(Comment)
+        .options(joinedload(Comment.user))
+        .where(Comment.id == db_comment.id)
+    )
+    result = await db.execute(query)
+    comment_with_user = result.scalars().first()
+
+    return CommentResponse.from_orm(comment_with_user)
 
 
 async def get_comment_by_id(

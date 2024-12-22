@@ -10,6 +10,11 @@ class CommentBase(BaseModel):
     text: str
 
 
+class CommentCreateBody(CommentBase):
+    launch_id: str
+    parent_comment_id: Optional[int] = None
+
+
 class CommentCreate(CommentBase):
     user_id: int
     launch_id: str

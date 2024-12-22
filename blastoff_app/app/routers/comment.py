@@ -9,17 +9,26 @@ from app.crud import (
     get_comment_by_id,
     get_comments_by_launch_id_and_parent,
 )
-from app.dependencies import get_db
-from app.schemas import CommentCreate, CommentResponse
+from app.dependencies import get_current_user, get_db
+from app.models import User
+from app.schemas import CommentCreate, CommentCreateBody, CommentResponse
 
 router = APIRouter()
 
 
 @router.post("/", response_model=CommentResponse, status_code=201)
 async def create_comment_route(
-    comment: CommentCreate, db: AsyncSession = Depends(get_db)
+    comment: CommentCreateBody,
+    db: AsyncSession = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
-    return await create_comment(db=db, comment_data=comment)
+    newComment = CommentCreate(
+        text=comment.text,
+        user_id=user.id,
+        launch_id=comment.launch_id,
+        parent_comment_id=comment.parent_comment_id,
+    )
+    return await create_comment(db=db, comment_data=newComment)
 
 
 @router.get("/{comment_id}", response_model=CommentResponse)
