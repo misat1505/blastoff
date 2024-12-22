@@ -1,12 +1,13 @@
-from app.models import Comment
-from app.schemas import CommentCreate, CommentResponse
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
+from app.models import Comment
+from app.schemas import CommentCreate, CommentResponse
+
 
 async def create_comment(
-        db: AsyncSession, comment_data: CommentCreate
+    db: AsyncSession, comment_data: CommentCreate
 ) -> CommentResponse:
     db_comment = Comment(
         text=comment_data.text,
@@ -20,7 +21,9 @@ async def create_comment(
     return db_comment
 
 
-async def get_comment_by_id(db: AsyncSession, comment_id: int) -> CommentResponse:
+async def get_comment_by_id(
+    db: AsyncSession, comment_id: int
+) -> CommentResponse:
     result = await db.execute(select(Comment).filter(Comment.id == comment_id))
     comment = result.scalar_one_or_none()
     if comment is None:

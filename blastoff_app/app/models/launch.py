@@ -1,6 +1,7 @@
-from app.database import Base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
+from app.database import Base
 
 
 class Launch(Base):
@@ -24,7 +25,9 @@ class Launch(Base):
     program = relationship("Program", back_populates="launches")
     site = relationship("Site", back_populates="launches")
     favourite_launches = relationship(
-        "FavouriteLaunch", back_populates="launch", cascade="all, delete-orphan"
+        "FavouriteLaunch",
+        back_populates="launch",
+        cascade="all, delete-orphan",
     )
     comments = relationship(
         "Comment", back_populates="launch", cascade="all, delete-orphan"

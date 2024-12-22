@@ -1,6 +1,7 @@
-from app.database import Base
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+
+from app.database import Base
 
 
 class Agency(Base):
@@ -14,7 +15,9 @@ class Agency(Base):
     image_url = Column(String(500))
 
     favourite_agencies = relationship(
-        "FavouriteAgency", back_populates="agency", cascade="all, delete-orphan"
+        "FavouriteAgency",
+        back_populates="agency",
+        cascade="all, delete-orphan",
     )
 
     rockets = relationship(
