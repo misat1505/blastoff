@@ -4,6 +4,7 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload
 
 from app.models import Agency, Rocket
+from app.redis import RedisKeys, redis
 from app.schemas import RocketCreate, RocketResponse
 
 
@@ -64,10 +65,20 @@ async def delete_rocket(db: AsyncSession, rocket_id: int):
 
 
 async def get_detailed_rocket_by_id(db: AsyncSession, rocket_id: int):
+    cached_rocket = await redis.get_cache(RedisKeys.rocket_details(rocket_id))
+
+    if cached_rocket:
+        return cached_rocket
+
     result = await db.execute(
         select(Rocket)
         .join(Agency, Agency.id == Rocket.agency_id)
         .where(Rocket.id == rocket_id)
         .options(joinedload(Rocket.agency))
     )
-    return result.scalar_one_or_none()
+
+    rocket = result.scalar_one_or_none()
+
+    await redis.set_cache(RedisKeys.rocket_details(rocket_id), rocket)
+
+    return rocket

@@ -1,8 +1,10 @@
+import pickle
+
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from redis.asyncio import Redis
+
 from app.settings import settings
-import pickle
 
 
 class RedisClient:
@@ -40,7 +42,16 @@ class RedisClient:
 
 class RedisKeys:
     @staticmethod
-    def future_launches(): return "future_launches"
+    def future_launches():
+        return "future_launches"
+
+    @staticmethod
+    def launch_details(id: str):
+        return f"launches:{id}"
+
+    @staticmethod
+    def rocket_details(id: int):
+        return f"rocket:{id}"
 
 
 redis = RedisClient(settings.redis_uri)
