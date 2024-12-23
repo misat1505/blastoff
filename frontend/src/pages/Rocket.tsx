@@ -46,6 +46,7 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
   } = useQuery({
     queryFn: () => RocketService.getRocketById(id),
     queryKey: queryKeysBuilder.rocket(id),
+    refetchOnMount: false,
   });
 
   if (isLoading) return <Loading />;
