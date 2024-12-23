@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     jwt_secret: str
     frontend_url: str
     sentry_dsn: str
+    redis_uri: str
     jwt_algorithm: str = "HS256"
     token_expiration_minutes: int = 300
 

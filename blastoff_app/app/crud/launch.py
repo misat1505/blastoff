@@ -7,6 +7,7 @@ from sqlalchemy.orm import joinedload
 
 from app.models import Agency, Launch, Rocket, Site
 from app.schemas import LaunchCreate, LaunchResponse
+from app.redis import redis
 
 
 async def create_launch(
@@ -56,6 +57,11 @@ async def delete_launch(db: AsyncSession, launch_id: str):
 
 
 async def get_future_launches_sorted(db: AsyncSession):
+    cached_launches = await redis.get_cache("future_launches")
+
+    if cached_launches:
+        return cached_launches
+
     current_time = datetime.now(timezone.utc)
 
     result = await db.execute(
@@ -70,7 +76,12 @@ async def get_future_launches_sorted(db: AsyncSession):
             joinedload(Launch.site),
         )
     )
-    return result.scalars().all()
+
+    launches = result.scalars().all()
+
+    await redis.set_cache("future_launches", launches)
+
+    return launches
 
 
 async def get_detailed_launch(db: AsyncSession, launch_id: str):

@@ -8,6 +8,14 @@ services:
     ports:
       - "3000:3000"
 
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
   database:
     image: mysql:8.0
     restart: always
@@ -37,3 +45,4 @@ services:
 
 volumes:
   database-data:
+  redis-data:
