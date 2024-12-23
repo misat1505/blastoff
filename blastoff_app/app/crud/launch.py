@@ -6,7 +6,7 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload
 
 from app.models import Agency, Launch, Rocket, Site
-from app.redis import RedisKeys, redis
+from app.redis import RedisClient, RedisKeys
 from app.schemas import LaunchCreate, LaunchResponse
 
 
@@ -56,7 +56,7 @@ async def delete_launch(db: AsyncSession, launch_id: str):
     return launch
 
 
-async def get_future_launches_sorted(db: AsyncSession):
+async def get_future_launches_sorted(db: AsyncSession, redis: RedisClient):
     cached_launches = await redis.get_cache(RedisKeys.future_launches())
 
     if cached_launches:
@@ -84,7 +84,9 @@ async def get_future_launches_sorted(db: AsyncSession):
     return launches
 
 
-async def get_detailed_launch(db: AsyncSession, launch_id: str):
+async def get_detailed_launch(
+    db: AsyncSession, redis: RedisClient, launch_id: str
+):
     cached_launch = await redis.get_cache(RedisKeys.launch_details(launch_id))
 
     if cached_launch:

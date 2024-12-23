@@ -8,7 +8,8 @@ from app.crud import (
     get_detailed_rocket_by_id,
     get_rocket_by_id,
 )
-from app.dependencies import get_db
+from app.dependencies import get_db, get_redis
+from app.redis import RedisClient
 from app.schemas import DetailedRocketResponse, RocketCreate, RocketResponse
 
 router = APIRouter()
@@ -30,9 +31,13 @@ async def get_rockets(db: AsyncSession = Depends(get_db)):
 
 @router.get("/{rocket_id}/details", response_model=DetailedRocketResponse)
 async def get_detailed_rocket(
-    rocket_id: int, db: AsyncSession = Depends(get_db)
+    rocket_id: int,
+    db: AsyncSession = Depends(get_db),
+    redis: RedisClient = Depends(get_redis),
 ):
-    rocket = await get_detailed_rocket_by_id(db=db, rocket_id=rocket_id)
+    rocket = await get_detailed_rocket_by_id(
+        db=db, redis=redis, rocket_id=rocket_id
+    )
     if rocket is None:
         raise HTTPException(status_code=404, detail="Rocket not found")
     return rocket

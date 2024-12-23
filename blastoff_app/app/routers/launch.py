@@ -11,7 +11,8 @@ from app.crud import (
     get_future_launches_sorted,
     get_launch_by_id,
 )
-from app.dependencies import get_db
+from app.dependencies import get_db, get_redis
+from app.redis import RedisClient
 from app.schemas import DetailedLaunchResponse, LaunchCreate, LaunchResponse
 
 router = APIRouter()
@@ -25,8 +26,10 @@ async def create_launch_route(
 
 
 @router.get("/future", response_model=list[DetailedLaunchResponse])
-async def get_future_launches(db: AsyncSession = Depends(get_db)):
-    launches = await get_future_launches_sorted(db=db)
+async def get_future_launches(
+    db: AsyncSession = Depends(get_db), redis: RedisClient = Depends(get_redis)
+):
+    launches = await get_future_launches_sorted(db=db, redis=redis)
     if not launches:
         raise HTTPException(status_code=404, detail="No future launches found")
     return launches
@@ -34,9 +37,11 @@ async def get_future_launches(db: AsyncSession = Depends(get_db)):
 
 @router.get("/{launch_id}/details", response_model=DetailedLaunchResponse)
 async def get_detailed_launch_by_id(
-    launch_id: str, db: AsyncSession = Depends(get_db)
+    launch_id: str,
+    db: AsyncSession = Depends(get_db),
+    redis: RedisClient = Depends(get_redis),
 ):
-    launch = await get_detailed_launch(db=db, launch_id=launch_id)
+    launch = await get_detailed_launch(db=db, redis=redis, launch_id=launch_id)
     if not launch:
         raise HTTPException(status_code=404, detail="Launch not found")
     return launch

@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.authentication import decode_access_token
 from app.database import SessionLocal
 from app.models import User
+from app.redis import RedisClient, redis
 
 
 async def get_db():
@@ -36,3 +37,9 @@ async def get_current_user(
         raise HTTPException(status_code=404, detail="User not found")
 
     return db_user
+
+
+async def get_redis() -> RedisClient:
+    if not redis.redis:
+        await redis.init_connection()
+    return redis
