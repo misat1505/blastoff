@@ -21,23 +21,24 @@ class RedisClient:
             await self.redis.close()
 
     async def get_cache(self, key: str):
-        if not self.redis:
-            raise ConnectionError("Redis connection is not initialized")
+        self.__check_connection()
         cached_data = await self.redis.get(key)
         if cached_data:
             return pickle.loads(cached_data)
         return None
 
     async def set_cache(self, key: str, value: str, expire: int = 3600):
-        if not self.redis:
-            raise ConnectionError("Redis connection is not initialized")
+        self.__check_connection()
         value_str = pickle.dumps(value)
         await self.redis.set(key, value_str, ex=expire)
 
     async def delete_cache(self, key: str):
+        self.__check_connection()
+        await self.redis.delete(key)
+
+    def __check_connection(self):
         if not self.redis:
             raise ConnectionError("Redis connection is not initialized")
-        await self.redis.delete(key)
 
 
 class RedisKeys:
