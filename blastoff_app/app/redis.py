@@ -38,4 +38,9 @@ class RedisClient:
         await self.redis.delete(key)
 
 
+class RedisKeys:
+    @staticmethod
+    def future_launches(): return "future_launches"
+
+
 redis = RedisClient(settings.redis_uri)
