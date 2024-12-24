@@ -30,8 +30,6 @@ async def get_future_launches(
     db: AsyncSession = Depends(get_db), redis: RedisClient = Depends(get_redis)
 ):
     launches = await get_future_launches_sorted(db=db, redis=redis)
-    if not launches:
-        raise HTTPException(status_code=404, detail="No future launches found")
     return launches
 
 
