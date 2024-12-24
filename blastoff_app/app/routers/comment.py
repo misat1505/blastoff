@@ -26,7 +26,7 @@ async def create_comment_route(
         text=comment.text,
         user_id=user.id,
         launch_id=comment.launch_id,
-        parent_comment_id=comment.parent_comment_id
+        parent_comment_id=comment.parent_comment_id,
     )
     return await create_comment(db=db, comment_data=newComment)
 
