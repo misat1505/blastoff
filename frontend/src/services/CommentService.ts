@@ -6,7 +6,7 @@ import axios from "axios";
 
 function processComment(data: any): Comment {
   const { added_at, ...rest } = data;
-  return { added_at: new Date(added_at), ...rest };
+  return { added_at: new Date(added_at + "Z"), ...rest };
 }
 
 export class CommentService {

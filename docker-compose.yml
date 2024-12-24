@@ -23,7 +23,6 @@ services:
       MYSQL_DATABASE: blastoff_db
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      TZ: Europe/Warsaw
     ports:
       - "3307:3306"
     volumes:
