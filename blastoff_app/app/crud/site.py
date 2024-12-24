@@ -6,16 +6,7 @@ from app.schemas import SiteCreate
 
 
 async def create_site(db: AsyncSession, site_data: SiteCreate):
-    db_site = Site(
-        id=site_data.id,
-        name=site_data.name,
-        country=site_data.country,
-        latitude=site_data.latitude,
-        longitude=site_data.longitude,
-        description=site_data.description,
-        image_url=site_data.image_url,
-        map_image_url=site_data.map_image_url,
-    )
+    db_site = Site(**site_data.model_dump())
     db.add(db_site)
     await db.commit()
     await db.refresh(db_site)

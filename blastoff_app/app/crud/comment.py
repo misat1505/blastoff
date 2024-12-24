@@ -12,12 +12,7 @@ from app.schemas import CommentCreate, CommentResponse
 async def create_comment(
     db: AsyncSession, comment_data: CommentCreate
 ) -> CommentResponse:
-    db_comment = Comment(
-        text=comment_data.text,
-        user_id=comment_data.user_id,
-        launch_id=comment_data.launch_id,
-        parent_comment_id=comment_data.parent_comment_id,
-    )
+    db_comment = Comment(**comment_data.model_dump())
     db.add(db_comment)
     await db.commit()
     await db.refresh(db_comment)

@@ -13,20 +13,7 @@ from app.schemas import LaunchCreate, LaunchResponse
 async def create_launch(
     db: AsyncSession, launch_data: LaunchCreate
 ) -> LaunchResponse:
-    db_launch = Launch(
-        id=launch_data.id,
-        last_updated=launch_data.last_updated,
-        mission_name=launch_data.mission_name,
-        status_name=launch_data.status_name,
-        status_description=launch_data.status_description,
-        date=launch_data.date,
-        description=launch_data.description,
-        url=launch_data.url,
-        image_url=launch_data.image_url,
-        rocket_id=launch_data.rocket_id,
-        program_id=launch_data.program_id,
-        site_id=launch_data.site_id,
-    )
+    db_launch = Launch(**launch_data.model_dump())
     db.add(db_launch)
     await db.commit()
     await db.refresh(db_launch)

@@ -9,13 +9,7 @@ from app.schemas import ProgramCreate, ProgramResponse
 async def create_program(
     db: AsyncSession, program_data: ProgramCreate
 ) -> ProgramResponse:
-    db_program = Program(
-        id=program_data.id,
-        name=program_data.name,
-        description=program_data.description,
-        website=program_data.website,
-        image_url=program_data.image_url,
-    )
+    db_program = Program(**program_data.model_dump())
     db.add(db_program)
     await db.commit()
     await db.refresh(db_program)

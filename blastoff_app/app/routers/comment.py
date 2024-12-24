@@ -22,12 +22,7 @@ async def create_comment_route(
     db: AsyncSession = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    newComment = CommentCreate(
-        text=comment.text,
-        user_id=user.id,
-        launch_id=comment.launch_id,
-        parent_comment_id=comment.parent_comment_id,
-    )
+    newComment = CommentCreate(**comment.model_dump(), user_id=user.id)
     return await create_comment(db=db, comment_data=newComment)
 
 

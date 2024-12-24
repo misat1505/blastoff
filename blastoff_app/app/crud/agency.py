@@ -8,14 +8,7 @@ from app.schemas import AgencyCreate, AgencyResponse
 async def create_agency(
     db: AsyncSession, agency_data: AgencyCreate
 ) -> AgencyResponse:
-    db_agency = Agency(
-        id=agency_data.id,
-        name=agency_data.name,
-        country=agency_data.country,
-        description=agency_data.description,
-        website=agency_data.website,
-        image_url=agency_data.image_url,
-    )
+    db_agency = Agency(**agency_data.model_dump())
     db.add(db_agency)
     await db.commit()
     await db.refresh(db_agency)
