@@ -35,6 +35,9 @@ dependencies = [
     "redis>=5.2.1",
     "aioredis>=2.0.1",
     "fastapi-cache2>=0.2.2",
+    "asyncpg>=0.30.0",
+    "sqlalchemy[asyncio]>=2.0.36",
+    "psycopg2-binary>=2.9.10",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"

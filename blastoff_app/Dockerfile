@@ -21,7 +21,7 @@ COPY app /project/app/
 WORKDIR /project
 EXPOSE 8000
 
-ENV DATABASE_URL=mysql+aiomysql://root:@database/blastoff_db
+ENV DATABASE_URL=postgresql+asyncpg://postgres:postgres@database/blastoff_db
 ENV JWT_SECRET=oiugauygeuygyfufh732f23ft31f69732f1gf967gc708tf
 ENV FRONTEND_URL=http://localhost:3000
 ENV SENTRY_DSN=https://9ba665eba857ce6c337cb7a2b77a7096@o4508512973225984.ingest.de.sentry.io/4508512974798928

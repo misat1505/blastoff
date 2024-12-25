@@ -12,7 +12,7 @@ class User(Base):
     username = Column(String(100), unique=True, index=True)
     email = Column(String(100), unique=True, index=True)
     hashed_password = Column(String(500))
-    created_at = Column(DateTime, default=func.now())
+    created_at = Column(DateTime(timezone=True), default=func.now())
 
     favourite_agencies = relationship(
         "FavouriteAgency", back_populates="user", cascade="all, delete-orphan"

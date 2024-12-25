@@ -9,7 +9,7 @@ class Comment(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     text = Column(String(5000), nullable=False)
-    added_at = Column(DateTime, default=func.now())
+    added_at = Column(DateTime(timezone=True), default=func.now())
     user_id = Column(
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )

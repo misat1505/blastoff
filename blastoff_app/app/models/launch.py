@@ -8,11 +8,11 @@ class Launch(Base):
     __tablename__ = "launches"
 
     id = Column(String(500), primary_key=True, index=True)
-    last_updated = Column(DateTime, nullable=False)
+    last_updated = Column(DateTime(timezone=True), nullable=False)
     mission_name = Column(String(100))
     status_name = Column(String(100))
     status_description = Column(String(5000))
-    date = Column(DateTime)
+    date = Column(DateTime(timezone=True))
     description = Column(String(5000))
     url = Column(String(500))
     image_url = Column(String(500))

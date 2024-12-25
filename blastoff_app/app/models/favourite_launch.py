@@ -9,7 +9,7 @@ class FavouriteLaunch(Base):
     __tablename__ = "favourite_launches"
 
     id = Column(Integer, primary_key=True, index=True)
-    added_at = Column(DateTime, default=func.now())
+    added_at = Column(DateTime(timezone=True), default=func.now())
     user_id = Column(
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
