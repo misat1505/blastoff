@@ -122,7 +122,7 @@ const SettingsSheet = () => {
             </SwitchCard>
           </div>
 
-          {isLoggedIn ? <LogoutDialog /> : <LoginButton />}
+          {isLoggedIn ? <SessionButtons /> : <LoginButton />}
         </div>
       </SheetContent>
     </Sheet>
@@ -162,7 +162,7 @@ const LoginButton = () => {
   );
 };
 
-const LogoutDialog = () => {
+const SessionButtons = () => {
   const { setUser } = useSessionContext();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -176,30 +176,47 @@ const LogoutDialog = () => {
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <span className="w-full">
-          <Tooltip content="Show logout modal">
-            <Button variant="destructive" className="w-full">
-              Logout
-            </Button>
-          </Tooltip>
-        </span>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Logging out will sign you out of your account. Please confirm if
-            you'd like to proceed.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleLogout}>Continue</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <div className="w-full">
+      <Tooltip content="Profile page">
+        <Link
+          className={buttonVariants({
+            variant: "outline",
+            className: "w-full mb-2",
+          })}
+          to={ROUTES.PROFILE.$path()}
+        >
+          Profile
+        </Link>
+      </Tooltip>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <span className="w-full">
+            <Tooltip content="Show logout modal">
+              <Button variant="destructive" className="w-full">
+                Logout
+              </Button>
+            </Tooltip>
+          </span>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are you sure you want to log out?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Logging out will sign you out of your account. Please confirm if
+              you'd like to proceed.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleLogout}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
   );
 };
 
