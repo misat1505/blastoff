@@ -3,7 +3,6 @@ import { AuthService } from "@/services/AuthService";
 import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
 import { createContext, PropsWithChildren, useContext } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { FavouritesService } from "@/services/FavouritesService";
 
 type SessionContextProps = PropsWithChildren & {};
 
@@ -30,11 +29,6 @@ const SessionProvider = ({ children }: SessionContextProps) => {
   const { isLoading } = useQuery({
     queryFn: AuthService.me,
     queryKey: queryKeysBuilder.me(),
-  });
-
-  useQuery({
-    queryFn: FavouritesService.getMyFavouriteAgencies,
-    queryKey: queryKeysBuilder.favouriteAgencies(),
   });
 
   const user = queryClient.getQueryData<User>(queryKeysBuilder.me());
