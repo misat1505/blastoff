@@ -53,7 +53,7 @@ const FollowedLaunch = ({ launch }: FollowedLaunchProps) => {
   return (
     <Tooltip content={`Unfollow ${launch.mission_name}`}>
       <button onClick={handleClick}>
-        <FaStar color={theme === "light" ? "blue" : "yellow"} />
+        <FaStar size={16} color={theme === "light" ? "blue" : "yellow"} />
       </button>
     </Tooltip>
   );
@@ -81,7 +81,7 @@ const NotFollowedLaunch = ({ launch }: NotFollowedLaunchProps) => {
   return (
     <Tooltip content={`Follow ${launch.mission_name}`}>
       <button onClick={handleClick}>
-        <FaRegStar color={theme === "light" ? "blue" : "yellow"} />
+        <FaRegStar size={16} color={theme === "light" ? "blue" : "yellow"} />
       </button>
     </Tooltip>
   );
@@ -91,7 +91,7 @@ const DisabledStar = () => {
   return (
     <Tooltip content="Log in to use this feature.">
       <button disabled className="hover:cursor-not-allowed">
-        <FaRegStar />
+        <FaRegStar size={16} />
       </button>
     </Tooltip>
   );

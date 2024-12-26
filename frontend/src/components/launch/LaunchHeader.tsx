@@ -3,6 +3,7 @@ import { useThemeContext } from "@/context/ThemeContext";
 import { useInView } from "react-intersection-observer";
 import { cn } from "@/lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
+import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
 
 const LaunchHeader = () => {
   const { theme } = useThemeContext();
@@ -57,7 +58,10 @@ const LaunchBar = ({ isVisible }: LaunchBarProps) => {
         }
       )}
     >
-      <p>{launch.mission_name}</p>
+      <div className="flex items-center space-x-2">
+        <p>{launch.mission_name}</p>
+        <FavouriteLaunchDisplay launch={launch} />
+      </div>
       <LaunchCountdown date={launch.date} />
     </div>
   );

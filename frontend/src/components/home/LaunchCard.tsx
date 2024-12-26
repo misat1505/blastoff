@@ -9,6 +9,7 @@ import { ROUTES } from "@/lib/routes";
 import { CgDetailsMore } from "react-icons/cg";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
+import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
 
 type LaunchCardProps = {
   launch: Launch;
@@ -38,12 +39,17 @@ const Image = () => {
 };
 
 const Info = () => {
+  const { launch } = useLaunchContext();
+
   return (
-    <div className="col-span-2 flex h-[calc(100%-10rem)] flex-col justify-between p-4 text-center sm:h-full">
+    <div className="col-span-2 flex h-[calc(100%-10rem)] flex-col justify-between p-4 text-center sm:h-full relative">
       <Header />
       <Countdown />
       <Status />
       <Links />
+      <div className="absolute right-4 top-4">
+        <FavouriteLaunchDisplay launch={launch} />
+      </div>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { TbDimensions } from "react-icons/tb";
 import { useRocketContext } from "@/context/RocketContext";
 import { useInView } from "react-intersection-observer";
 import { cn } from "@/lib/utils";
+import FavouriteAgencyDisplay from "../FavouriteAgencyDisplay";
 
 const RocketManufacture = () => {
   return (
@@ -25,7 +26,7 @@ const ManufacturerDisplay = () => {
   const { rocket } = useRocketContext();
 
   return (
-    <div className="flex h-full flex-col items-center justify-between gap-y-12 rounded-md border border-slate-300 bg-slate-100 p-4 transition-all hover:shadow-lg dark:border-slate-700 dark:bg-slate-900">
+    <div className="relative flex h-full flex-col items-center justify-between gap-y-12 rounded-md border border-slate-300 bg-slate-100 p-4 transition-all hover:shadow-lg dark:border-slate-700 dark:bg-slate-900">
       <div className="flex items-center space-x-4">
         <MdFactory size={20} />
         <h2 className="text-2xl font-semibold">Manufacturer</h2>
@@ -36,6 +37,9 @@ const ManufacturerDisplay = () => {
         className="max-h-12"
       />
       <p className="text-xl">{rocket.agency.name}</p>
+      <div className="absolute top-4 right-4">
+        <FavouriteAgencyDisplay agency={rocket.agency} />
+      </div>
     </div>
   );
 };
