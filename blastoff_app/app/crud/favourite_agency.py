@@ -6,11 +6,9 @@ from app.schemas import FavouriteAgencyCreate, FavouriteAgencyDelete
 
 
 async def create_favourite_agency(
-    db: AsyncSession, favourite_agency: FavouriteAgencyCreate
+    db: AsyncSession, favourite_agency: FavouriteAgencyCreate, user_id: int
 ):
-    db_fav = FavouriteAgency(
-        user_id=favourite_agency.user_id, agency_id=favourite_agency.agency_id
-    )
+    db_fav = FavouriteAgency(**favourite_agency.model_dump(), user_id=user_id)
     db.add(db_fav)
     await db.commit()
     await db.refresh(db_fav)
