@@ -1,4 +1,5 @@
 import FollowedCount from "@/components/dashboard/FollowedCount";
+import FollowedDisplayer from "@/components/dashboard/FollowedDisplayer";
 import Greeting from "@/components/dashboard/Greeting";
 import ProfileSettings from "@/components/dashboard/Settings";
 
@@ -8,6 +9,7 @@ const ProfilePage = () => {
       <Greeting />
       <ProfileSettings />
       <FollowedCount />
+      <FollowedDisplayer />
     </div>
   );
 };
