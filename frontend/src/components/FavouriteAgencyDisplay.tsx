@@ -12,12 +12,12 @@ type FavouriteAgencyDisplayProps = {
 };
 
 const FavouriteAgencyDisplay = ({ agency }: FavouriteAgencyDisplayProps) => {
-  const { data: agencies } = useQuery(
+  const { data: agencies, error } = useQuery(
     queryKeysBuilder.favouriteAgencies(),
     FavouritesService.getMyFavouriteAgencies
   );
 
-  if (agencies === undefined) return <DisabledStar />;
+  if (agencies === undefined || error) return <DisabledStar />;
 
   const isFavourite = agencies.some((a) => a.agency_id === agency.id);
 

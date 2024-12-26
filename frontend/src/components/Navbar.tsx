@@ -31,6 +31,8 @@ import {
 } from "./ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { AuthService } from "@/services/AuthService";
+import { useQueryClient } from "react-query";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
 
 const Navbar = () => {
   const { user } = useSessionContext();
@@ -163,11 +165,13 @@ const LoginButton = () => {
 const LogoutDialog = () => {
   const { setUser } = useSessionContext();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     await AuthService.logout();
     setUser(null);
     toast({ title: "Successfully logged out." });
+    queryClient.invalidateQueries(queryKeysBuilder.favouriteAgencies());
   };
 
   return (
