@@ -6,11 +6,9 @@ from app.schemas import FavouriteLaunchCreate, FavouriteLaunchDelete
 
 
 async def create_favourite_launch(
-    db: AsyncSession, favourite_launch: FavouriteLaunchCreate
+    db: AsyncSession, favourite_launch: FavouriteLaunchCreate, user_id: int
 ):
-    db_fav = FavouriteLaunch(
-        user_id=favourite_launch.user_id, launch_id=favourite_launch.launch_id
-    )
+    db_fav = FavouriteLaunch(**favourite_launch.model_dump(), user_id=user_id)
     db.add(db_fav)
     await db.commit()
     await db.refresh(db_fav)
@@ -34,6 +32,19 @@ async def get_all_favourite_launches(
 ):
     result = await db.execute(
         select(FavouriteLaunch).offset(skip).limit(limit)
+    )
+    result = result.scalars().all()
+    return result
+
+
+async def get_favourite_launches_by_user_id(
+    db: AsyncSession, user_id: int, skip: int = 0, limit: int = 100
+):
+    result = await db.execute(
+        select(FavouriteLaunch)
+        .filter(FavouriteLaunch.user_id == user_id)
+        .offset(skip)
+        .limit(limit)
     )
     result = result.scalars().all()
     return result

@@ -24,6 +24,9 @@ from .favourite_launch import (
     create_favourite_launch,
     delete_favourite_launch_by_id,
     delete_favourite_launch_by_user_or_launch,
+    get_all_favourite_launches,
+    get_favourite_launch_by_id,
+    get_favourite_launches_by_user_id,
 )
 from .launch import (
     create_launch,

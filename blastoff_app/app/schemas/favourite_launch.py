@@ -5,7 +5,6 @@ from pydantic import BaseModel
 
 
 class FavouriteLaunchBase(BaseModel):
-    user_id: int
     launch_id: str
 
 
@@ -16,6 +15,7 @@ class FavouriteLaunchCreate(FavouriteLaunchBase):
 class FavouriteLaunch(FavouriteLaunchBase):
     id: int
     added_at: datetime
+    user_id: int
 
     class Config:
         from_attributes = True
