@@ -9,7 +9,7 @@ import { useSessionContext } from "@/context/SessionContext";
 
 const FollowedCount = () => {
   return (
-    <div className="grid grid-cols-3 space-x-4 mt-4 bg-slate-300/40 dark:bg-slate-700/20 p-2 rounded-md">
+    <div className="flex items-stretch space-x-4 mt-4 bg-slate-300/40 dark:bg-slate-700/20 p-2 rounded-md overflow-x-auto">
       <FollowedAgenciesCount />
       <FollowedLaunchesCount />
       <UserCreationInfo />
@@ -24,7 +24,7 @@ const FollowedAgenciesCount = () => {
   });
 
   return (
-    <div className="flex items-center justify-center space-x-4 flex-grow bg-slate-300 dark:bg-slate-700 p-2 rounded-md">
+    <div className="flex items-center flex-grow justify-center space-x-4 bg-slate-300 dark:bg-slate-700 p-2 rounded-md min-w-[200px]">
       <FaBuilding size={30} />
       <div>
         <h2 className="font-semibold">Followed agencies</h2>
@@ -68,7 +68,7 @@ const FollowedLaunchesCount = () => {
   });
 
   return (
-    <div className="flex items-center justify-center space-x-4 flex-grow bg-slate-300 dark:bg-slate-700 p-2 rounded-md">
+    <div className="flex items-center flex-grow justify-center space-x-4 bg-slate-300 dark:bg-slate-700 p-2 rounded-md min-w-[200px]">
       <FaRocket size={30} />
       <div>
         <h2 className="font-semibold">Followed launches</h2>
@@ -114,7 +114,7 @@ const UserCreationInfo = () => {
   const daysSinceCreation = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
 
   return (
-    <div className="text-center flex flex-col justify-between bg-slate-300 dark:bg-slate-700 p-2 rounded-md">
+    <div className="text-center flex flex-grow flex-col justify-between bg-slate-300 dark:bg-slate-700 p-2 rounded-md min-w-[200px]">
       <h2 className="font-semibold">
         Active since {createdDate.toLocaleDateString()}
       </h2>

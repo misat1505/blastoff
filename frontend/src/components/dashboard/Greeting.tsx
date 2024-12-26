@@ -4,7 +4,7 @@ const Greeting = () => {
   const { user } = useSessionContext();
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between space-x-4">
       <div>
         <h2 className="font-semibold text-2xl">
           Welcome back, {user?.username}!

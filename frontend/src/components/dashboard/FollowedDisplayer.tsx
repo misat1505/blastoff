@@ -132,7 +132,7 @@ const LaunchRow = ({ launch: fav_launch }: LaunchRowProps) => {
         {new Date(fav_launch.added_at).toLocaleDateString()}
       </TableCell>
       <TableCell className="text-right">
-        <div className="space-x-2">
+        <div className="flex space-x-2">
           <Tooltip content={`${launch.mission_name} details`}>
             <span>
               <Link
