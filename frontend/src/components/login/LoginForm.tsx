@@ -9,6 +9,9 @@ import {
 import { AuthService } from "@/services/AuthService";
 import { useToast } from "@/hooks/use-toast";
 import { useSessionContext } from "@/context/SessionContext";
+import { ToastAction } from "../ui/toast";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/lib/routes";
 
 const LoginForm = () => {
   const {
@@ -20,6 +23,7 @@ const LoginForm = () => {
   });
   const { toast } = useToast();
   const { setUser } = useSessionContext();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
@@ -27,6 +31,15 @@ const LoginForm = () => {
       setUser(user);
       toast({
         title: "Logged in successfully.",
+        description: "You can now comment and follow launches and agencies.",
+        action: (
+          <ToastAction
+            onClick={() => navigate(ROUTES.PROFILE.$path())}
+            altText="Goto profile page."
+          >
+            Profile
+          </ToastAction>
+        ),
       });
     } catch (e: any) {
       toast({

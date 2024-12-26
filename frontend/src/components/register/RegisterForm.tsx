@@ -9,6 +9,9 @@ import {
 import { AuthService } from "@/services/AuthService";
 import { toast } from "@/hooks/use-toast";
 import { useSessionContext } from "@/context/SessionContext";
+import { ToastAction } from "../ui/toast";
+import { ROUTES } from "@/lib/routes";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const {
@@ -19,6 +22,7 @@ const RegisterForm = () => {
     resolver: zodResolver(registerFormSchema),
   });
   const { setUser } = useSessionContext();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
     try {
@@ -26,7 +30,15 @@ const RegisterForm = () => {
       setUser(user);
       toast({
         title: "Registered successfully.",
-        description: `Successfully registered as ${user.username}.`,
+        description: `Successfully registered as ${user.username}. You can now comment and follow launches and agencies.`,
+        action: (
+          <ToastAction
+            onClick={() => navigate(ROUTES.PROFILE.$path())}
+            altText="Goto profile page."
+          >
+            Profile
+          </ToastAction>
+        ),
       });
     } catch (e: any) {
       toast({
