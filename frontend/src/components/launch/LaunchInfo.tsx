@@ -8,6 +8,7 @@ import { GOOGLE_MAPS_LOGO_PATH, LOGO_PATH } from "@/constants";
 import { formatLaunchDate } from "@/utils/formatLaunchDate";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
+import FavouriteAgencyDisplay from "../FavouriteAgencyDisplay";
 
 const LaunchInfo = () => {
   return (
@@ -152,31 +153,38 @@ const AgencyPreview = () => {
   const { launch } = useLaunchContext();
 
   return (
-    <Tooltip
-      content={
-        <p className="max-w-96 text-wrap">{launch.rocket.agency.description}</p>
-      }
-    >
-      <div className="flex h-full flex-col items-center justify-between gap-y-4">
-        <h2 className="text-xl font-semibold">Manufacturer</h2>
-        <img
-          src={launch.rocket.agency.image_url || undefined}
-          alt={launch.rocket.agency.name || undefined}
-          className="max-w-48 object-cover"
-        />
-        <p className="text-sm">
-          {launch.rocket.agency.name}, {launch.rocket.agency.country}
-        </p>
+    <div className="relative flex h-full flex-col items-center justify-between gap-y-4">
+      <h2 className="text-xl font-semibold">Manufacturer</h2>
+      <Tooltip
+        content={
+          <p className="max-w-96 text-wrap">
+            {launch.rocket.agency.description}
+          </p>
+        }
+      >
+        <span>
+          <img
+            src={launch.rocket.agency.image_url || undefined}
+            alt={launch.rocket.agency.name || undefined}
+            className="max-w-48 object-cover"
+          />
+          <p className="text-sm mt-4 text-muted-foreground">
+            {launch.rocket.agency.name}, {launch.rocket.agency.country}
+          </p>
+        </span>
+      </Tooltip>
 
-        <StyledLink
-          to={launch.rocket.agency.website!}
-          tooltip={`${launch.rocket.agency.name} website`}
-          target="_blank"
-        >
-          <span className="text-sm font-semibold">Learn more</span>
-        </StyledLink>
+      <StyledLink
+        to={launch.rocket.agency.website!}
+        tooltip={`${launch.rocket.agency.name} website`}
+        target="_blank"
+      >
+        <span className="text-sm font-semibold">Learn more</span>
+      </StyledLink>
+      <div className="absolute top-0 right-0">
+        <FavouriteAgencyDisplay agency={launch.rocket.agency} />
       </div>
-    </Tooltip>
+    </div>
   );
 };
 

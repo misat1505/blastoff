@@ -9,7 +9,7 @@ const FAV_AGENCY_BASE = axios.create({
 
 export class FavouritesService {
   static async getMyFavouriteAgencies(): Promise<FavouriteAgency[]> {
-    const response = await axios.get(`${FAV_AGENCY_BASE}/mine`);
+    const response = await FAV_AGENCY_BASE.get("/mine");
     return response.data;
   }
 }
