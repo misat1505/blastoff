@@ -10,4 +10,5 @@ export const queryKeysBuilder = {
     ["comments", { launchId, replyId }] as const,
   me: () => ["me"] as const,
   favouriteAgencies: () => ["favourite-agencies"] as const,
+  favouriteLaunches: () => ["favourite-launches"] as const,
 };

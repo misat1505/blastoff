@@ -9,6 +9,7 @@ import { formatLaunchDate } from "@/utils/formatLaunchDate";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
 import FavouriteAgencyDisplay from "../FavouriteAgencyDisplay";
+import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
 
 const LaunchInfo = () => {
   return (
@@ -40,7 +41,7 @@ const GeneralLaunchInfo = () => {
   const { launch } = useLaunchContext();
 
   return (
-    <div className="my-4 rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
+    <div className="relative my-4 rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
       <h2 className="text-2xl font-semibold">{launch.mission_name}</h2>
       <p className="text-sm text-muted-foreground">{launch.description}</p>
       <TimeDisplay />
@@ -49,6 +50,9 @@ const GeneralLaunchInfo = () => {
         <p className="text-sm text-muted-foreground">
           {launch.status_description}
         </p>
+      </div>
+      <div className="absolute top-4 right-4">
+        <FavouriteLaunchDisplay launch={launch} />
       </div>
     </div>
   );

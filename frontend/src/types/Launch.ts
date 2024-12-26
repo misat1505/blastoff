@@ -1,5 +1,6 @@
 import { Rocket } from "./Rocket";
 import { Site } from "./Site";
+import { User } from "./User";
 
 export type Launch = {
   id: string;
@@ -12,4 +13,11 @@ export type Launch = {
   status_description: string | null;
   url: string | null;
   site: Site | null;
+};
+
+export type FavouriteLaunch = {
+  launch_id: Launch["id"];
+  id: number;
+  added_at: Date;
+  user_id: User["id"];
 };

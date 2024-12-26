@@ -172,6 +172,7 @@ const LogoutDialog = () => {
     setUser(null);
     toast({ title: "Successfully logged out." });
     queryClient.invalidateQueries(queryKeysBuilder.favouriteAgencies());
+    queryClient.invalidateQueries(queryKeysBuilder.favouriteLaunches());
   };
 
   return (
