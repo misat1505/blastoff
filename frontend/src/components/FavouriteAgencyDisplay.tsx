@@ -4,6 +4,8 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 import { useQuery, useQueryClient } from "react-query";
 import Tooltip from "./Tooltip";
 import { FavouritesService } from "@/services/FavouritesService";
+import { useThemeContext } from "@/context/ThemeContext";
+import { useToast } from "@/hooks/use-toast";
 
 type FavouriteAgencyDisplayProps = {
   agency: Agency;
@@ -33,6 +35,8 @@ const FollowedAgency = ({ agency }: FollowedAgencyProps) => {
     FavouritesService.getMyFavouriteAgencies
   );
   const favAgency = agencies!.find((a) => a.agency_id === agency.id)!;
+  const { theme } = useThemeContext();
+  const { toast } = useToast();
 
   const handleClick = async () => {
     await FavouritesService.unfollowAgency(favAgency.id);
@@ -40,12 +44,16 @@ const FollowedAgency = ({ agency }: FollowedAgencyProps) => {
       queryKeysBuilder.favouriteAgencies(),
       (prev) => prev!.filter((a) => a.id !== favAgency.id)
     );
+    toast({
+      title: `Unfollowed ${agency.name}`,
+      description: `You will no longer receive notifications about their launches.`,
+    });
   };
 
   return (
     <Tooltip content={`Unfollow ${agency.name}`}>
       <button onClick={handleClick}>
-        <FaStar color="yellow" />
+        <FaStar color={theme === "light" ? "blue" : "yellow"} />
       </button>
     </Tooltip>
   );
@@ -55,6 +63,8 @@ type NotFollowedAgencyProps = { agency: Agency };
 
 const NotFollowedAgency = ({ agency }: NotFollowedAgencyProps) => {
   const queryClient = useQueryClient();
+  const { theme } = useThemeContext();
+  const { toast } = useToast();
 
   const handleClick = async () => {
     const newFavAgency = await FavouritesService.followAgency(agency.id);
@@ -62,12 +72,16 @@ const NotFollowedAgency = ({ agency }: NotFollowedAgencyProps) => {
       queryKeysBuilder.favouriteAgencies(),
       (prev) => (prev !== undefined ? [...prev, newFavAgency] : [newFavAgency])
     );
+    toast({
+      title: `Followed ${agency.name}`,
+      description: `You will now receive email notifications about their upcoming launches.`,
+    });
   };
 
   return (
     <Tooltip content={`Follow ${agency.name}`}>
       <button onClick={handleClick}>
-        <FaRegStar color="yellow" />
+        <FaRegStar color={theme === "light" ? "blue" : "yellow"} />
       </button>
     </Tooltip>
   );
