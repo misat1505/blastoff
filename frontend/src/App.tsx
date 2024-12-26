@@ -1,9 +1,10 @@
 import { Suspense } from "react";
-import { routes } from "@/lib/routes";
+import { protectedRoutes, publicRoutes } from "@/lib/routes";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Loading from "@/components/Loading";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
@@ -11,7 +12,20 @@ const App = () => {
       <Navbar />
       <ScrollToTop>
         <Routes>
-          {routes.map((route, index) => (
+          {protectedRoutes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <ProtectedRoute>
+                  <Suspense fallback={<Loading />}>
+                    <route.component />
+                  </Suspense>
+                </ProtectedRoute>
+              }
+            />
+          ))}
+          {publicRoutes.map((route, index) => (
             <Route
               key={index}
               path={route.path}
