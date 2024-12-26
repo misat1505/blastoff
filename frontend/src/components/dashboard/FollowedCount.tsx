@@ -9,7 +9,7 @@ import { useSessionContext } from "@/context/SessionContext";
 
 const FollowedCount = () => {
   return (
-    <div className="grid grid-cols-3 space-x-4 mt-8 bg-slate-300/40 dark:bg-slate-700/20 p-2 rounded-md">
+    <div className="grid grid-cols-3 space-x-4 mt-4 bg-slate-300/40 dark:bg-slate-700/20 p-2 rounded-md">
       <FollowedAgenciesCount />
       <FollowedLaunchesCount />
       <UserCreationInfo />

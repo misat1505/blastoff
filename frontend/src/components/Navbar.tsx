@@ -33,6 +33,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AuthService } from "@/services/AuthService";
 import { useQueryClient } from "react-query";
 import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const { user } = useSessionContext();
@@ -132,11 +133,22 @@ const SettingsSheet = () => {
 type SwicthCardProps = PropsWithChildren & {
   title: string;
   description: string;
+  className?: string;
 };
 
-const SwitchCard = ({ children, title, description }: SwicthCardProps) => {
+export const SwitchCard = ({
+  children,
+  title,
+  description,
+  className,
+}: SwicthCardProps) => {
   return (
-    <div className="mb-4 flex w-full items-center justify-between space-x-2 rounded-sm border p-4">
+    <div
+      className={cn(
+        "mb-4 flex w-full items-center justify-between space-x-2 rounded-sm border p-4",
+        className
+      )}
+    >
       <div>
         <h3 className="font-semibold">{title}</h3>
         <p className="mt-2 text-sm text-muted-foreground">{description}</p>
