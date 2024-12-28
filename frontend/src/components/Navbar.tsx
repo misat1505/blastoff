@@ -43,7 +43,7 @@ const Navbar = () => {
       <header className="fixed z-50 flex h-20 w-full items-center justify-between bg-slate-100 px-4 transition-all dark:bg-slate-900">
         <Logo />
         <div className="flex items-center space-x-4">
-          <div>{user ? user.username : ""}</div>
+          <div className="font-semibold">{user ? user.username : ""}</div>
           <ThemeSwitch />
           <SettingsSheet />
         </div>

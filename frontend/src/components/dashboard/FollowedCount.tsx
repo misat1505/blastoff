@@ -45,9 +45,15 @@ type FollowedAgencesCountTextProps = { agencies: FavouriteAgency[] };
 const FollowedAgencesCountText = ({
   agencies,
 }: FollowedAgencesCountTextProps) => {
-  const todayFollows = agencies.filter(
-    (agency) => new Date(agency.added_at).getTime() < Date.now()
-  ).length;
+  const todayFollows = agencies.filter((agency) => {
+    const agencyDate = new Date(agency.added_at);
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+    agencyDate.setHours(0, 0, 0, 0);
+
+    return agencyDate.getTime() === today.getTime();
+  }).length;
 
   return (
     <div className="flex items-center space-x-2">
@@ -89,9 +95,15 @@ type FollowedLaunchesCountTextProps = { launches: FavouriteLaunch[] };
 const FollowedLaunchesCountText = ({
   launches,
 }: FollowedLaunchesCountTextProps) => {
-  const todayFollows = launches.filter(
-    (launch) => new Date(launch.added_at).getTime() < Date.now()
-  ).length;
+  const todayFollows = launches.filter((launch) => {
+    const launchDate = new Date(launch.added_at);
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+    launchDate.setHours(0, 0, 0, 0);
+
+    return launchDate.getTime() === today.getTime();
+  }).length;
 
   return (
     <div className="flex items-center space-x-2">
