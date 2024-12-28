@@ -17,7 +17,7 @@ type LaunchCardProps = {
 
 const LaunchCard = ({ launch }: LaunchCardProps) => {
   return (
-    <div className="mb-8 h-[calc(500px+10rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-100/80 transition-all hover:shadow-sm dark:bg-slate-900/80 sm:grid sm:h-[500px]">
+    <div className="mb-4 h-[calc(350px+14rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-100/80 transition-all hover:shadow-sm dark:bg-slate-900/80 sm:grid sm:h-[400px]">
       <LaunchProvider launch={launch}>
         <Image />
         <Info />
@@ -31,7 +31,7 @@ const Image = () => {
 
   return (
     <img
-      className="col-span-1 max-h-40 w-full object-cover sm:h-full sm:max-h-full"
+      className="col-span-1 max-h-56 w-full object-cover sm:h-full sm:max-h-full"
       src={launch.image_url}
       alt={launch.mission_name}
     />
@@ -42,7 +42,7 @@ const Info = () => {
   const { launch } = useLaunchContext();
 
   return (
-    <div className="col-span-2 flex h-[calc(100%-10rem)] flex-col justify-between p-4 text-center sm:h-full relative">
+    <div className="col-span-2 flex h-[calc(100%-14rem)] flex-col justify-between p-4 text-center sm:h-full relative">
       <Header />
       <Countdown />
       <Status />
@@ -104,7 +104,9 @@ const Countdown = () => {
         date={launch.date}
         className="text-nowrap text-2xl font-semibold sm:text-xl 2xl:text-3xl"
       />
-      <div>{formatLaunchDate(launch.date)}</div>
+      <div className="text-muted-foreground">
+        {formatLaunchDate(launch.date)}
+      </div>
     </div>
   );
 };
