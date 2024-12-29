@@ -68,7 +68,7 @@ const LaunchesDisplay = () => {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Name</TableHead>
-          <TableHead>Logo</TableHead>
+          <TableHead>Image</TableHead>
           <TableHead>Followed since</TableHead>
           <TableHead className="text-right"></TableHead>
         </TableRow>
@@ -125,7 +125,7 @@ const LaunchRow = ({ launch: fav_launch }: LaunchRowProps) => {
         <img
           src={launch.image_url!}
           alt={`${launch.mission_name} logo`}
-          className="max-h-8 max-w-24"
+          className="max-h-8 max-w-24 rounded-sm"
         />
       </TableCell>
       <TableCell>
