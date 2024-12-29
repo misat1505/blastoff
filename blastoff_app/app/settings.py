@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     redis_uri: str
     jwt_algorithm: str = "HS256"
     token_expiration_minutes: int = 300
+    smtp_password: str
 
 
 settings = Settings()

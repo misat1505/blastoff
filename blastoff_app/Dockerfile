@@ -26,5 +26,6 @@ ENV JWT_SECRET=oiugauygeuygyfufh732f23ft31f69732f1gf967gc708tf
 ENV FRONTEND_URL=http://localhost:3000
 ENV SENTRY_DSN=https://9ba665eba857ce6c337cb7a2b77a7096@o4508512973225984.ingest.de.sentry.io/4508512974798928
 ENV REDIS_URI=redis://redis
+ENV SMTP_PASSWORD="rcnl djfd qbkb mrpx"
 
 CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
