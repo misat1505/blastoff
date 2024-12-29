@@ -16,7 +16,9 @@ async def lifespan(app: FastAPI):
 
     async with SessionLocal() as db:
         email_notifier = LaunchEmailNotifier(app, db, redis)
-        await email_notifier.send_notifications(time_delta=timedelta(hours=1))
+        await email_notifier.schedule_notifications(
+            time_delta=timedelta(hours=1)
+        )
 
     yield
 
