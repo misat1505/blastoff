@@ -1,19 +1,22 @@
 from datetime import datetime, timedelta, timezone
 
+from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 from app.crud import get_future_launches_sorted
-from app.models import FavouriteAgency, Launch, User
+from app.models import FavouriteLaunch, Launch, User
 from app.redis import RedisClient
 from app.settings import settings
 
+from .email_builder import EmailBuilder
 from .smtp_client import SMTPClient
 
 
 class LaunchEmailNotifier:
     def __init__(
         self,
+        app: FastAPI,
         db_session: AsyncSession,
         redis_client: RedisClient,
         email_sender=SMTPClient(),
@@ -24,11 +27,14 @@ class LaunchEmailNotifier:
         :param db_session: SQLAlchemy session for database queries.
         :param email_sender: Function or object for sending emails (e.g., SMTP client).
         """
+        self.app = app
         self.db_session = db_session
         self.email_sender = email_sender
         self.redis_client = redis_client
 
-    async def send_notifications(self, time_delta: timedelta):
+    async def send_notifications(
+        self, time_delta: timedelta = timedelta(hours=1)
+    ):
         """
         Send email notifications for launches happening within the given time delta.
 
@@ -41,11 +47,10 @@ class LaunchEmailNotifier:
         )
 
         for launch in upcoming_launches:
-            agency = launch.rocket.agency
             result = await self.db_session.execute(
                 select(User)
-                .join(FavouriteAgency, FavouriteAgency.user_id == User.id)
-                .filter(FavouriteAgency.agency_id == agency.id)
+                .join(FavouriteLaunch, FavouriteLaunch.user_id == User.id)
+                .filter(FavouriteLaunch.launch_id == launch.id)
             )
             users = result.scalars().all()
 
@@ -59,14 +64,8 @@ class LaunchEmailNotifier:
         :param recipient_email: The email address of the recipient.
         :param launch: The Launch object containing launch details.
         """
-        subject = f"Upcoming Launch: {launch.mission_name}"
-        body = (
-            f"Hello {recipient.username},\n\n"
-            f"A launch is scheduled soon:\n"
-            f"Mission Name: {launch.mission_name}\n"
-            f"Date: {launch.date}\n"
-            f"Description: {launch.description}\n\n"
-            f"Visit {settings.frontend_url}/launches/{launch.id} for more details."
+        subject, body = EmailBuilder.build_launch_email(
+            recipient=recipient, launch=launch
         )
         print(recipient.email, subject, body)
 
