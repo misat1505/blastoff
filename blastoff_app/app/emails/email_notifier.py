@@ -68,7 +68,7 @@ class EmailNotifier:
             self._send_email_job,
             trigger,
             args=[launch],
-            id=f"launch_email_{launch.id}",
+            id=f"email_{launch.id}",
             replace_existing=True,
         )
 
@@ -90,19 +90,20 @@ class EmailNotifier:
         :param launch: Launch
         """
 
-        fav_launch_result = await self.db_session.execute(
-            select(User)
-            .join(FavouriteLaunch, FavouriteLaunch.user_id == User.id)
-            .filter(FavouriteLaunch.launch_id == launch.id)
-        )
-        fav_launch_users = fav_launch_result.scalars().all()
+        async with self.db_session.begin():
+            fav_launch_result = await self.db_session.execute(
+                select(User)
+                .join(FavouriteLaunch, FavouriteLaunch.user_id == User.id)
+                .filter(FavouriteLaunch.launch_id == launch.id)
+            )
+            fav_launch_users = fav_launch_result.scalars().all()
 
-        fav_agency_result = await self.db_session.execute(
-            select(User)
-            .join(FavouriteAgency, FavouriteAgency.user_id == User.id)
-            .filter(FavouriteAgency.agency_id == launch.rocket.agency.id)
-        )
-        fav_agency_users = fav_agency_result.scalars().all()
+            fav_agency_result = await self.db_session.execute(
+                select(User)
+                .join(FavouriteAgency, FavouriteAgency.user_id == User.id)
+                .filter(FavouriteAgency.agency_id == launch.rocket.agency.id)
+            )
+            fav_agency_users = fav_agency_result.scalars().all()
 
         users = fav_launch_users + fav_agency_users
 
