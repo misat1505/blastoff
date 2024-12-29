@@ -7,14 +7,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 from app.crud import get_future_launches_sorted
-from app.models import FavouriteLaunch, Launch, User
+from app.models import FavouriteAgency, FavouriteLaunch, Launch, User
 from app.redis import RedisClient
 
 from .email_builder import EmailBuilder
 from .smtp_client import SMTPClient
 
 
-class LaunchEmailNotifier:
+class EmailNotifier:
     def __init__(
         self,
         app: FastAPI,
@@ -25,8 +25,10 @@ class LaunchEmailNotifier:
         """
         Initialize the notifier.
 
+        :param app: FastAPI for scheduling tasks.
         :param db_session: SQLAlchemy session for database queries.
-        :param email_sender: Function or object for sending emails (e.g., SMTP client).
+        :param redis_client: RedisClient for handling redis cache.
+        :param email_sender: SMTPClient for sending emails.
         """
         self.app = app
         self.db_session = db_session
@@ -76,15 +78,29 @@ class LaunchEmailNotifier:
 
         :param launch: The Launch object containing launch details.
         """
-        result = await self.db_session.execute(
+        users = await self._get_users_for_emails(launch)
+
+        for user in users:
+            self._send_email(user, launch)
+
+    async def _get_users_for_emails(self, launch: Launch) -> list[User]:
+        fav_launch_result = await self.db_session.execute(
             select(User)
             .join(FavouriteLaunch, FavouriteLaunch.user_id == User.id)
             .filter(FavouriteLaunch.launch_id == launch.id)
         )
-        users = result.scalars().all()
+        fav_launch_users = fav_launch_result.scalars().all()
 
-        for user in users:
-            self._send_email(user, launch)
+        fav_agency_result = await self.db_session.execute(
+            select(User)
+            .join(FavouriteAgency, FavouriteAgency.user_id == User.id)
+            .filter(FavouriteAgency.agency_id == launch.rocket.agency.id)
+        )
+        fav_agency_users = fav_agency_result.scalars().all()
+
+        users = fav_launch_users + fav_agency_users
+
+        return list({user.id: user for user in users}.values())
 
     def _send_email(self, recipient: User, launch: Launch):
         """
@@ -93,8 +109,10 @@ class LaunchEmailNotifier:
         :param recipient: The user to send the email to.
         :param launch: The Launch object containing launch details.
         """
-        subject, body = EmailBuilder.build_launch_email(
+        subject, body = EmailBuilder.build_email(
             recipient=recipient, launch=launch
         )
 
-        self.email_sender.send_email(to=recipient.email, subject=subject, body=body)
+        self.email_sender.send_email(
+            to=recipient.email, subject=subject, body=body
+        )

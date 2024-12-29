@@ -4,7 +4,7 @@ from app.settings import settings
 
 class EmailBuilder:
     @staticmethod
-    def build_launch_email(recipient: User, launch: Launch) -> tuple[str, str]:
+    def build_email(recipient: User, launch: Launch) -> tuple[str, str]:
         subject = f"Upcoming Launch: {launch.mission_name}"
         body = f"""
         <html>
@@ -71,6 +71,7 @@ class EmailBuilder:
                     <p><strong>Mission Name:</strong> {launch.mission_name}</p>
                     <p><strong>Date:</strong> {launch.date}</p>
                     <p><strong>Description:</strong> {launch.description}</p>
+                    <img style="width: 100%" src="{launch.image_url}" alt="{launch.mission_name} logo" />
                 </div>
 
                 <p>For more details, click the button below:</p>

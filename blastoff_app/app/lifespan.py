@@ -4,7 +4,7 @@ from datetime import timedelta
 from fastapi import FastAPI
 
 from app.database import Base, SessionLocal, engine
-from app.emails import LaunchEmailNotifier
+from app.emails import EmailNotifier
 from app.redis import redis
 
 
@@ -15,7 +15,7 @@ async def lifespan(app: FastAPI):
     await redis.init_connection()
 
     async with SessionLocal() as db:
-        email_notifier = LaunchEmailNotifier(app, db, redis)
+        email_notifier = EmailNotifier(app, db, redis)
         await email_notifier.schedule_notifications(
             time_delta=timedelta(hours=1)
         )
