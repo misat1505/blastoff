@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:f3e1cd682f950354d2f2b05a5104b7985083fb9a3a40985b758de2a96492be61"
+content_hash = "sha256:a3969e6d6cddd62a09e550dd67059c1c765a6bcb692fac6886a23ff6294a544a"
 
 [[metadata.targets]]
 requires_python = "==3.12.*"
@@ -37,6 +37,17 @@ dependencies = [
 files = [
     {file = "aioredis-2.0.1-py3-none-any.whl", hash = "sha256:9ac0d0b3b485d293b8ca1987e6de8658d7dafcca1cddfcd1d506cae8cdebfdd6"},
     {file = "aioredis-2.0.1.tar.gz", hash = "sha256:eaa51aaf993f2d71f54b70527c440437ba65340588afeb786cd87c55c89cd98e"},
+]
+
+[[package]]
+name = "aiosmtplib"
+version = "3.0.2"
+requires_python = ">=3.8"
+summary = "asyncio SMTP client"
+groups = ["default"]
+files = [
+    {file = "aiosmtplib-3.0.2-py3-none-any.whl", hash = "sha256:8783059603a34834c7c90ca51103c3aa129d5922003b5ce98dbaa6d4440f10fc"},
+    {file = "aiosmtplib-3.0.2.tar.gz", hash = "sha256:08fd840f9dbc23258025dca229e8a8f04d2ccf3ecb1319585615bfc7933f7f47"},
 ]
 
 [[package]]

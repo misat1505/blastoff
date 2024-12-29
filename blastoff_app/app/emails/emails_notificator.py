@@ -42,7 +42,7 @@ class EmailNotifier:
         self, time_delta: timedelta = timedelta(hours=1)
     ):
         """
-        Send email notifications for launches happening within the given time delta.
+        Schedule email notifications. Send them time_delta prior to launch.
 
         :param time_delta: Time delta before the launch to send notifications.
         """
@@ -81,9 +81,15 @@ class EmailNotifier:
         users = await self._get_users_for_emails(launch)
 
         for user in users:
-            self._send_email(user, launch)
+            await self._send_email(user, launch)
 
     async def _get_users_for_emails(self, launch: Launch) -> list[User]:
+        """
+        Get list of users who follow launch or it's agency.
+
+        :param launch: Launch
+        """
+
         fav_launch_result = await self.db_session.execute(
             select(User)
             .join(FavouriteLaunch, FavouriteLaunch.user_id == User.id)
@@ -102,7 +108,7 @@ class EmailNotifier:
 
         return list({user.id: user for user in users}.values())
 
-    def _send_email(self, recipient: User, launch: Launch):
+    async def _send_email(self, recipient: User, launch: Launch):
         """
         Send an email about a specific launch.
 
@@ -113,6 +119,6 @@ class EmailNotifier:
             recipient=recipient, launch=launch
         )
 
-        self.email_sender.send_email(
+        await self.email_sender.send_email(
             to=recipient.email, subject=subject, body=body
         )

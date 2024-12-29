@@ -1,6 +1,7 @@
-import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+from aiosmtplib import SMTP
 
 from app.settings import settings
 
@@ -31,9 +32,9 @@ class SMTPClient:
         self.email = email
         self.password = password
 
-    def send_email(self, to, subject, body):
+    async def send_email(self, to, subject, body):
         """
-        Send an email.
+        Send an email asynchronously.
 
         :param to: Recipient's email address.
         :param subject: Subject of the email.
@@ -46,10 +47,11 @@ class SMTPClient:
         message.attach(MIMEText(body, "html"))
 
         try:
-            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
-                server.starttls()
-                server.login(self.email, self.password)
-                server.send_message(message)
+            async with SMTP(
+                hostname=self.smtp_server, port=self.smtp_port
+            ) as client:
+                await client.login(self.email, self.password)
+                await client.send_message(message)
                 print(f"Email sent successfully to {to}!")
         except Exception as e:
             print(f"Failed to send email to {to}: {e}")
