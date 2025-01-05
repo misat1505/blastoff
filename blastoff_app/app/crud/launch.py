@@ -23,8 +23,6 @@ async def create_launch(
 async def get_launch_by_id(db: AsyncSession, launch_id: str) -> LaunchResponse:
     result = await db.execute(select(Launch).filter(Launch.id == launch_id))
     launch = result.scalar_one_or_none()
-    if launch is None:
-        raise HTTPException(status_code=404, detail="Launch not found")
     return launch
 
 
@@ -95,3 +93,33 @@ async def get_detailed_launch(
     await redis.set_cache(RedisKeys.launch_details(launch_id), launch)
 
     return launch
+
+
+async def update_launch(
+    db: AsyncSession, launch_id: int, launch_data: LaunchCreate
+):
+    launch = await get_launch_by_id(db, launch_id)
+    if not launch:
+        return None
+
+    launch.last_updated = launch_data.last_updated
+    launch.mission_name = launch_data.mission_name
+    launch.status_name = launch_data.status_name
+    launch.status_description = launch_data.status_description
+    launch.date = launch_data.date
+    launch.description = launch_data.description
+    launch.url = launch_data.url
+    launch.image_url = launch_data.image_url
+    launch.rocket_id = launch_data.rocket_id
+    launch.program_id = launch_data.program_id
+    launch.site_id = launch_data.site_id
+
+    await db.commit()
+    await db.refresh(launch)
+    return launch
+
+
+async def get_current_launches(db: AsyncSession) -> list[tuple[str, datetime]]:
+    result = await db.execute(select(Launch.id, Launch.last_updated))
+    launches = result.all()
+    return launches
