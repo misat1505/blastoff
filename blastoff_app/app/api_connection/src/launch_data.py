@@ -72,11 +72,8 @@ class LaunchDataList(collections.UserList):
         :param data: list of tuples containing launch data - tuple format (id, last_updated) - ex. [('some_id', '2024-01-01')]
         :return: LaunchDataList object (containing LaunchData objects with id, last_updated, url fields)
         """
-        try:
-            return cls([LaunchData(api_id, last_updated, "") for api_id, last_updated in data])
-        except ValueError as e:
-            raise InvalidDBData("Invalid datetime field - {}".format(e))
-
+        return cls([LaunchData(api_id, last_updated, "") for api_id, last_updated in data])
+    
     def get_by_id(self, id: str) -> LaunchData:
         """
         Method created to get easier access to data field - by item id

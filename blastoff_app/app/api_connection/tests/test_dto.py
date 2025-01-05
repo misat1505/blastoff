@@ -3,7 +3,7 @@ import json
 import pytest
 from hypothesis import given, strategies as st
 
-from dto import LaunchDTO, InvalidAPIData
+from app.api_connection.src.dto import LaunchDTO, InvalidAPIData
 
 
 @given(

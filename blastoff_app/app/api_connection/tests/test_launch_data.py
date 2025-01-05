@@ -4,7 +4,7 @@ import random
 import pytest
 from hypothesis import given, strategies as st
 
-from launch_data import LaunchData, LaunchDataList, InvalidAPIData, InvalidDBData
+from app.api_connection.src.launch_data import LaunchData, LaunchDataList, InvalidAPIData, InvalidDBData
 
 
 @given(st.text(min_size=1), st.datetimes().map(lambda dt: dt.isoformat()), st.text())
@@ -88,23 +88,17 @@ def test_launch_data_list_from_invalid_datetime_api(api_list):
         LaunchDataList.from_api(api_list)
 
 
-@given(st.lists(st.tuples(st.text(min_size=1), st.datetimes().map(lambda dt: dt.isoformat()))))
+@given(st.lists(st.tuples(st.text(min_size=1), st.datetimes())))
 def test_launch_data_list_from_db(db_list):
     ldl = LaunchDataList.from_db(db_list)
     for db_data, launch_data_list_data in zip(db_list, ldl):
         assert db_data[0] == launch_data_list_data.id
-        assert datetime.datetime.fromisoformat(db_data[1]) == launch_data_list_data.last_updated
+        assert db_data[1] == launch_data_list_data.last_updated
 
 
 @given(st.lists(st.tuples(st.text(min_size=1), st.text()), max_size=0))
 def test_launch_data_list_from_empty_db(db_list):
     LaunchDataList.from_db(db_list)
-
-
-@given(st.lists(st.tuples(st.text(min_size=1), st.text()), min_size=1))
-def test_launch_data_list_from_invalid_db_data(db_list):
-    with pytest.raises(InvalidDBData):
-        LaunchDataList.from_db(db_list)
 
 
 @given(st.lists(
@@ -177,7 +171,7 @@ def test_launch_data_list_compare_sth_to_diff(api_list, db_list):
     )
 )
 def test_launch_data_list_compare_the_same_data(api_list):
-    db_list = [(element["id"], element["last_updated"]) for element in api_list]
+    db_list = [(element["id"], datetime.datetime.fromisoformat(element["last_updated"])) for element in api_list]
     ldl_api = LaunchDataList.from_api(api_list)
     ldl_db = LaunchDataList.from_db(db_list)
     assert list(ldl_api.compare(ldl_db)) == []
