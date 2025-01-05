@@ -1,25 +1,19 @@
-from app.models import Launch
-from app.schemas import LaunchCreate, LaunchResponse
+from datetime import datetime, timezone
+
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.orm import joinedload
+
+from app.models import Agency, Launch, Rocket, Site
+from app.redis import RedisClient, RedisKeys
+from app.schemas import LaunchCreate, LaunchResponse
 
 
-async def create_launch(db: AsyncSession, launch_data: LaunchCreate) -> LaunchResponse:
-    db_launch = Launch(
-        id=launch_data.id,
-        last_updated=launch_data.last_updated,
-        mission_name=launch_data.mission_name,
-        status_name=launch_data.status_name,
-        status_description=launch_data.status_description,
-        date=launch_data.date,
-        description=launch_data.description,
-        url=launch_data.url,
-        image_url=launch_data.image_url,
-        rocket_id=launch_data.rocket_id,
-        program_id=launch_data.program_id,
-        site_id=launch_data.site_id,
-    )
+async def create_launch(
+    db: AsyncSession, launch_data: LaunchCreate
+) -> LaunchResponse:
+    db_launch = Launch(**launch_data.model_dump())
     db.add(db_launch)
     await db.commit()
     await db.refresh(db_launch)
@@ -46,4 +40,58 @@ async def delete_launch(db: AsyncSession, launch_id: str):
         return None
     await db.delete(launch)
     await db.commit()
+    return launch
+
+
+async def get_future_launches_sorted(db: AsyncSession, redis: RedisClient):
+    cached_launches = await redis.get_cache(RedisKeys.future_launches())
+
+    if cached_launches:
+        return cached_launches
+
+    current_time = datetime.now(timezone.utc)
+
+    result = await db.execute(
+        select(Launch)
+        .join(Rocket, Rocket.id == Launch.rocket_id)
+        .join(Agency, Agency.id == Rocket.agency_id)
+        .join(Site, Site.id == Launch.site_id)
+        .where(Launch.date > current_time)
+        .order_by(Launch.date.asc())
+        .options(
+            joinedload(Launch.rocket).joinedload(Rocket.agency),
+            joinedload(Launch.site),
+        )
+    )
+
+    launches = result.scalars().all()
+
+    await redis.set_cache(RedisKeys.future_launches(), launches)
+
+    return launches
+
+
+async def get_detailed_launch(
+    db: AsyncSession, redis: RedisClient, launch_id: str
+):
+    cached_launch = await redis.get_cache(RedisKeys.launch_details(launch_id))
+
+    if cached_launch:
+        return cached_launch
+
+    result = await db.execute(
+        select(Launch)
+        .join(Rocket, Rocket.id == Launch.rocket_id)
+        .join(Agency, Agency.id == Rocket.agency_id)
+        .join(Site, Site.id == Launch.site_id)
+        .where(Launch.id == launch_id)
+        .options(
+            joinedload(Launch.rocket).joinedload(Rocket.agency),
+            joinedload(Launch.site),
+        )
+    )
+    launch = result.scalars().first()
+
+    await redis.set_cache(RedisKeys.launch_details(launch_id), launch)
+
     return launch

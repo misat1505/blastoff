@@ -1,51 +1,31 @@
-from fastapi import APIRouter, Depends, HTTPException, Response, Request
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.authentication import create_access_token, get_expires_timestamp
 from app.crud import (
     create_user,
-    get_all_users,
     delete_user,
-    update_user_email,
+    get_all_users,
+    get_user_by_email,
     get_user_by_id,
-    get_user_by_email
+    update_user_email,
 )
-from app.dependencies import get_db
-from app.schemas import UserResponse, UserCreate, UserEmailUpdate, UserLogin
-from app.security import verify_password
-from app.authentication import create_access_token, decode_access_token, get_expires_timestamp
+from app.dependencies import get_current_user, get_db
 from app.models import User
+from app.schemas import UserCreate, UserEmailUpdate, UserLogin, UserResponse
+from app.security import verify_password
 
 router = APIRouter()
 
 
-async def get_current_user(request: Request, db: AsyncSession = Depends(get_db)) -> User:
-    """Extracts user from JWT token stored in cookies."""
-    token = request.cookies.get("token")
-    if not token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-
-    try:
-        payload = decode_access_token(token)
-        user_id = payload.get("id")
-    except HTTPException:
-        raise HTTPException(status_code=401, detail="Invalid or expired token")
-
-    if not user_id:
-        raise HTTPException(status_code=401, detail="User not found in token")
-
-    db_user = await db.get(User, user_id)
-    if not db_user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    return db_user
-
-
 @router.post("/register", response_model=UserResponse)
-async def register_user(user: UserCreate, response: Response, db: AsyncSession = Depends(get_db)):
+async def register_user(
+    user: UserCreate, response: Response, db: AsyncSession = Depends(get_db)
+):
     user_with_email = await get_user_by_email(db, user.email)
     if user_with_email:
         raise HTTPException(
-            status_code=409,
-            detail="User with this email already exists."
+            status_code=409, detail="User with this email already exists."
         )
 
     db_user = await create_user(db, user)
@@ -54,17 +34,18 @@ async def register_user(user: UserCreate, response: Response, db: AsyncSession =
         key="token",
         value=token,
         httponly=True,
-        expires=get_expires_timestamp()
+        expires=get_expires_timestamp(),
     )
     return db_user
 
 
 @router.post("/login", response_model=UserResponse)
-async def login_user(user: UserLogin, response: Response, db: AsyncSession = Depends(get_db)):
+async def login_user(
+    user: UserLogin, response: Response, db: AsyncSession = Depends(get_db)
+):
     db_user = await get_user_by_email(db, user.email)
     http_error = HTTPException(
-        status_code=401,
-        detail="Invalid email or password"
+        status_code=401, detail="Invalid email or password"
     )
 
     if not db_user:
@@ -78,7 +59,7 @@ async def login_user(user: UserLogin, response: Response, db: AsyncSession = Dep
         key="token",
         value=token,
         httponly=True,
-        expires=get_expires_timestamp()
+        expires=get_expires_timestamp(),
     )
     return db_user
 
@@ -103,7 +84,9 @@ async def get_users(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/{user_id}", response_model=UserResponse)
-async def get_user_by_id_route(user_id: int, db: AsyncSession = Depends(get_db)):
+async def get_user_by_id_route(
+    user_id: int, db: AsyncSession = Depends(get_db)
+):
     user = await get_user_by_id(db, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -120,7 +103,9 @@ async def delete_user_route(user_id: int, db: AsyncSession = Depends(get_db)):
 
 @router.put("/users/{user_id}/email", response_model=UserResponse)
 async def update_user_email_route(
-        user_id: int, email_update: UserEmailUpdate, db: AsyncSession = Depends(get_db)
+    user_id: int,
+    email_update: UserEmailUpdate,
+    db: AsyncSession = Depends(get_db),
 ):
     user = await update_user_email(db, user_id, email_update.email)
     if not user:

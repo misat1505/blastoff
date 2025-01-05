@@ -31,6 +31,9 @@ import {
 } from "./ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { AuthService } from "@/services/AuthService";
+import { useQueryClient } from "react-query";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const { user } = useSessionContext();
@@ -40,7 +43,7 @@ const Navbar = () => {
       <header className="fixed z-50 flex h-20 w-full items-center justify-between bg-slate-100 px-4 transition-all dark:bg-slate-900">
         <Logo />
         <div className="flex items-center space-x-4">
-          <div>{user ? user.username : ""}</div>
+          <div className="font-semibold">{user ? user.username : ""}</div>
           <ThemeSwitch />
           <SettingsSheet />
         </div>
@@ -120,7 +123,7 @@ const SettingsSheet = () => {
             </SwitchCard>
           </div>
 
-          {isLoggedIn ? <LogoutDialog /> : <LoginButton />}
+          {isLoggedIn ? <SessionButtons /> : <LoginButton />}
         </div>
       </SheetContent>
     </Sheet>
@@ -130,11 +133,22 @@ const SettingsSheet = () => {
 type SwicthCardProps = PropsWithChildren & {
   title: string;
   description: string;
+  className?: string;
 };
 
-const SwitchCard = ({ children, title, description }: SwicthCardProps) => {
+export const SwitchCard = ({
+  children,
+  title,
+  description,
+  className,
+}: SwicthCardProps) => {
   return (
-    <div className="mb-4 flex w-full items-center justify-between space-x-2 rounded-sm border p-4">
+    <div
+      className={cn(
+        "mb-4 flex w-full items-center justify-between space-x-2 rounded-sm border p-4",
+        className
+      )}
+    >
       <div>
         <h3 className="font-semibold">{title}</h3>
         <p className="mt-2 text-sm text-muted-foreground">{description}</p>
@@ -160,41 +174,61 @@ const LoginButton = () => {
   );
 };
 
-const LogoutDialog = () => {
+const SessionButtons = () => {
   const { setUser } = useSessionContext();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     await AuthService.logout();
     setUser(null);
     toast({ title: "Successfully logged out." });
+    queryClient.invalidateQueries(queryKeysBuilder.favouriteAgencies());
+    queryClient.invalidateQueries(queryKeysBuilder.favouriteLaunches());
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <span className="w-full">
-          <Tooltip content="Show logout modal">
-            <Button variant="destructive" className="w-full">
-              Logout
-            </Button>
-          </Tooltip>
-        </span>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Logging out will sign you out of your account. Please confirm if
-            you'd like to proceed.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleLogout}>Continue</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <div className="w-full">
+      <Tooltip content="Profile page">
+        <Link
+          className={buttonVariants({
+            variant: "outline",
+            className: "w-full mb-2",
+          })}
+          to={ROUTES.PROFILE.$path()}
+        >
+          Profile
+        </Link>
+      </Tooltip>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <span className="w-full">
+            <Tooltip content="Show logout modal">
+              <Button variant="destructive" className="w-full">
+                Logout
+              </Button>
+            </Tooltip>
+          </span>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are you sure you want to log out?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Logging out will sign you out of your account. Please confirm if
+              you'd like to proceed.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleLogout}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
   );
 };
 

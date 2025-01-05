@@ -1,14 +1,24 @@
-from app.crud import create_rocket, get_all_rockets, get_rocket_by_id, delete_rocket
-from app.dependencies import get_db
-from app.schemas import RocketCreate, RocketResponse
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.crud import (
+    create_rocket,
+    delete_rocket,
+    get_all_rockets,
+    get_detailed_rocket_by_id,
+    get_rocket_by_id,
+)
+from app.dependencies import get_db, get_redis
+from app.redis import RedisClient
+from app.schemas import DetailedRocketResponse, RocketCreate, RocketResponse
 
 router = APIRouter()
 
 
 @router.post("/", response_model=RocketResponse)
-async def create_rocket_route(rocket: RocketCreate, db: AsyncSession = Depends(get_db)):
+async def create_rocket_route(
+    rocket: RocketCreate, db: AsyncSession = Depends(get_db)
+):
     db_rocket = await create_rocket(db=db, rocket_data=rocket)
     return db_rocket
 
@@ -17,6 +27,20 @@ async def create_rocket_route(rocket: RocketCreate, db: AsyncSession = Depends(g
 async def get_rockets(db: AsyncSession = Depends(get_db)):
     rockets = await get_all_rockets(db=db)
     return rockets
+
+
+@router.get("/{rocket_id}/details", response_model=DetailedRocketResponse)
+async def get_detailed_rocket(
+    rocket_id: int,
+    db: AsyncSession = Depends(get_db),
+    redis: RedisClient = Depends(get_redis),
+):
+    rocket = await get_detailed_rocket_by_id(
+        db=db, redis=redis, rocket_id=rocket_id
+    )
+    if rocket is None:
+        raise HTTPException(status_code=404, detail="Rocket not found")
+    return rocket
 
 
 @router.get("/{rocket_id}", response_model=RocketResponse)
@@ -28,7 +52,9 @@ async def get_rocket(rocket_id: int, db: AsyncSession = Depends(get_db)):
 
 
 @router.delete("/{rocket_id}", response_model=RocketResponse)
-async def delete_rocket_route(rocket_id: int, db: AsyncSession = Depends(get_db)):
+async def delete_rocket_route(
+    rocket_id: int, db: AsyncSession = Depends(get_db)
+):
     deleted_rocket = await delete_rocket(db=db, rocket_id=rocket_id)
     if not deleted_rocket:
         raise HTTPException(status_code=404, detail="Rocket not found")

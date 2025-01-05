@@ -41,6 +41,7 @@ const LaunchPageContent = ({ id }: LaunchPageContentProps) => {
   } = useQuery({
     queryFn: () => LaunchService.getLaunchById(id),
     queryKey: queryKeysBuilder.launch(id),
+    refetchOnMount: false,
   });
 
   if (isLoading) return <Loading />;

@@ -8,19 +8,27 @@ services:
     ports:
       - "3000:3000"
 
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
   database:
-    image: mysql:8.0
+    image: postgres:15
     restart: always
     environment:
-      MYSQL_DATABASE: blastoff_db
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      POSTGRES_DB: blastoff_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - "3307:3306"
+      - "5432:5432"
     volumes:
-      - database-data:/var/lib/mysql
+      - database-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -37,3 +45,4 @@ services:
 
 volumes:
   database-data:
+  redis-data:

@@ -6,7 +6,7 @@ export function formatCommentDate(date: Date): string {
   );
 
   if (diffInSeconds < 60) {
-    return "just now";
+    return "Just Now";
   } else if (diffInSeconds < 3600) {
     const minutes = Math.floor(diffInSeconds / 60);
     return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;

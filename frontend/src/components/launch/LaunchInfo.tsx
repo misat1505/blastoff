@@ -6,10 +6,10 @@ import { FaPlay, FaRocket } from "react-icons/fa";
 import { buildGoogleMapsURL } from "@/utils/googleMaps";
 import { GOOGLE_MAPS_LOGO_PATH, LOGO_PATH } from "@/constants";
 import { formatLaunchDate } from "@/utils/formatLaunchDate";
-import { getLaunchStatusType } from "@/utils/getLaunchStatusType";
-import { cn } from "@/lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
+import FavouriteAgencyDisplay from "../FavouriteAgencyDisplay";
+import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
 
 const LaunchInfo = () => {
   return (
@@ -40,23 +40,19 @@ const LaunchInfo = () => {
 const GeneralLaunchInfo = () => {
   const { launch } = useLaunchContext();
 
-  const getStatusColor = (): string => {
-    const statusType = getLaunchStatusType(launch.status.id);
-    if (statusType === "failure") return "text-red-500";
-    if (statusType === "success") return "text-green-500";
-    return "";
-  };
-
   return (
-    <div className="my-4 rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
-      <h2 className="text-2xl font-semibold">{launch.name}</h2>
+    <div className="relative my-4 rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
+      <h2 className="text-2xl font-semibold">{launch.mission_name}</h2>
       <p className="text-sm text-muted-foreground">{launch.description}</p>
       <TimeDisplay />
-      <div className={cn("mt-8", getStatusColor())}>
-        <h2 className="text-xl font-semibold">{launch.status.name}</h2>
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold">{launch.status_name}</h2>
         <p className="text-sm text-muted-foreground">
-          {launch.status.description}
+          {launch.status_description}
         </p>
+      </div>
+      <div className="absolute top-4 right-4">
+        <FavouriteLaunchDisplay launch={launch} />
       </div>
     </div>
   );
@@ -67,9 +63,9 @@ const TimeDisplay = () => {
 
   return (
     <div className="mt-8">
-      <LaunchCountdown date={launch.net} className="text-xl font-semibold" />
+      <LaunchCountdown date={launch.date} className="text-xl font-semibold" />
       <div className="text-sm text-muted-foreground">
-        {formatLaunchDate(launch.net)}
+        {formatLaunchDate(launch.date)}
       </div>
     </div>
   );
@@ -98,8 +94,8 @@ const SiteInfo = () => {
   return (
     <div className="mt-4 flex flex-col gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900 sm:mt-0">
       <h2>
-        <span className="font-semibold">{launch.name}</span> is schedule for
-        blastoff from {launch.site.name}, {launch.site.country}
+        <span className="font-semibold">{launch.mission_name}</span> is schedule
+        for blastoff from {launch.site.name}, {launch.site.country}
       </h2>
       <div className="relative flex-grow">
         <div className="absolute right-4 top-4">
@@ -114,7 +110,7 @@ const SiteInfo = () => {
           </Tooltip>
         </div>
         <img
-          src={launch.site.image_map}
+          src={launch.site.map_image_url || undefined}
           className="h-full rounded-md object-cover shadow-md"
         />
       </div>
@@ -145,8 +141,8 @@ const LaunchLinks = () => {
   return (
     <div>
       <h2 className="mb-8 text-xl font-semibold">Links</h2>
-      {launch.links.live ? (
-        <StyledLink to={launch.links.live} tooltip="Open video" target="_blank">
+      {launch.url ? (
+        <StyledLink to={launch.url} tooltip="Open video" target="_blank">
           <FaPlay />
           <span className="text-sm font-semibold">Video</span>
         </StyledLink>
@@ -161,31 +157,38 @@ const AgencyPreview = () => {
   const { launch } = useLaunchContext();
 
   return (
-    <Tooltip
-      content={
-        <p className="max-w-96 text-wrap">{launch.agency.description}</p>
-      }
-    >
-      <div className="flex h-full flex-col items-center justify-between gap-y-4">
-        <h2 className="text-xl font-semibold">Manufacturer</h2>
-        <img
-          src={launch.agency.image_url}
-          alt={launch.agency.name}
-          className="max-w-48 object-cover"
-        />
-        <p className="text-sm">
-          {launch.agency.name}, {launch.agency.country}
-        </p>
+    <div className="relative flex h-full flex-col items-center justify-between gap-y-4">
+      <h2 className="text-xl font-semibold">Manufacturer</h2>
+      <Tooltip
+        content={
+          <p className="max-w-96 text-wrap">
+            {launch.rocket.agency.description}
+          </p>
+        }
+      >
+        <span>
+          <img
+            src={launch.rocket.agency.image_url || undefined}
+            alt={launch.rocket.agency.name || undefined}
+            className="max-w-48 object-cover"
+          />
+          <p className="text-sm mt-4 text-muted-foreground">
+            {launch.rocket.agency.name}, {launch.rocket.agency.country}
+          </p>
+        </span>
+      </Tooltip>
 
-        <StyledLink
-          to={launch.agency.website}
-          tooltip={`${launch.agency.name} website`}
-          target="_blank"
-        >
-          <span className="text-sm font-semibold">Learn more</span>
-        </StyledLink>
+      <StyledLink
+        to={launch.rocket.agency.website!}
+        tooltip={`${launch.rocket.agency.name} website`}
+        target="_blank"
+      >
+        <span className="text-sm font-semibold">Learn more</span>
+      </StyledLink>
+      <div className="absolute top-0 right-0">
+        <FavouriteAgencyDisplay agency={launch.rocket.agency} />
       </div>
-    </Tooltip>
+    </div>
   );
 };
 

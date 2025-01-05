@@ -27,8 +27,8 @@ export const useSessionContext = () => {
 const SessionProvider = ({ children }: SessionContextProps) => {
   const queryClient = useQueryClient();
   const { isLoading } = useQuery({
-    queryKey: queryKeysBuilder.me(),
     queryFn: AuthService.me,
+    queryKey: queryKeysBuilder.me(),
   });
 
   const user = queryClient.getQueryData<User>(queryKeysBuilder.me());

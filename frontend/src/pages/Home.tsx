@@ -14,6 +14,7 @@ const HomePage = () => {
   } = useQuery({
     queryKey: queryKeysBuilder.upcomingLaunches(),
     queryFn: LaunchService.getUpcomingLaunches,
+    refetchOnMount: false,
   });
 
   if (isLoading) return <Loading />;

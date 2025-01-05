@@ -5,7 +5,6 @@ from pydantic import BaseModel
 
 
 class FavouriteAgencyBase(BaseModel):
-    user_id: int
     agency_id: int
 
 
@@ -16,6 +15,7 @@ class FavouriteAgencyCreate(FavouriteAgencyBase):
 class FavouriteAgency(FavouriteAgencyBase):
     id: int
     added_at: datetime
+    user_id: int
 
     class Config:
         from_attributes = True

@@ -15,27 +15,27 @@ const RocketLaunches = () => {
     {
       icon: <FaDollarSign size={iconSize} />,
       title: "Cost ($)",
-      value: rocket.launches.cost,
+      value: rocket.launch_cost,
     },
     {
       icon: <IoMdRocket size={iconSize} />,
       title: "Flights",
-      value: rocket.launches.launches_count,
+      value: rocket.launches_count,
     },
     {
       icon: <FaCheck size={iconSize} className="text-green-500" />,
       title: "Successes",
-      value: rocket.launches.successful_launches,
+      value: rocket.successful_launches_count,
     },
     {
       icon: <RxCross2 size={iconSize} className="text-red-500" />,
       title: "Failures",
-      value: rocket.launches.failed_launches,
+      value: rocket.failed_launches_count,
     },
     {
       icon: <MdOutlinePendingActions size={iconSize} />,
       title: "Pending",
-      value: rocket.launches.pending_launches,
+      value: rocket.pending_launches,
     },
   ];
 

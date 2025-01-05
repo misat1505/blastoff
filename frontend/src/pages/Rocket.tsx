@@ -46,6 +46,7 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
   } = useQuery({
     queryFn: () => RocketService.getRocketById(id),
     queryKey: queryKeysBuilder.rocket(id),
+    refetchOnMount: false,
   });
 
   if (isLoading) return <Loading />;
@@ -67,7 +68,7 @@ const RocketPageContent = ({ id }: RocketPageContentProps) => {
       />
     );
 
-  const landings = rocket.landings.attempted_landings;
+  const landings = rocket.landings_count;
   const isReusable = landings ? landings > 0 : false;
 
   return (

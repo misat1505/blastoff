@@ -3,6 +3,7 @@ import { useThemeContext } from "@/context/ThemeContext";
 import { useInView } from "react-intersection-observer";
 import { cn } from "@/lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
+import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
 
 const LaunchHeader = () => {
   const { theme } = useThemeContext();
@@ -14,8 +15,8 @@ const LaunchHeader = () => {
       <LaunchBar isVisible={!inView} />
       <div className="relative">
         <img
-          src={launch.image}
-          alt={launch.name}
+          src={launch.image_url}
+          alt={launch.mission_name}
           className="w-full rounded-sm object-cover shadow-lg"
         />
         <div
@@ -29,9 +30,9 @@ const LaunchHeader = () => {
               theme === "dark" ? "2px 2px 4px black" : "2px 2px 4px white",
           }}
         >
-          <h2>{launch.name}</h2>
+          <h2>{launch.mission_name}</h2>
           <LaunchCountdown
-            date={launch.net}
+            date={launch.date}
             className="text-2xl font-semibold sm:text-4xl 2xl:text-4xl"
           />
         </div>
@@ -57,8 +58,11 @@ const LaunchBar = ({ isVisible }: LaunchBarProps) => {
         }
       )}
     >
-      <p>{launch.name}</p>
-      <LaunchCountdown date={launch.net} />
+      <div className="flex items-center space-x-2">
+        <p>{launch.mission_name}</p>
+        <FavouriteLaunchDisplay launch={launch} />
+      </div>
+      <LaunchCountdown date={launch.date} />
     </div>
   );
 };

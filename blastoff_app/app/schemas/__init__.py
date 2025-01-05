@@ -1,12 +1,10 @@
-from .user import (
-    UserCreate,
-    UserBase,
-    UserEmailUpdate,
-    UserResponse,
-    UserLogin
-)
 from .agency import AgencyBase, AgencyCreate, AgencyResponse
-from .comment import CommentBase, CommentCreate, CommentResponse
+from .comment import (
+    CommentBase,
+    CommentCreate,
+    CommentCreateBody,
+    CommentResponse,
+)
 from .favourite_agency import (
     FavouriteAgency,
     FavouriteAgencyBase,
@@ -18,8 +16,24 @@ from .favourite_launch import (
     FavouriteLaunchCreate,
     FavouriteLaunchDelete,
 )
-from .launch import LaunchBase, LaunchCreate, LaunchResponse
+from .launch import (
+    DetailedLaunchResponse,
+    LaunchBase,
+    LaunchCreate,
+    LaunchResponse,
+)
 from .program import ProgramBase, ProgramCreate, ProgramResponse
-from .rocket import RocketBase, RocketCreate, RocketResponse
+from .rocket import (
+    DetailedRocketResponse,
+    RocketBase,
+    RocketCreate,
+    RocketResponse,
+)
 from .site import SiteBase, SiteCreate, SiteResponse
-from .user import UserCreate, UserBase, UserEmailUpdate, UserResponse
+from .user import (
+    UserBase,
+    UserCreate,
+    UserEmailUpdate,
+    UserLogin,
+    UserResponse,
+)

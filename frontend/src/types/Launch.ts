@@ -1,40 +1,23 @@
+import { Rocket } from "./Rocket";
+import { Site } from "./Site";
+import { User } from "./User";
+
 export type Launch = {
   id: string;
-  name: string;
-  description: string;
-  net: Date;
-  image: string;
-  window: {
-    start: Date;
-    end: Date;
-  };
-  rocket: {
-    id: number;
-    name: string;
-    image: string;
-  };
-  status: {
-    id: number;
-    name: string;
-    description: string;
-  };
-  links: {
-    live: string | null;
-  };
-  agency: {
-    id: number;
-    name: string;
-    image_url: string;
-    country: string;
-    website: string;
-    description: string;
-  };
-  site: {
-    id: number;
-    name: string;
-    country: string;
-    latitude: number;
-    longitude: number;
-    image_map: string;
-  } | null;
+  mission_name: string;
+  description: string | null;
+  date: Date;
+  image_url: string;
+  rocket: Rocket;
+  status_name: string | null;
+  status_description: string | null;
+  url: string | null;
+  site: Site | null;
+};
+
+export type FavouriteLaunch = {
+  launch_id: Launch["id"];
+  id: number;
+  added_at: Date;
+  user_id: User["id"];
 };

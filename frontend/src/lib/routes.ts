@@ -6,6 +6,7 @@ const RocketPage = lazy(() => import("../pages/Rocket"));
 const LaunchPage = lazy(() => import("../pages/Launch"));
 const RegisterPage = lazy(() => import("../pages/Register"));
 const LoginPage = lazy(() => import("../pages/Login"));
+const ProfilePage = lazy(() => import("../pages/Profile"));
 const NotFoundPage = lazy(() => import("../pages/NotFound"));
 
 type Route = {
@@ -19,9 +20,17 @@ export const ROUTES = {
   REGISTER: route({ path: "register" }),
   LOGIN: route({ path: "login" }),
   LAUNCH: route({ path: "launches/:launchId" }),
+  PROFILE: route({ path: "profile" }),
 };
 
-export const routes: Route[] = [
+export const protectedRoutes: Route[] = [
+  {
+    path: ROUTES.PROFILE.$path(),
+    component: ProfilePage,
+  },
+];
+
+export const publicRoutes: Route[] = [
   {
     path: ROUTES.HOME.$path(),
     component: HomePage,
