@@ -8,7 +8,7 @@ class Rocket(Base):
     __tablename__ = "rockets"
 
     id = Column(Integer, primary_key=True, index=True, default=1)
-    name = Column(String(100), unique=True, index=True)
+    name = Column(String(100))
     agency_id = Column(Integer, ForeignKey("agencies.id"), nullable=False)
     no_stages = Column(Integer)
     height = Column(Float)
