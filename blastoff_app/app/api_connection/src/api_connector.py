@@ -1,8 +1,8 @@
 from typing import Generator
 
-from get_api_data import GetLaunchesAPIData, GetAPIData, APIError
-from launch_data import LaunchDataList
-from dto import LaunchDTO
+from app.api_connection.src.get_api_data import GetLaunchesAPIData, GetAPIData, APIError
+from app.api_connection.src.launch_data import LaunchDataList
+from app.api_connection.src.dto import LaunchDTO
 
 
 class APIDataConnector:
@@ -22,7 +22,7 @@ class APIDataConnector:
         self.database_data = LaunchDataList.from_db(database_data)
         self.max_loop_count = max_loop_count
 
-    def get_difference(self, new: bool = True, changed: bool = True) -> Generator[LaunchDTO]:
+    def get_difference(self, new: bool = True, changed: bool = True) -> Generator[LaunchDTO, None, None]:
         """
         Method to get new and/or changed launches
 

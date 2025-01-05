@@ -2,7 +2,7 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
-from launch_data import InvalidAPIData
+from app.api_connection.src.launch_data import InvalidAPIData
 
 
 class CouldNotReadFile(Exception):
@@ -228,7 +228,7 @@ class LaunchDTO:
             "latitude": pad_details.get("latitude"),
             "longitude": pad_details.get("longitude"),
             "description": pad_details.get("description"),
-            "map_image": pad_details.get("map_image"),
+            "map_image_url": pad_details.get("map_image"),
             "country": extract_nested(pad_details, "country", "name"),
             "image_url": extract_nested(pad_details, "image", "image_url"),
         }

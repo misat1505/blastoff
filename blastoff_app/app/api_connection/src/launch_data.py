@@ -63,7 +63,7 @@ class LaunchDataList(collections.UserList):
             raise InvalidAPIData("Invalid datetime field - {}".format(e))
 
     @classmethod
-    def from_db(cls, data: list[tuple[str, str]]) -> "LaunchDataList":
+    def from_db(cls, data: list[tuple[str, datetime.datetime]]) -> "LaunchDataList":
         """
         Creates an LaunchDataList object from db data
 
@@ -73,7 +73,7 @@ class LaunchDataList(collections.UserList):
         :return: LaunchDataList object (containing LaunchData objects with id, last_updated, url fields)
         """
         try:
-            return cls([LaunchData(api_id, datetime.datetime.fromisoformat(last_updated), "") for api_id, last_updated in data])
+            return cls([LaunchData(api_id, last_updated, "") for api_id, last_updated in data])
         except ValueError as e:
             raise InvalidDBData("Invalid datetime field - {}".format(e))
 
@@ -91,7 +91,7 @@ class LaunchDataList(collections.UserList):
                 return item
         raise KeyError(id)
 
-    def compare(self, other: "LaunchDataList", new: bool = True, changed: bool = True) -> Generator[LaunchData]:
+    def compare(self, other: "LaunchDataList", new: bool = True, changed: bool = True) -> Generator[LaunchData, None, None]:
         """
         Method to compare two LaunchDataList objects, used for getting new / modified launches data (compared to current data in db)
 
