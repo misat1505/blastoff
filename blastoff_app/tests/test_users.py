@@ -11,7 +11,7 @@ def test_create_user():
     unique_name = f"username_{datetime.now().timestamp()}"
     # Create a new user with a unique username
     response = client.post(
-        "/users/register/",
+        "/api/v1/users/register/",
         json={
             "username": unique_name,
             "email": f"{unique_name}@example.com",

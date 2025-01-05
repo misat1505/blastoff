@@ -2,3 +2,5 @@
 .pdm-python
 .venv
 .env*
+.pytest_cache
+.hypothesis
