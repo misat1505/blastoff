@@ -47,12 +47,11 @@ class EmailNotifier:
 
         :param time_delta: Time delta before the launch to send notifications.
         """
+        await self.redis_client.flush_all()
 
         upcoming_launches = await get_future_launches_sorted(
             self.db_session, self.redis_client
         )
-
-        await self.redis_client.flush_all()
 
         for launch in upcoming_launches:
             launch_time = launch.date
