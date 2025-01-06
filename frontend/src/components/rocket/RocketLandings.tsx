@@ -9,8 +9,8 @@ import { GiCatch } from "react-icons/gi";
 const RocketLandings = () => {
   const { rocket } = useRocketContext();
 
-  const iconSize = 50;
-  const isCatchable = rocket.id === 464;
+  const iconSize = 40;
+  const isCatchable = rocket.name.toLowerCase().includes("starship");
 
   const items = [
     {
