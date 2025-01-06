@@ -122,11 +122,15 @@ const LaunchRow = ({ launch: fav_launch }: LaunchRowProps) => {
         {launch.mission_name}
       </TableCell>
       <TableCell>
-        <img
-          src={launch.image_url!}
-          alt={`${launch.mission_name} logo`}
-          className="max-h-8 max-w-24 rounded-sm"
-        />
+        {launch.image_url ? (
+          <img
+            src={launch.image_url}
+            alt={`${launch.mission_name} logo`}
+            className="h-8 w-20 object-cover rounded-sm"
+          />
+        ) : (
+          <p className="text-sm text-muted-foreground text-center">N/A</p>
+        )}
       </TableCell>
       <TableCell>
         {new Date(fav_launch.added_at).toLocaleDateString()}

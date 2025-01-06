@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { cn } from "@/lib/utils";
 import LaunchCountdown from "../LaunchCountdown";
 import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
+import { IoMdRocket } from "react-icons/io";
 
 const LaunchHeader = () => {
   const { theme } = useThemeContext();
@@ -14,11 +15,7 @@ const LaunchHeader = () => {
     <div className="mt-4 w-full">
       <LaunchBar isVisible={!inView} />
       <div className="relative">
-        <img
-          src={launch.image_url}
-          alt={launch.mission_name}
-          className="w-full rounded-sm object-cover shadow-lg"
-        />
+        <LaunchImage />
         <div
           ref={ref}
           className="absolute top-[calc(50%-4rem)] -translate-y-1/2"
@@ -39,6 +36,25 @@ const LaunchHeader = () => {
       </div>
       <div></div>
     </div>
+  );
+};
+
+const LaunchImage = () => {
+  const { launch } = useLaunchContext();
+
+  if (!launch.image_url)
+    return (
+      <div className="w-full rounded-sm object-cover shadow-lg flex items-start justify-center py-4">
+        <IoMdRocket size={224} />
+      </div>
+    );
+
+  return (
+    <img
+      src={launch.image_url}
+      alt={launch.mission_name}
+      className="w-full rounded-sm object-cover shadow-lg"
+    />
   );
 };
 

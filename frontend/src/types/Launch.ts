@@ -7,7 +7,7 @@ export type Launch = {
   mission_name: string;
   description: string | null;
   date: Date;
-  image_url: string;
+  image_url: string | null;
   rocket: Rocket;
   status_name: string | null;
   status_description: string | null;
