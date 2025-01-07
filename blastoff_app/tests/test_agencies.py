@@ -15,7 +15,7 @@ allowed_characters = characters(blacklist_categories=["Cc", "Cs"])
     website=text(min_size=1, max_size=100, alphabet=allowed_characters),
     image_url=text(min_size=1, max_size=100, alphabet=allowed_characters),
 )
-@settings(max_examples=1, deadline=500)
+@settings(max_examples=20, deadline=500)
 @pytest.mark.asyncio
 async def test_create_and_delete_agency(
     name, country, description, website, image_url

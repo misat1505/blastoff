@@ -12,7 +12,7 @@ allowed_characters = characters(blacklist_categories=["Cc", "Cs"])
     email=text(min_size=5, max_size=30, alphabet=allowed_characters),
     password=text(min_size=5, max_size=20, alphabet=allowed_characters),
 )
-@settings(max_examples=1, deadline=500)
+@settings(max_examples=10, deadline=1000)
 @pytest.mark.asyncio
 async def test_create_user(username, email, password):
     user_data = {"username": username, "email": email, "password": password}
