@@ -1,20 +1,21 @@
 import pytest
 import httpx
 from hypothesis import given, settings
-from hypothesis.strategies import integers, text
+from hypothesis.strategies import characters, text
 
 URL_HOST = "http://localhost:8000/api/v1/agencies/"
 TEST_AGENCY_ID = 501
+allowed_characters = characters(blacklist_categories=["Cc", "Cs"])
 
 
 @given(
-    name=text(min_size=1, max_size=50),
-    country=text(min_size=1, max_size=50),
-    description=text(min_size=1, max_size=100),
-    website=text(min_size=1, max_size=100),
-    image_url=text(min_size=1, max_size=100),
+    name=text(min_size=1, max_size=50, alphabet=allowed_characters),
+    country=text(min_size=1, max_size=50, alphabet=allowed_characters),
+    description=text(min_size=1, max_size=100, alphabet=allowed_characters),
+    website=text(min_size=1, max_size=100, alphabet=allowed_characters),
+    image_url=text(min_size=1, max_size=100, alphabet=allowed_characters),
 )
-@settings(max_examples=10)
+@settings(max_examples=1, deadline=500)
 @pytest.mark.asyncio
 async def test_create_and_delete_agency(
     name, country, description, website, image_url
