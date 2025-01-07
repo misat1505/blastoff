@@ -8,12 +8,19 @@ TEST_ROCKET_ID = 333
 TEST_AGENCY_ID = 121
 allowed_characters = characters(blacklist_categories=["Cc", "Cs"])
 
+
 @given(
     name=text(min_size=1, max_size=100, alphabet=allowed_characters),
     no_stages=integers(min_value=1, max_value=10),
-    height=floats(min_value=0, max_value=100, allow_infinity=False, allow_nan=False),
-    mass=floats(min_value=0, max_value=100000, allow_infinity=False, allow_nan=False),
-    diameter=floats(min_value=0, max_value=10, allow_infinity=False, allow_nan=False),
+    height=floats(
+        min_value=0, max_value=100, allow_infinity=False, allow_nan=False
+    ),
+    mass=floats(
+        min_value=0, max_value=100000, allow_infinity=False, allow_nan=False
+    ),
+    diameter=floats(
+        min_value=0, max_value=10, allow_infinity=False, allow_nan=False
+    ),
     description=text(min_size=1, max_size=5000, alphabet=allowed_characters),
     launches_count=integers(min_value=0, max_value=1000),
     successful_launches_count=integers(min_value=0, max_value=1000),
@@ -22,22 +29,49 @@ allowed_characters = characters(blacklist_categories=["Cc", "Cs"])
     successful_landings_count=integers(min_value=0, max_value=1000),
     failed_landings_count=integers(min_value=0, max_value=1000),
     pending_launches=integers(min_value=0, max_value=1000),
-    leo_capacity=floats(min_value=0, max_value=1000, allow_infinity=False, allow_nan=False),
-    gto_capacity=floats(min_value=0, max_value=1000, allow_infinity=False, allow_nan=False),
-    geo_capacity=floats(min_value=0, max_value=1000, allow_infinity=False, allow_nan=False),
-    sso_capacity=floats(min_value=0, max_value=1000, allow_infinity=False, allow_nan=False),
-    rocket_thrust=floats(min_value=0, max_value=10000, allow_infinity=False, allow_nan=False),
-    launch_cost=floats(min_value=0, max_value=1000000, allow_infinity=False, allow_nan=False),
+    leo_capacity=floats(
+        min_value=0, max_value=1000, allow_infinity=False, allow_nan=False
+    ),
+    gto_capacity=floats(
+        min_value=0, max_value=1000, allow_infinity=False, allow_nan=False
+    ),
+    geo_capacity=floats(
+        min_value=0, max_value=1000, allow_infinity=False, allow_nan=False
+    ),
+    sso_capacity=floats(
+        min_value=0, max_value=1000, allow_infinity=False, allow_nan=False
+    ),
+    rocket_thrust=floats(
+        min_value=0, max_value=10000, allow_infinity=False, allow_nan=False
+    ),
+    launch_cost=floats(
+        min_value=0, max_value=1000000, allow_infinity=False, allow_nan=False
+    ),
     image_url=text(min_size=1, max_size=500, alphabet=allowed_characters),
 )
 @settings(max_examples=10, deadline=500)
 @pytest.mark.asyncio
 async def test_create_and_delete_rocket(
-    name, no_stages, height, mass, diameter, description, launches_count,
-    successful_launches_count, failed_launches_count, landings_count,
-    successful_landings_count, failed_landings_count, pending_launches,
-    leo_capacity, gto_capacity, geo_capacity, sso_capacity, rocket_thrust,
-    launch_cost, image_url
+    name,
+    no_stages,
+    height,
+    mass,
+    diameter,
+    description,
+    launches_count,
+    successful_launches_count,
+    failed_launches_count,
+    landings_count,
+    successful_landings_count,
+    failed_landings_count,
+    pending_launches,
+    leo_capacity,
+    gto_capacity,
+    geo_capacity,
+    sso_capacity,
+    rocket_thrust,
+    launch_cost,
+    image_url,
 ):
     rocket_id = TEST_ROCKET_ID
     agency_id = TEST_AGENCY_ID
@@ -114,14 +148,14 @@ async def test_create_rocket():
         "rocket_thrust": 1200.0,
         "launch_cost": 3000000.0,
         "image_url": "http://example.com/test_rocket.png",
-        "agency_id": TEST_AGENCY_ID
+        "agency_id": TEST_AGENCY_ID,
     }
 
     async with httpx.AsyncClient() as client:
         response = await client.post(URL_HOST, json=new_rocket_data)
-    assert response.status_code == 200 
+    assert response.status_code == 200
     created_rocket = response.json()
-    
+
     for key, value in new_rocket_data.items():
         assert created_rocket[key] == value
 
@@ -149,7 +183,7 @@ async def test_get_rocket():
         "rocket_thrust": 1200.0,
         "launch_cost": 3000000.0,
         "image_url": "http://example.com/test_rocket.png",
-        "agency_id": TEST_AGENCY_ID
+        "agency_id": TEST_AGENCY_ID,
     }
 
     async with httpx.AsyncClient() as client:
