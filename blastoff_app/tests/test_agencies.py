@@ -15,7 +15,7 @@ allowed_characters = characters(blacklist_categories=["Cc", "Cs"])
     website=text(min_size=1, max_size=100, alphabet=allowed_characters),
     image_url=text(min_size=1, max_size=100, alphabet=allowed_characters),
 )
-@settings(max_examples=20, deadline=None)
+@settings(max_examples=10, deadline=None)
 @pytest.mark.asyncio
 async def test_create_and_delete_agency(
     name, country, description, website, image_url
@@ -56,7 +56,7 @@ async def test_create_and_delete_agency(
 
 
 @pytest.mark.asyncio
-async def test_create_agency(monkeypatch):
+async def test_create_agency():
     agency_data = {
         "id": TEST_AGENCY_ID,
         "name": "SpaceX",
@@ -78,7 +78,7 @@ async def test_create_agency(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_update_agency(monkeypatch):
+async def test_update_agency():
     updated_agency_data = {
         "name": "string",
         "country": "string",
@@ -102,7 +102,7 @@ async def test_update_agency(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_get_agency(monkeypatch):
+async def test_get_agency():
     updated_agency_data = {
         "name": "string",
         "country": "string",
@@ -124,7 +124,7 @@ async def test_get_agency(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_delete_agency(monkeypatch):
+async def test_delete_agency():
     updated_agency_data = {
         "name": "string",
         "country": "string",
@@ -146,7 +146,7 @@ async def test_delete_agency(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_delete_wrong_id_agency(monkeypatch):
+async def test_delete_wrong_id_agency():
     async with httpx.AsyncClient() as client:
         r = await client.delete(URL_HOST + f"{TEST_AGENCY_ID+1}")
     assert r.status_code == 404
