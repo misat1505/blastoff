@@ -404,7 +404,7 @@ files = [
 
 [[package]]
 name = "hypothesis"
-version = "6.123.2"
+version = "6.123.9"
 requires_python = ">=3.9"
 summary = "A library for property-based testing"
 groups = ["dev"]
@@ -414,8 +414,8 @@ dependencies = [
     "sortedcontainers<3.0.0,>=2.1.0",
 ]
 files = [
-    {file = "hypothesis-6.123.2-py3-none-any.whl", hash = "sha256:0a8bf07753f1436f1b8697a13ea955f3fef3ef7b477c2972869b1d142bcdb30e"},
-    {file = "hypothesis-6.123.2.tar.gz", hash = "sha256:02c25552783764146b191c69eef69d8375827b58a75074055705ab8fdbc95fc5"},
+    {file = "hypothesis-6.123.9-py3-none-any.whl", hash = "sha256:aca6a2f7aeef85e5201079ab93156fca137a8cabcf5cc39ea2a3b7147432fe89"},
+    {file = "hypothesis-6.123.9.tar.gz", hash = "sha256:0f924bd9513daa9ecddbfe8abe8b3f7598d4d09234fe1027b19b4cd717adba05"},
 ]
 
 [[package]]

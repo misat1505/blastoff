@@ -41,7 +41,6 @@ dependencies = [
     "apscheduler>=3.11.0",
     "aiosmtplib>=3.0.2",
     "requests>=2.32.3",
-    "hypothesis>=6.123.9",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
