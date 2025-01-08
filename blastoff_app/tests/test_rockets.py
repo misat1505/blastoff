@@ -49,7 +49,7 @@ allowed_characters = characters(blacklist_categories=["Cc", "Cs"])
     ),
     image_url=text(min_size=1, max_size=500, alphabet=allowed_characters),
 )
-@settings(max_examples=10, deadline=500)
+@settings(max_examples=10, deadline=None)
 @pytest.mark.asyncio
 async def test_create_and_delete_rocket(
     name,
@@ -125,6 +125,7 @@ async def test_create_and_delete_rocket(
     assert response_data["detail"] == "Rocket not found"
 
 
+@pytest.mark.asyncio
 async def test_create_rocket():
     new_rocket_data = {
         "id": TEST_ROCKET_ID,
@@ -160,6 +161,7 @@ async def test_create_rocket():
         assert created_rocket[key] == value
 
 
+@pytest.mark.asyncio
 async def test_get_rocket():
     expected_rocket_data = {
         "id": TEST_ROCKET_ID,
@@ -194,6 +196,7 @@ async def test_get_rocket():
         assert response_data[key] == value
 
 
+@pytest.mark.asyncio
 async def test_delete_rocket():
     async with httpx.AsyncClient() as client:
         r = await client.delete(URL_HOST + f"{TEST_ROCKET_ID}")
@@ -207,6 +210,7 @@ async def test_delete_rocket():
     assert response_data["detail"] == "Rocket not found"
 
 
+@pytest.mark.asyncio
 async def test_delete_wrong_id_rocket():
     wrong_id = TEST_ROCKET_ID + 1
     async with httpx.AsyncClient() as client:

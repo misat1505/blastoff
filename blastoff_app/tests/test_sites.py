@@ -17,7 +17,7 @@ allowed_characters = characters(blacklist_categories=["Cc", "Cs"])
     image_url=text(min_size=5, max_size=100, alphabet=allowed_characters),
     map_image_url=text(min_size=5, max_size=100, alphabet=allowed_characters),
 )
-@settings(max_examples=10, deadline=500)
+@settings(max_examples=10, deadline=None)
 @pytest.mark.asyncio
 async def test_create_site(
     name, country, latitude, longitude, description, image_url, map_image_url

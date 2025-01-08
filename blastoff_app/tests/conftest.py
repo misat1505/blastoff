@@ -1,5 +1,5 @@
-import pytest
 import httpx
+import pytest_asyncio
 
 URL_HOST_A = "http://localhost:8000/api/v1/agencies/"
 DELETE_AGENCY_ID = 501
@@ -21,14 +21,14 @@ CREATE_SITE_ID = 87
 DELETE_SITE_ID = 0
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest_asyncio.fixture(scope="session", autouse=True)
 async def prepare_database():
     await setup_test_data()
 
 
 async def setup_test_data():
     async with httpx.AsyncClient() as client:
-        response = await client.delete(URL_HOST_R + f"{DELETE_ROCKET_ID}")
+        await client.delete(URL_HOST_R + f"{DELETE_ROCKET_ID}")
 
     agency_data = {
         "id": CREATE_AGENCY_ID,
@@ -39,9 +39,9 @@ async def setup_test_data():
         "image_url": "https://www.spacex.com/logo.png",
     }
     async with httpx.AsyncClient() as client:
-        response = await client.post(URL_HOST_A, json=agency_data)
+        await client.post(URL_HOST_A, json=agency_data)
     async with httpx.AsyncClient() as client:
-        response = await client.delete(URL_HOST_A + f"{DELETE_AGENCY_ID}")
+        await client.delete(URL_HOST_A + f"{DELETE_AGENCY_ID}")
 
     new_rocket_data = {
         "id": CREATE_ROCKET_ID,
@@ -69,7 +69,7 @@ async def setup_test_data():
     }
 
     async with httpx.AsyncClient() as client:
-        response = await client.post(URL_HOST_R, json=new_rocket_data)
+        await client.post(URL_HOST_R, json=new_rocket_data)
 
     program_data = {
         "name": "Mars Exploration Program",
@@ -79,9 +79,9 @@ async def setup_test_data():
         "id": CREATE_PROGRAM_ID
     }
     async with httpx.AsyncClient() as client:
-        response = await client.post(URL_HOST_P, json=program_data)
+        await client.post(URL_HOST_P, json=program_data)
     async with httpx.AsyncClient() as client:
-        response = await client.delete(URL_HOST_P + f"{DELETE_PROGRAM_ID}")
+        await client.delete(URL_HOST_P + f"{DELETE_PROGRAM_ID}")
 
     site_data = {
         "name": "Cape Canaveral",
@@ -94,9 +94,9 @@ async def setup_test_data():
         "id": CREATE_SITE_ID
     }
     async with httpx.AsyncClient() as client:
-        response = await client.post(URL_HOST_S, json=site_data)
+        await client.post(URL_HOST_S, json=site_data)
     async with httpx.AsyncClient() as client:
-        response = await client.delete(URL_HOST_S + f"{DELETE_SITE_ID}")
+        await client.delete(URL_HOST_S + f"{DELETE_SITE_ID}")
 
     async with httpx.AsyncClient() as client:
-        response = await client.delete(URL_HOST_L + f"{DELETE_LAUNCH_ID}")
+        await client.delete(URL_HOST_L + f"{DELETE_LAUNCH_ID}")
