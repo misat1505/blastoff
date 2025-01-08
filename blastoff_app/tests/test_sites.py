@@ -23,6 +23,7 @@ async def test_create_site(
     name, country, latitude, longitude, description, image_url, map_image_url
 ):
     site_data = {
+        "id": TEST_SITE_ID,
         "name": name,
         "country": country,
         "latitude": latitude,
@@ -30,20 +31,15 @@ async def test_create_site(
         "description": description,
         "image_url": image_url,
         "map_image_url": map_image_url,
-        "id": TEST_SITE_ID,
     }
 
     async with httpx.AsyncClient() as client:
         r = await client.post(URL_HOST, json=site_data)
     assert r.status_code == 200
     response_data = r.json()
-    assert response_data["name"] == site_data["name"]
-    assert response_data["country"] == site_data["country"]
-    assert response_data["latitude"] == site_data["latitude"]
-    assert response_data["longitude"] == site_data["longitude"]
-    assert response_data["description"] == site_data["description"]
-    assert response_data["image_url"] == site_data["image_url"]
-    assert response_data["map_image_url"] == site_data["map_image_url"]
+
+    for key in site_data.keys():
+        assert response_data[key] == site_data[key]
 
     async with httpx.AsyncClient() as client:
         r = await client.delete(URL_HOST + f"{TEST_SITE_ID}")

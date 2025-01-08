@@ -34,12 +34,9 @@ async def test_create_and_delete_agency(
         create_response = await client.post(URL_HOST, json=agency_data)
     assert create_response.status_code == 200
     created_agency = create_response.json()
-    assert created_agency["id"] == agency_data["id"]
-    assert created_agency["name"] == agency_data["name"]
-    assert created_agency["country"] == agency_data["country"]
-    assert created_agency["description"] == agency_data["description"]
-    assert created_agency["website"] == agency_data["website"]
-    assert created_agency["image_url"] == agency_data["image_url"]
+
+    for key in agency_data.keys():
+        assert created_agency[key] == agency_data[key]
 
     async with httpx.AsyncClient() as client:
         delete_response = await client.delete(URL_HOST + f"{agency_id}")
@@ -69,12 +66,9 @@ async def test_create_agency():
         r = await client.post(URL_HOST, json=agency_data)
     assert r.status_code == 200
     response_data = r.json()
-    assert response_data["id"] == agency_data["id"]
-    assert response_data["name"] == agency_data["name"]
-    assert response_data["country"] == agency_data["country"]
-    assert response_data["description"] == agency_data["description"]
-    assert response_data["website"] == agency_data["website"]
-    assert response_data["image_url"] == agency_data["image_url"]
+
+    for key in agency_data.keys():
+        assert response_data[key] == agency_data[key]
 
 
 @pytest.mark.asyncio
@@ -93,17 +87,14 @@ async def test_update_agency():
         )
     assert r.status_code == 200
     response_data = r.json()
-    assert response_data["id"] == updated_agency_data["id"]
-    assert response_data["name"] == updated_agency_data["name"]
-    assert response_data["country"] == updated_agency_data["country"]
-    assert response_data["description"] == updated_agency_data["description"]
-    assert response_data["website"] == updated_agency_data["website"]
-    assert response_data["image_url"] == updated_agency_data["image_url"]
+
+    for key in updated_agency_data.keys():
+        assert response_data[key] == updated_agency_data[key]
 
 
 @pytest.mark.asyncio
 async def test_get_agency():
-    updated_agency_data = {
+    agency_data = {
         "name": "string",
         "country": "string",
         "description": "string",
@@ -115,17 +106,14 @@ async def test_get_agency():
         r = await client.get(URL_HOST + f"{TEST_AGENCY_ID}")
     assert r.status_code == 200
     response_data = r.json()
-    assert response_data["id"] == updated_agency_data["id"]
-    assert response_data["name"] == updated_agency_data["name"]
-    assert response_data["country"] == updated_agency_data["country"]
-    assert response_data["description"] == updated_agency_data["description"]
-    assert response_data["website"] == updated_agency_data["website"]
-    assert response_data["image_url"] == updated_agency_data["image_url"]
+
+    for key in agency_data.keys():
+        assert response_data[key] == agency_data[key]
 
 
 @pytest.mark.asyncio
 async def test_delete_agency():
-    updated_agency_data = {
+    agency_data = {
         "name": "string",
         "country": "string",
         "description": "string",
@@ -137,12 +125,9 @@ async def test_delete_agency():
         r = await client.delete(URL_HOST + f"{TEST_AGENCY_ID}")
     assert r.status_code == 200
     response_data = r.json()
-    assert response_data["id"] == updated_agency_data["id"]
-    assert response_data["name"] == updated_agency_data["name"]
-    assert response_data["country"] == updated_agency_data["country"]
-    assert response_data["description"] == updated_agency_data["description"]
-    assert response_data["website"] == updated_agency_data["website"]
-    assert response_data["image_url"] == updated_agency_data["image_url"]
+
+    for key in agency_data.keys():
+        assert response_data[key] == agency_data[key]
 
 
 @pytest.mark.asyncio

@@ -88,7 +88,7 @@ async def test_create_and_delete_rocket(
         "failed_launches_count": failed_launches_count,
         "landings_count": landings_count,
         "successful_landings_count": successful_landings_count,
-        "failed_landings_count": failed_launches_count,
+        "failed_landings_count": failed_landings_count,
         "pending_launches": pending_launches,
         "leo_capacity": leo_capacity,
         "gto_capacity": gto_capacity,
@@ -104,12 +104,9 @@ async def test_create_and_delete_rocket(
         create_response = await client.post(URL_HOST, json=rocket_data)
     assert create_response.status_code == 200
     created_rocket = create_response.json()
-    assert created_rocket["id"] == rocket_data["id"]
-    assert created_rocket["name"] == rocket_data["name"]
-    assert created_rocket["no_stages"] == rocket_data["no_stages"]
-    assert created_rocket["height"] == rocket_data["height"]
-    assert created_rocket["mass"] == rocket_data["mass"]
-    assert created_rocket["agency_id"] == rocket_data["agency_id"]
+
+    for key, value in rocket_data.items():
+        assert created_rocket[key] == value
 
     async with httpx.AsyncClient() as client:
         delete_response = await client.delete(URL_HOST + f"{rocket_id}")
