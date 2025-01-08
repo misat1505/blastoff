@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:646f68dadb7da54418559386a2737637667cfa2082a6402980042e4e57aef405"
+content_hash = "sha256:41c0431c9999ba3877084794d141c68394c0ec2ec0236e9df3d47554d39d9f23"
 
 [[metadata.targets]]
 requires_python = "==3.12.*"
@@ -375,7 +375,7 @@ name = "httpcore"
 version = "1.0.7"
 requires_python = ">=3.8"
 summary = "A minimal low-level HTTP client."
-groups = ["dev"]
+groups = ["default", "dev"]
 dependencies = [
     "certifi",
     "h11<0.15,>=0.13",
@@ -390,7 +390,7 @@ name = "httpx"
 version = "0.28.1"
 requires_python = ">=3.8"
 summary = "The next generation HTTP client."
-groups = ["dev"]
+groups = ["default", "dev"]
 dependencies = [
     "anyio",
     "certifi",

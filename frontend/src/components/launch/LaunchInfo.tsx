@@ -170,7 +170,7 @@ const AgencyPreview = () => {
           <img
             src={launch.rocket.agency.image_url || undefined}
             alt={launch.rocket.agency.name || undefined}
-            className="max-w-48 object-cover"
+            className="max-w-48 object-cover mx-auto"
           />
           <p className="text-sm mt-4 text-muted-foreground">
             {launch.rocket.agency.name}, {launch.rocket.agency.country}

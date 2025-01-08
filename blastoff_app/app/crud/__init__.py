@@ -32,11 +32,11 @@ from .launch import (
     create_launch,
     delete_launch,
     get_all_launches,
+    get_current_launches,
     get_detailed_launch,
     get_future_launches_sorted,
     get_launch_by_id,
     update_launch,
-    get_current_launches,
 )
 from .program import (
     create_program,
@@ -53,7 +53,13 @@ from .rocket import (
     get_rocket_by_id,
     update_rocket,
 )
-from .site import create_site, delete_site, get_all_sites, get_site_by_id, update_site
+from .site import (
+    create_site,
+    delete_site,
+    get_all_sites,
+    get_site_by_id,
+    update_site,
+)
 from .user import (
     create_user,
     delete_user,

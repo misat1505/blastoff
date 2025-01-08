@@ -2,7 +2,7 @@ from typing import Any
 
 import requests
 
-from app.api_connection.src.launch_data import LaunchDataList, InvalidAPIData
+from app.api_connection.src.launch_data import InvalidAPIData, LaunchDataList
 
 
 class APIError(Exception):
@@ -76,4 +76,6 @@ class GetLaunchesAPIData(GetAPIData):
             self.next = self.results["next"]
             return LaunchDataList.from_api(self.results["results"])
         except (KeyError, InvalidAPIData) as e:
-            raise APIError(f'API error occurred. Request results: {self.results}. Error details: {e}')
+            raise APIError(
+                f"API error occurred. Request results: {self.results}. Error details: {e}"
+            )

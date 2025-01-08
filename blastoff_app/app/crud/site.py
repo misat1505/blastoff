@@ -34,9 +34,7 @@ async def delete_site(db: AsyncSession, site_id: int):
     return site
 
 
-async def update_site(
-    db: AsyncSession, site_id: int, site_data: SiteCreate
-):
+async def update_site(db: AsyncSession, site_id: int, site_data: SiteCreate):
     site = await get_site_by_id(db, site_id)
     if not site:
         return None

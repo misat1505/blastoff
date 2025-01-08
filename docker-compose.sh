@@ -27,4 +27,4 @@ else
     exit 1
 fi
 
-docker-compose -f "$COMPOSE_FILE" up
+docker-compose -f "$COMPOSE_FILE" up --build
