@@ -1,5 +1,5 @@
-import pytest
 import httpx
+import pytest
 from hypothesis import given, settings
 from hypothesis.strategies import characters, text
 

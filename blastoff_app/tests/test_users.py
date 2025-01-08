@@ -1,7 +1,7 @@
-import pytest
 import httpx
+import pytest
 from hypothesis import given, settings
-from hypothesis.strategies import text, characters
+from hypothesis.strategies import characters, text
 
 URL_HOST = "http://localhost:8000/api/v1/users/"
 allowed_characters = characters(blacklist_categories=["Cc", "Cs"])

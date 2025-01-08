@@ -1,7 +1,7 @@
-import pytest
 import httpx
+import pytest
 from hypothesis import given, settings
-from hypothesis.strategies import integers, floats, characters, text
+from hypothesis.strategies import characters, floats, integers, text
 
 URL_HOST = "http://localhost:8000/api/v1/rockets/"
 TEST_ROCKET_ID = 333

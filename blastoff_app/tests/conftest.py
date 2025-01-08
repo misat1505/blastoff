@@ -76,7 +76,7 @@ async def setup_test_data():
         "description": "A program dedicated to exploring Mars.",
         "website": "string",
         "image_url": "string",
-        "id": CREATE_PROGRAM_ID
+        "id": CREATE_PROGRAM_ID,
     }
     async with httpx.AsyncClient() as client:
         await client.post(URL_HOST_P, json=program_data)
@@ -91,7 +91,7 @@ async def setup_test_data():
         "description": "string",
         "image_url": "string",
         "map_image_url": "string",
-        "id": CREATE_SITE_ID
+        "id": CREATE_SITE_ID,
     }
     async with httpx.AsyncClient() as client:
         await client.post(URL_HOST_S, json=site_data)
