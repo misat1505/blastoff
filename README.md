@@ -8,7 +8,7 @@
 
 Projekt zakłada stworzenie systemu, który będzie pozwalać śledzić starty rakiet oraz umożliwiał użytkownikom komentowanie, dodawanie do ulubionych i obserwowanie tych startów.
 
-System będzie składał się z serwera, który będzie regularnie pobierał dane z zewnętrznego API i zapisywał je do bazy danych MySQL. W momencie, gdy użytkownik zgłosi zapytanie, serwer najpierw sprawdzi, czy wynik zapytania znajduje się w pamięci podręcznej (Redis). Jeśli dane będą dostępne w Redis, zostaną zwrócone natychmiast, minimalizując obciążenie bazy danych.
+System będzie składał się z serwera, który będzie regularnie pobierał dane z zewnętrznego API i zapisywał je do bazy danych PostgreSQL. W momencie, gdy użytkownik zgłosi zapytanie, serwer najpierw sprawdzi, czy wynik zapytania znajduje się w pamięci podręcznej (Redis). Jeśli dane będą dostępne w Redis, zostaną zwrócone natychmiast, minimalizując obciążenie bazy danych.
 
 Interfejs graficzny zapewni użytkownikom czytelne i przejrzyste wyświetlanie danych. Użytkownicy będą mogli wchodzić w interakcje z systemem, np. dodawać starty do ulubionych czy komentować wydarzenia.
 
@@ -44,7 +44,7 @@ Interfejs graficzny zapewni użytkownikom czytelne i przejrzyste wyświetlanie d
 
 - **Backend**: Python FastAPI
 - **Frontend**: React
-- **Baza danych**: MySQL
+- **Baza danych**: PostgreSQL
 - **Testy automatyczne**: Selenium
 - **Narzędzie do cache'owania**: Redis
 - **Testy jednostkowe**: pytest
@@ -57,6 +57,6 @@ Interfejs graficzny zapewni użytkownikom czytelne i przejrzyste wyświetlanie d
 
 - FastAPI documentation - [fastapi.tiangolo.com](https://fastapi.tiangolo.com)
 - API - [thespacedevs.com/llapi](https://thespacedevs.com/llapi)
-- MySQL documentation - [dev.mysql.com/doc](https://dev.mysql.com/doc)
+- PostgreSQL documentation - [postgresql.org/docs/](https://www.postgresql.org/docs/)
 - React - [react.dev/](https://react.dev/)
 - Locust documentation - [docs.locust.io/en/stable/](https://docs.locust.io/en/stable/)
