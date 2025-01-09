@@ -21,8 +21,6 @@ async def create_rocket(
 async def get_rocket_by_id(db: AsyncSession, rocket_id: int) -> RocketResponse:
     result = await db.execute(select(Rocket).filter(Rocket.id == rocket_id))
     rocket = result.scalar_one_or_none()
-    if rocket is None:
-        raise HTTPException(status_code=404, detail="Rocket not found")
     return rocket
 
 
@@ -60,4 +58,38 @@ async def get_detailed_rocket_by_id(
 
     await redis.set_cache(RedisKeys.rocket_details(rocket_id), rocket)
 
+    return rocket
+
+
+async def update_rocket(
+    db: AsyncSession, rocket_id: int, rocket_data: RocketCreate
+):
+    rocket = await get_rocket_by_id(db, rocket_id)
+    if not rocket:
+        return None
+
+    rocket.name = rocket_data.name
+    rocket.no_stages = rocket_data.no_stages
+    rocket.height = rocket_data.height
+    rocket.mass = rocket_data.mass
+    rocket.diameter = rocket_data.diameter
+    rocket.description = rocket_data.description
+    rocket.launches_count = rocket_data.launches_count
+    rocket.successful_launches_count = rocket_data.successful_launches_count
+    rocket.failed_launches_count = rocket_data.failed_launches_count
+    rocket.landings_count = rocket_data.landings_count
+    rocket.successful_landings_count = rocket_data.successful_landings_count
+    rocket.failed_landings_count = rocket_data.failed_landings_count
+    rocket.pending_launches = rocket_data.pending_launches
+    rocket.leo_capacity = rocket_data.leo_capacity
+    rocket.gto_capacity = rocket_data.gto_capacity
+    rocket.geo_capacity = rocket_data.geo_capacity
+    rocket.sso_capacity = rocket_data.sso_capacity
+    rocket.rocket_thrust = rocket_data.rocket_thrust
+    rocket.launch_cost = rocket_data.launch_cost
+    rocket.image_url = rocket_data.image_url
+    rocket.agency_id = rocket_data.agency_id
+
+    await db.commit()
+    await db.refresh(rocket)
     return rocket

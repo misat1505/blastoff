@@ -1,7 +1,7 @@
 import collections
 import datetime
 from dataclasses import dataclass
-from typing import Generator, Any
+from typing import Any, Generator
 
 
 class InvalidAPIData(Exception):
@@ -25,6 +25,7 @@ class LaunchData:
     - last_updated: date of last update (from api)
     - url: url to get launch details (from api)
     """
+
     id: str
     last_updated: datetime.datetime
     url: str
@@ -56,14 +57,27 @@ class LaunchDataList(collections.UserList):
         if len(ids) != len(set(ids)):
             raise InvalidAPIData("Id fields must be unique!")
         try:
-            return cls([LaunchData(launch["id"], datetime.datetime.fromisoformat(launch["last_updated"]), launch["url"]) for launch in data])
+            return cls(
+                [
+                    LaunchData(
+                        launch["id"],
+                        datetime.datetime.fromisoformat(
+                            launch["last_updated"]
+                        ),
+                        launch["url"],
+                    )
+                    for launch in data
+                ]
+            )
         except KeyError as e:
             raise InvalidAPIData("Missing key {}".format(e))
         except ValueError as e:
             raise InvalidAPIData("Invalid datetime field - {}".format(e))
 
     @classmethod
-    def from_db(cls, data: list[tuple[str, str]]) -> "LaunchDataList":
+    def from_db(
+        cls, data: list[tuple[str, datetime.datetime]]
+    ) -> "LaunchDataList":
         """
         Creates an LaunchDataList object from db data
 
@@ -72,10 +86,12 @@ class LaunchDataList(collections.UserList):
         :param data: list of tuples containing launch data - tuple format (id, last_updated) - ex. [('some_id', '2024-01-01')]
         :return: LaunchDataList object (containing LaunchData objects with id, last_updated, url fields)
         """
-        try:
-            return cls([LaunchData(api_id, datetime.datetime.fromisoformat(last_updated), "") for api_id, last_updated in data])
-        except ValueError as e:
-            raise InvalidDBData("Invalid datetime field - {}".format(e))
+        return cls(
+            [
+                LaunchData(api_id, last_updated, "")
+                for api_id, last_updated in data
+            ]
+        )
 
     def get_by_id(self, id: str) -> LaunchData:
         """
@@ -91,7 +107,9 @@ class LaunchDataList(collections.UserList):
                 return item
         raise KeyError(id)
 
-    def compare(self, other: "LaunchDataList", new: bool = True, changed: bool = True) -> Generator[LaunchData]:
+    def compare(
+        self, other: "LaunchDataList", new: bool = True, changed: bool = True
+    ) -> Generator[LaunchData, None, None]:
         """
         Method to compare two LaunchDataList objects, used for getting new / modified launches data (compared to current data in db)
 
@@ -103,7 +121,11 @@ class LaunchDataList(collections.UserList):
         """
         for launch_data in self:
             if launch_data.id in other:
-                if changed and launch_data.last_updated != other.get_by_id(launch_data.id).last_updated:
+                if (
+                    changed
+                    and launch_data.last_updated
+                    != other.get_by_id(launch_data.id).last_updated
+                ):
                     yield launch_data
             elif new:
                 yield launch_data

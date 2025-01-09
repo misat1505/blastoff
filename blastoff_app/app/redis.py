@@ -36,6 +36,10 @@ class RedisClient:
         self.__check_connection()
         await self.redis.delete(key)
 
+    async def flush_all(self):
+        self.__check_connection()
+        await self.redis.flushall()
+
     def __check_connection(self):
         if not self.redis:
             raise ConnectionError("Redis connection is not initialized")

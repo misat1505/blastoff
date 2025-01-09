@@ -22,11 +22,13 @@ const RocketImage = () => {
         }
       )}
     >
-      <img
-        src={rocket.image_url || undefined}
-        alt={rocket.name}
-        className="h-full w-full object-cover transition-all duration-1000 ease-out"
-      />
+      {rocket.image_url && (
+        <img
+          src={rocket.image_url || undefined}
+          alt={rocket.name}
+          className="h-full w-full object-cover transition-all duration-1000 ease-out"
+        />
+      )}
       <div
         className={cn(
           "absolute left-1/2 top-1/2 z-10 max-h-[calc(100vh-5rem)] w-[80vw] -translate-x-1/2 translate-y-10 overflow-y-hidden text-center text-slate-900 opacity-0 transition-all delay-500 duration-1000 ease-out dark:text-slate-100 md:w-[50vw]",

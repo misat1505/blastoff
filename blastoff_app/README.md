@@ -1,11 +1,21 @@
-# FastAPI ORM with MySQL Database
+# FastAPI backend server
 
-Running MySql database in docker
-``` bash
-./setup_mysql.sh
+## Running App
+
+Make sure you have pdm installed
+
+```
+pip install -U pdm
 ```
 
-Running App
-``` bash
-python -m uvicorn app.main:app --reload
+Install dependencies
+
+```
+pdm install
+```
+
+Blastoff the app
+
+```bash
+pdm run start
 ```

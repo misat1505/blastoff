@@ -8,7 +8,7 @@ class Program(Base):
     __tablename__ = "programs"
 
     id = Column(Integer, primary_key=True, index=True, default=1)
-    name = Column(String(100), nullable=False, unique=True)
+    name = Column(String(100), nullable=False)
     description = Column(String(5000))
     website = Column(String(500))
     image_url = Column(String(500))

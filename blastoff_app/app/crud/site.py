@@ -32,3 +32,21 @@ async def delete_site(db: AsyncSession, site_id: int):
     await db.delete(site)
     await db.commit()
     return site
+
+
+async def update_site(db: AsyncSession, site_id: int, site_data: SiteCreate):
+    site = await get_site_by_id(db, site_id)
+    if not site:
+        return None
+
+    site.name = site_data.name
+    site.country = site_data.country
+    site.latitude = site_data.latitude
+    site.longitude = site_data.longitude
+    site.description = site_data.description
+    site.image_url = site_data.image_url
+    site.map_image_url = site_data.map_image_url
+
+    await db.commit()
+    await db.refresh(site)
+    return site

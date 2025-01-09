@@ -8,7 +8,7 @@ class Agency(Base):
     __tablename__ = "agencies"
 
     id = Column(Integer, primary_key=True, index=True, default=1)
-    name = Column(String(100), unique=True, index=True)
+    name = Column(String(100))
     country = Column(String(100))
     description = Column(String(5000))
     website = Column(String(500))

@@ -10,6 +10,7 @@ import { CgDetailsMore } from "react-icons/cg";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
 import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
+import { IoMdRocket } from "react-icons/io";
 
 type LaunchCardProps = {
   launch: Launch;
@@ -28,6 +29,13 @@ const LaunchCard = ({ launch }: LaunchCardProps) => {
 
 const Image = () => {
   const { launch } = useLaunchContext();
+
+  if (!launch.image_url)
+    return (
+      <div className="col-span-1 max-h-56 w-full object-cover sm:h-full sm:max-h-full dark:bg-slate-900/80 bg-slate-200/40 flex items-center justify-center">
+        <IoMdRocket size={224} />
+      </div>
+    );
 
   return (
     <img

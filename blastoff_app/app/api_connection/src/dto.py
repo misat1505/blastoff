@@ -2,7 +2,7 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
-from launch_data import InvalidAPIData
+from app.api_connection.src.launch_data import InvalidAPIData
 
 
 class CouldNotReadFile(Exception):
@@ -34,6 +34,7 @@ class LaunchDTO:
     - rocket: rocket details (from api), containing only necessary (from db perspective) fields
     - site: site details (from api), containing only necessary (from db perspective) fields
     """
+
     agency: dict[str, Any] | None
     launch: dict[str, Any] | None
     program: dict[str, Any] | None
@@ -44,7 +45,9 @@ class LaunchDTO:
         for field in ["agency", "launch", "program", "rocket", "site"]:
             value = getattr(self, field)
             if value is not None and not isinstance(value, dict):
-                raise ValueError(f"{field} must be a dictionary or None, got {type(value)}")
+                raise ValueError(
+                    f"{field} must be a dictionary or None, got {type(value)}"
+                )
         if not self.launch or not self.launch.get("id"):
             raise ValueError("Launch data must be provided")
 
@@ -76,14 +79,22 @@ class LaunchDTO:
         :return: LaunchDTO object
         """
         try:
-            with open(filename, 'r') as file:
+            with open(filename, "r") as file:
                 data = json.load(file)
-            return cls(data.get("agency"), data.get("launch"), data.get("program"), data.get("rocket"), data.get("site"))
+            return cls(
+                data.get("agency"),
+                data.get("launch"),
+                data.get("program"),
+                data.get("rocket"),
+                data.get("site"),
+            )
         except (FileNotFoundError, json.JSONDecodeError):
-            raise CouldNotReadFile(f'Could not read file: {filename}')
+            raise CouldNotReadFile(f"Could not read file: {filename}")
 
     @staticmethod
-    def _get_launch_url(info_urls: list[dict[str, Any]], vid_urls: list[dict[str, Any]]) -> str | None:
+    def _get_launch_url(
+        info_urls: list[dict[str, Any]], vid_urls: list[dict[str, Any]]
+    ) -> str | None:
         """
         Supporting method to get media url with max priority
 
@@ -109,13 +120,15 @@ class LaunchDTO:
             "launch": self.launch,
             "program": self.program,
             "rocket": self.rocket,
-            "site": self.site
+            "site": self.site,
         }
         try:
-            with open(filename, 'w') as file:
+            with open(filename, "w") as file:
                 json.dump(data, file, indent=4)
         except FileNotFoundError:
-            raise CouldNotSaveToFile(f'Could not save data to file: {filename}')
+            raise CouldNotSaveToFile(
+                f"Could not save data to file: {filename}"
+            )
 
     @staticmethod
     def _create_launch(details: dict[str, Any]) -> dict[str, Any]:
@@ -129,16 +142,22 @@ class LaunchDTO:
             "id": details.get("id"),
             "last_updated": details.get("last_updated"),
             "date": details.get("net"),
-            "url": LaunchDTO._get_launch_url(details.get("info_urls"), details.get("vid_urls")),
+            "url": LaunchDTO._get_launch_url(
+                details.get("info_urls"), details.get("vid_urls")
+            ),
             "mission_name": extract_nested(details, "mission", "name"),
             "status_name": extract_nested(details, "status", "name"),
-            "status_description": extract_nested(details, "status", "description"),
+            "status_description": extract_nested(
+                details, "status", "description"
+            ),
             "image_url": extract_nested(details, "image", "image_url"),
             "description": extract_nested(details, "mission", "description"),
         }
 
     @staticmethod
-    def _create_agency(agency_details: dict[str, Any]) -> dict[str, Any] | None:
+    def _create_agency(
+        agency_details: dict[str, Any]
+    ) -> dict[str, Any] | None:
         """
         Gets necessary data about agency from api details
 
@@ -157,7 +176,9 @@ class LaunchDTO:
         }
 
     @staticmethod
-    def _create_program(program_details: dict[str, Any]) -> dict[str, Any] | None:
+    def _create_program(
+        program_details: dict[str, Any]
+    ) -> dict[str, Any] | None:
         """
         Gets necessary data about program from api details
 
@@ -175,7 +196,9 @@ class LaunchDTO:
         }
 
     @staticmethod
-    def _create_rocket(rocket_details: dict[str, Any]) -> dict[str, Any] | None:
+    def _create_rocket(
+        rocket_details: dict[str, Any]
+    ) -> dict[str, Any] | None:
         """
         Gets necessary data about rocket from api details
 
@@ -196,20 +219,36 @@ class LaunchDTO:
             "mass": rocket_configuration_details.get("launch_mass"),
             "diameter": rocket_configuration_details.get("diameter"),
             "description": rocket_configuration_details.get("description"),
-            "launches_count": rocket_configuration_details.get("total_launch_count"),
-            "successful_launches_count": rocket_configuration_details.get("successful_launches"),
-            "failed_launches_count": rocket_configuration_details.get("failed_launches"),
-            "landings_count": rocket_configuration_details.get("attempted_landings"),
-            "successful_landings_count": rocket_configuration_details.get("successful_landings"),
-            "failed_landings_count": rocket_configuration_details.get("failed_landings"),
-            "pending_launches": rocket_configuration_details.get("pending_launches"),
+            "launches_count": rocket_configuration_details.get(
+                "total_launch_count"
+            ),
+            "successful_launches_count": rocket_configuration_details.get(
+                "successful_launches"
+            ),
+            "failed_launches_count": rocket_configuration_details.get(
+                "failed_launches"
+            ),
+            "landings_count": rocket_configuration_details.get(
+                "attempted_landings"
+            ),
+            "successful_landings_count": rocket_configuration_details.get(
+                "successful_landings"
+            ),
+            "failed_landings_count": rocket_configuration_details.get(
+                "failed_landings"
+            ),
+            "pending_launches": rocket_configuration_details.get(
+                "pending_launches"
+            ),
             "leo_capacity": rocket_configuration_details.get("leo_capacity"),
             "gto_capacity": rocket_configuration_details.get("gto_capacity"),
             "geo_capacity": rocket_configuration_details.get("geo_capacity"),
             "sso_capacity": rocket_configuration_details.get("sso_capacity"),
             "rocket_thrust": rocket_configuration_details.get("to_thrust"),
             "launch_cost": rocket_configuration_details.get("launch_cost"),
-            "image_url": extract_nested(rocket_configuration_details, "image", "image_url"),
+            "image_url": extract_nested(
+                rocket_configuration_details, "image", "image_url"
+            ),
         }
 
     @staticmethod
@@ -228,7 +267,7 @@ class LaunchDTO:
             "latitude": pad_details.get("latitude"),
             "longitude": pad_details.get("longitude"),
             "description": pad_details.get("description"),
-            "map_image": pad_details.get("map_image"),
+            "map_image_url": pad_details.get("map_image"),
             "country": extract_nested(pad_details, "country", "name"),
             "image_url": extract_nested(pad_details, "image", "image_url"),
         }

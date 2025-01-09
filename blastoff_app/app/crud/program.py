@@ -21,8 +21,6 @@ async def get_program_by_id(
 ) -> ProgramResponse:
     result = await db.execute(select(Program).filter(Program.id == program_id))
     program = result.scalar_one_or_none()
-    if program is None:
-        raise HTTPException(status_code=404, detail="Program not found")
     return program
 
 
@@ -38,4 +36,21 @@ async def delete_program(db: AsyncSession, program_id: int):
         return None
     await db.delete(program)
     await db.commit()
+    return program
+
+
+async def update_program(
+    db: AsyncSession, program_id: int, program_data: ProgramCreate
+):
+    program = await get_program_by_id(db, program_id)
+    if not program:
+        return None
+
+    program.name = program_data.name
+    program.website = program_data.website
+    program.description = program_data.description
+    program.image_url = program_data.image_url
+
+    await db.commit()
+    await db.refresh(program)
     return program

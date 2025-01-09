@@ -1,8 +1,12 @@
 from typing import Generator
 
-from get_api_data import GetLaunchesAPIData, GetAPIData, APIError
-from launch_data import LaunchDataList
-from dto import LaunchDTO
+from app.api_connection.src.dto import LaunchDTO
+from app.api_connection.src.get_api_data import (
+    APIError,
+    GetAPIData,
+    GetLaunchesAPIData,
+)
+from app.api_connection.src.launch_data import LaunchDataList
 
 
 class APIDataConnector:
@@ -10,7 +14,12 @@ class APIDataConnector:
     Class allows to get new and/or modified data from API
     """
 
-    def __init__(self, first_url: str, database_data: list[tuple[str, str]], max_loop_count: int = 5):
+    def __init__(
+        self,
+        first_url: str,
+        database_data: list[tuple[str, str]],
+        max_loop_count: int = 5,
+    ):
         """
         Initialize APIDataConnector object
 
@@ -22,7 +31,9 @@ class APIDataConnector:
         self.database_data = LaunchDataList.from_db(database_data)
         self.max_loop_count = max_loop_count
 
-    def get_difference(self, new: bool = True, changed: bool = True) -> Generator[LaunchDTO]:
+    def get_difference(
+        self, new: bool = True, changed: bool = True
+    ) -> Generator[LaunchDTO, None, None]:
         """
         Method to get new and/or changed launches
 
@@ -39,9 +50,13 @@ class APIDataConnector:
             result = interface.get_structured_data()
             self.url = interface.next
 
-            for launch in result.compare(self.database_data, new=new, changed=changed):
+            for launch in result.compare(
+                self.database_data, new=new, changed=changed
+            ):
                 details = GetAPIData(launch.url).execute()
                 if details.get("id") is None:
-                    raise APIError("No more requests are available at the moment. Try again later...")
+                    raise APIError(
+                        "No more requests are available at the moment. Try again later..."
+                    )
                 yield LaunchDTO.from_api(details)
             self.max_loop_count -= 1
