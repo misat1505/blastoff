@@ -2,8 +2,8 @@ import asyncio
 import datetime
 import logging
 
-from app.api_connection.src.api_connector import APIDataConnector
-from app.api_connection.src.get_api_data import APIError
+from app.api_connection.api_connector import APIDataConnector
+from app.api_connection.get_api_data import APIError
 from app.crud import *
 from app.schemas import *
 
