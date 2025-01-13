@@ -3,8 +3,8 @@ This module enables communication with external API.
 
 # Use case:
 ```python
-from app.api_connection.src.api_connector import APIDataConnector
-from app.api_connection.src.get_api_data import APIError
+from app.api_connection.api_connector import APIDataConnector
+from app.api_connection.get_api_data import APIError
 
 import datetime
 
