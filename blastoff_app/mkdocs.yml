@@ -1,0 +1,42 @@
+site_name: "My Library"
+
+theme:
+  name: "material"
+
+plugins:
+- search
+- mermaid2
+# - autorefs
+- gen-files:
+    scripts:
+    - docs/scripts/gen_ref_pages.py
+- literate-nav:
+    nav_file: SUMMARY.md
+- section-index
+- mkdocstrings:
+    handlers:
+      python:
+        import:
+          - https://docs.python.org/pl/3.12/objects.inv
+        paths: [app]
+        options:
+          show_bases: true
+          show_source: true
+          allow_inspection: true
+          show_root_heading: true
+          parameter_headings: true
+          merge_init_into_class: true
+          signature_crossrefs: true
+          summary: true
+          show_symbol_type_toc: true
+          show_symbol_type_heading: true
+          show_if_no_docstring: true
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      preserve_tabs: true
+      custom_fences:
+      - name: mermaid
+        class: mermaid
+        format: !!python/name:mermaid2.fence_mermaid
