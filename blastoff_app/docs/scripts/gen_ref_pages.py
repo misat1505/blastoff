@@ -5,7 +5,9 @@ from pathlib import Path
 import mkdocs_gen_files
 
 nav = mkdocs_gen_files.Nav()
-mod_symbol = '<code class="doc-symbol doc-symbol-nav doc-symbol-module"></code>'
+mod_symbol = (
+    '<code class="doc-symbol doc-symbol-nav doc-symbol-module"></code>'
+)
 
 root = Path(__file__).parent.parent.parent
 src = root / "app"
@@ -36,7 +38,9 @@ for path in sorted(src.rglob("*.py")):
         ident = ".".join(parts)
         fd.write(f"---\ntitle: {ident}\n---\n\n::: {ident}")
 
-    mkdocs_gen_files.set_edit_path(full_doc_path, ".." / path.relative_to(root))
+    mkdocs_gen_files.set_edit_path(
+        full_doc_path, ".." / path.relative_to(root)
+    )
 
 
 with mkdocs_gen_files.open("reference/SUMMARY.md", "w") as nav_file:

@@ -8,9 +8,9 @@ from app.api_connection.launch_data import InvalidAPIData
 class CouldNotReadFile(Exception):
     """
     Custom exception for handling exceptions related to files
-    
+
     Attributes:
-    text (str): error text 
+    text (str): error text
     """
 
     def __init__(self, text: str):
@@ -22,7 +22,7 @@ class CouldNotSaveToFile(Exception):
     Custom exception for handling exceptions related to saving data to file
 
     Attributes:
-        text (str): error text 
+        text (str): error text
     """
 
     def __init__(self, text: str):
@@ -65,7 +65,7 @@ class LaunchDTO:
 
         Args:
             details: result of api query for details of specific launch
-        
+
         Returns:
             LaunchDTO: LaunchDTO object with given api data
         """
@@ -87,7 +87,7 @@ class LaunchDTO:
 
         Args:
             filename: name of the file with stored data
-        
+
         Returns:
             LaunchDTO: LaunchDTO object
         """
@@ -114,7 +114,7 @@ class LaunchDTO:
         Args:
             info_urls: info_urls from api
             vid_urls: vid_urls from api
-        
+
         Returns:
             str: url with max priority
         """
@@ -130,7 +130,7 @@ class LaunchDTO:
 
         Args:
             filename: name of the file which data will be saved in
-        
+
         """
         data = {
             "agency": self.agency,
@@ -154,7 +154,7 @@ class LaunchDTO:
 
         Args:
             details: result of api query for details of specific launch
-        
+
         Returns:
             dict with necessary launch data
         """
@@ -183,7 +183,7 @@ class LaunchDTO:
 
         Args:
             agency_details: agency section of api query for details of specific launch
-        
+
         Returns:
             dict with necessary agency data
         """
@@ -207,7 +207,7 @@ class LaunchDTO:
 
         Args:
             program_details: program section of api query for details of specific launch
-        
+
         Returns:
             dict with necessary program data
         """
@@ -230,7 +230,7 @@ class LaunchDTO:
 
         Args:
             rocket_details: rocket section of api query for details of specific launch
-        
+
         Returns:
             dict with necessary rocket data
         """
@@ -287,7 +287,7 @@ class LaunchDTO:
 
         Args:
             pad_details: pad section of api query for details of specific launch
-        
+
         Returns:
             dict with necessary site data
         """
@@ -305,7 +305,7 @@ class LaunchDTO:
         }
 
 
-def extract_nested(data: Any, *keys: Any, default: Any=None) -> Any:
+def extract_nested(data: Any, *keys: Any, default: Any = None) -> Any:
     """
     Safely extracts values, supporting function for LaunchDTO class
 
@@ -313,8 +313,8 @@ def extract_nested(data: Any, *keys: Any, default: Any=None) -> Any:
         data: data to extract
         keys: keys to extract from data
         default: default value to return if key is wrong or data is null
-        
-    Returns: 
+
+    Returns:
         extracted value or default value (if proper value is not found)
     """
     for key in keys:

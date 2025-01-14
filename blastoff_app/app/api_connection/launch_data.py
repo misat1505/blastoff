@@ -9,8 +9,9 @@ class InvalidAPIData(Exception):
     Custom exception for handling invalid api data
 
     Attributes:
-        text (str): error text 
+        text (str): error text
     """
+
     def __init__(self, text: str):
         self.text = text
 
@@ -20,8 +21,9 @@ class InvalidDBData(Exception):
     Custom exception for handling invalid db data
 
     Attributes:
-        text (str): error text 
+        text (str): error text
     """
+
     def __init__(self, text: str):
         self.text = text
 
@@ -63,7 +65,7 @@ class LaunchDataList(collections.UserList):
 
         Args:
             data: 'results' from default query (all launches), is a list of dicts containing launch data
-        
+
         Returns:
             LaunchDataList object (containing LaunchData objects with id, last_updated, url fields)
         """
@@ -101,7 +103,7 @@ class LaunchDataList(collections.UserList):
 
         Args:
             data: list of tuples containing launch data - tuple format (id, last_updated) - ex. [('some_id', '2024-01-01')]
-        
+
         Returns:
             LaunchDataList object (containing LaunchData objects with id, last_updated, url fields)
         """
@@ -117,10 +119,10 @@ class LaunchDataList(collections.UserList):
         Method created to get easier access to data field - by item id
 
         If item with given id does not exist, method raises KeyError
-        
+
         Args:
             id: searched item id
-        
+
         Returns:
             item (LaunchData object) with given id if exists
         """
@@ -140,7 +142,7 @@ class LaunchDataList(collections.UserList):
             other: 'current' data - LaunchDataList object with data from db (ex. created by from_db method)
             new: boolean indicating if new data should be yielded
             changed: boolean indicating if changed data should be yielded
-        
+
         Returns:
             yields every new and/or changed launch (yields LaunchData object)
         """

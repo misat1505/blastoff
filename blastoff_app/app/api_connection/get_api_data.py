@@ -10,7 +10,7 @@ class APIError(Exception):
     Custom exception for handling api errors
 
     Attributes:
-        text (str): error text 
+        text (str): error text
     """
 
     def __init__(self, text: str):
@@ -20,7 +20,7 @@ class APIError(Exception):
 class GetAPIData:
     """
     Class implemented to get data from some api (less specific - from any url)
-    
+
     Attributes:
         api_url (str): string containing url to api
     """
@@ -55,7 +55,7 @@ class GetAPIData:
 class GetLaunchesAPIData(GetAPIData):
     """
     Class specifically for launches api, implements additional method to get LaunchDataList object (with api data)
-    
+
     Attributes:
         api_url (str): string containing url to launches api
         results (dict[str, Any]): dict with query results

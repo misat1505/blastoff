@@ -12,7 +12,7 @@ from app.api_connection.launch_data import LaunchDataList
 class APIDataConnector:
     """
     Class allows to get new and/or modified data from API
-    
+
     Attributes:
         url (str): url to get first portion of data
         database_data (list[tuple[str, str]]): list with tuples (api_id, last_updated) from current records in database
@@ -44,8 +44,8 @@ class APIDataConnector:
         Args:
             new: boolean indicating if new data should be yielded
             changed: boolean indicating if changed data should be yielded
-            
-        Returns: 
+
+        Returns:
             yields every new and/or changed launch (yields LaunchDTO object)
         """
         while self.max_loop_count > 0:
