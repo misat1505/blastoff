@@ -1,3 +1,16 @@
+"""
+This module contains the API routes for managing agencies.
+
+Available endpoints:
+- **POST /agencies/**: Create a new agency.
+- **GET /agencies/**: Retrieve all agencies.
+- **GET /agencies/{agency_id}**: Retrieve a specific agency by ID.
+- **PUT /agencies/{agency_id}**: Update an existing agency by ID.
+- **DELETE /agencies/{agency_id}**: Delete an agency by ID.
+
+Each endpoint corresponds to a specific CRUD operation for managing agency data in the database.
+"""
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
