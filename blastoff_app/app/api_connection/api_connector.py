@@ -12,6 +12,11 @@ from app.api_connection.launch_data import LaunchDataList
 class APIDataConnector:
     """
     Class allows to get new and/or modified data from API
+    
+    Attributes:
+        url (str): url to get first portion of data
+        database_data (list[tuple[str, str]]): list with tuples (api_id, last_updated) from current records in database
+        max_loop_count (int): max number of loops in get_difference, used to avoid infinite execution
     """
 
     def __init__(
@@ -23,9 +28,6 @@ class APIDataConnector:
         """
         Initialize APIDataConnector object
 
-        :param first_url: url to get first portion of data
-        :param database_data: list with tuples (api_id, last_updated) from current records in database
-        :param max_loop_count: max number of loops in get_difference, used to avoid infinite execution
         """
         self.url = first_url
         self.database_data = LaunchDataList.from_db(database_data)
@@ -39,9 +41,12 @@ class APIDataConnector:
 
         Might raise APIRequestTimeout exception
 
-        :param new: boolean indicating if new data should be yielded
-        :param changed: boolean indicating if changed data should be yielded
-        :return: yields every new and/or changed launch (yields LaunchDTO object)
+        Args:
+            new: boolean indicating if new data should be yielded
+            changed: boolean indicating if changed data should be yielded
+            
+        Returns: 
+            yields every new and/or changed launch (yields LaunchDTO object)
         """
         while self.max_loop_count > 0:
             if not self.url:

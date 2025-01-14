@@ -9,22 +9,26 @@ class APIError(Exception):
     """
     Custom exception for handling api errors
 
+    Attributes:
+        text (str): error text 
     """
 
-    def __init__(self, text):
+    def __init__(self, text: str):
         self.text = text
 
 
 class GetAPIData:
     """
     Class implemented to get data from some api (less specific - from any url)
+    
+    Attributes:
+        api_url (str): string containing url to api
     """
 
     def __init__(self, api_url: str):
         """
         Initialize GetAPIData object
 
-        :param api_url: string containing url
         """
         self.api_url = api_url
 
@@ -33,7 +37,8 @@ class GetAPIData:
         Builds query - in principle, returns api_url,
         for more complicated requests, it can be overwritten to build proper url
 
-        :return: query to be executed
+        Returns:
+            query to be executed
         """
         return self.api_url
 
@@ -41,7 +46,8 @@ class GetAPIData:
         """
         Executes query
 
-        :return: received data in json format
+        Returns:
+            received data in json format
         """
         return requests.get(self._build_query()).json()
 
@@ -49,13 +55,17 @@ class GetAPIData:
 class GetLaunchesAPIData(GetAPIData):
     """
     Class specifically for launches api, implements additional method to get LaunchDataList object (with api data)
+    
+    Attributes:
+        api_url (str): string containing url to launches api
+        results (dict[str, Any]): dict with query results
+        next (str): url to next api query
     """
 
     def __init__(self, api_url: str):
         """
         Initialize GetLaunchesAPIData object
 
-        :param api_url: string containing url
         """
         super().__init__(api_url)
         self.results: dict[str, Any] = {}
@@ -69,7 +79,8 @@ class GetLaunchesAPIData(GetAPIData):
 
         Method might raise APIError exception if no more requests are available or api sent wrong data
 
-        :return: LaunchDataList object with api data
+        Returns:
+            LaunchDataList object with api data
         """
         try:
             self.results = self.execute()

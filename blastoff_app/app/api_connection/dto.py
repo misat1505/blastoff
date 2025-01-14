@@ -8,18 +8,24 @@ from app.api_connection.launch_data import InvalidAPIData
 class CouldNotReadFile(Exception):
     """
     Custom exception for handling exceptions related to files
+    
+    Attributes:
+    text (str): error text 
     """
 
-    def __init__(self, text):
+    def __init__(self, text: str):
         self.text = text
 
 
 class CouldNotSaveToFile(Exception):
     """
     Custom exception for handling exceptions related to saving data to file
+
+    Attributes:
+        text (str): error text 
     """
 
-    def __init__(self, text):
+    def __init__(self, text: str):
         self.text = text
 
 
@@ -28,11 +34,12 @@ class LaunchDTO:
     """
     Dataclass for specific information about launch
 
-    - agency: agency details (from api), containing only necessary (from db perspective) fields
-    - launch: launch details (from api), containing only necessary (from db perspective) fields
-    - program: program details (from api), containing only necessary (from db perspective) fields
-    - rocket: rocket details (from api), containing only necessary (from db perspective) fields
-    - site: site details (from api), containing only necessary (from db perspective) fields
+    Attributes:
+        agency: agency details (from api), containing only necessary (from db perspective) fields
+        launch: launch details (from api), containing only necessary (from db perspective) fields
+        program: program details (from api), containing only necessary (from db perspective) fields
+        rocket: rocket details (from api), containing only necessary (from db perspective) fields
+        site: site details (from api), containing only necessary (from db perspective) fields
     """
 
     agency: dict[str, Any] | None
@@ -56,8 +63,11 @@ class LaunchDTO:
         """
         Creates a LaunchDTO object from api data
 
-        :param details: result of api query for details of specific launch
-        :return: LaunchDTO object
+        Args:
+            details: result of api query for details of specific launch
+        
+        Returns:
+            LaunchDTO: LaunchDTO object with given api data
         """
         if not details.get("id"):
             raise InvalidAPIData("Launch id must be provided")
@@ -75,8 +85,11 @@ class LaunchDTO:
 
         Method might raise CouldNotReadFile exception, if it encounters the problem
 
-        :param filename: name of the file with stored data
-        :return: LaunchDTO object
+        Args:
+            filename: name of the file with stored data
+        
+        Returns:
+            LaunchDTO: LaunchDTO object
         """
         try:
             with open(filename, "r") as file:
@@ -98,9 +111,12 @@ class LaunchDTO:
         """
         Supporting method to get media url with max priority
 
-        :param info_urls: info_urls from api
-        :param vid_urls: vid_urls from api
-        :return: url with max priority
+        Args:
+            info_urls: info_urls from api
+            vid_urls: vid_urls from api
+        
+        Returns:
+            str: url with max priority
         """
         if not info_urls and not vid_urls:
             return None
@@ -112,8 +128,9 @@ class LaunchDTO:
         """
         Method to save data to file
 
-        :param filename: name of the file which data will be saved in
-        :return: None
+        Args:
+            filename: name of the file which data will be saved in
+        
         """
         data = {
             "agency": self.agency,
@@ -135,8 +152,11 @@ class LaunchDTO:
         """
         Gets necessary data about launch from api details
 
-        :param details: result of api query for details of specific launch
-        :return: dict with necessary launch data
+        Args:
+            details: result of api query for details of specific launch
+        
+        Returns:
+            dict with necessary launch data
         """
         return {
             "id": details.get("id"),
@@ -161,8 +181,11 @@ class LaunchDTO:
         """
         Gets necessary data about agency from api details
 
-        :param agency_details: agency section of api query for details of specific launch
-        :return: dict with necessary agency data
+        Args:
+            agency_details: agency section of api query for details of specific launch
+        
+        Returns:
+            dict with necessary agency data
         """
         if not agency_details:
             return None
@@ -182,8 +205,11 @@ class LaunchDTO:
         """
         Gets necessary data about program from api details
 
-        :param program_details: program section of api query for details of specific launch
-        :return: dict with necessary program data
+        Args:
+            program_details: program section of api query for details of specific launch
+        
+        Returns:
+            dict with necessary program data
         """
         if not program_details:
             return None
@@ -202,8 +228,11 @@ class LaunchDTO:
         """
         Gets necessary data about rocket from api details
 
-        :param rocket_details: rocket section of api query for details of specific launch
-        :return: dict with necessary rocket data
+        Args:
+            rocket_details: rocket section of api query for details of specific launch
+        
+        Returns:
+            dict with necessary rocket data
         """
         if not rocket_details:
             return None
@@ -256,8 +285,11 @@ class LaunchDTO:
         """
         Gets necessary data about site from api details
 
-        :param pad_details: pad section of api query for details of specific launch
-        :return: dict with necessary site data
+        Args:
+            pad_details: pad section of api query for details of specific launch
+        
+        Returns:
+            dict with necessary site data
         """
         if not pad_details:
             return None
@@ -273,13 +305,17 @@ class LaunchDTO:
         }
 
 
-def extract_nested(data, *keys, default=None):
+def extract_nested(data: Any, *keys: Any, default: Any=None) -> Any:
     """
     Safely extracts values, supporting function for LaunchDTO class
 
-    :param data: data to extract
-    :param keys: keys to extract from data
-    :param default: default value to return if key is wrong or data is null
+    Args:
+        data: data to extract
+        keys: keys to extract from data
+        default: default value to return if key is wrong or data is null
+        
+    Returns: 
+        extracted value or default value (if proper value is not found)
     """
     for key in keys:
         if isinstance(data, list):
