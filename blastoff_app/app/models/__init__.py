@@ -1,4 +1,4 @@
-from .agency import Agency
+from .agency import Agency, Base
 from .comment import Comment
 from .favourite_agency import FavouriteAgency
 from .favourite_launch import FavouriteLaunch
