@@ -12,6 +12,16 @@ SessionLocal = sessionmaker(
 
 
 async def get_db():
+    """
+    Dependency that provides an asynchronous database session.
+
+    This function is used in FastAPI route handlers to provide an active
+    database session to interact with the database. It ensures that the session
+    is properly closed after use.
+
+    Yields:
+        AsyncSession: An active database session.
+    """
     async with SessionLocal() as session:
         yield session
 
