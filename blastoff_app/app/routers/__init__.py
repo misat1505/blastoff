@@ -1,3 +1,33 @@
+"""
+This module contains all the API route handlers for the application.
+
+For detailed documentation on each route, refer to the respective markdown files.
+
+Available routers:
+- `users`: Routes related to user registration, login, and profile management.
+- `comments`: Routes for posting and retrieving comments on launches or agencies.
+- `agencies`: Routes for managing agencies and their information.
+- `favourite-agencies`: Routes for handling user favorite agencies.
+- `rockets`: Routes for managing rocket information and related launches.
+- `launches`: Routes for managing rocket launches and their details.
+- `programs`: Routes for managing space programs and associated launches.
+- `sites`: Routes for managing launch sites used for rocket launches.
+- `favourite-launches`: Routes for handling user favorite launches.
+
+Each router is included under a specific prefix and grouped by its functionality to create a modular and organized API structure.
+
+The following routes are included:
+- **Users**: `/users`
+- **Comments**: `/comments`
+- **Agencies**: `/agencies`
+- **Favourite Agencies**: `/favourite-agencies`
+- **Rockets**: `/rockets`
+- **Launches**: `/launches`
+- **Programs**: `/programs`
+- **Sites**: `/sites`
+- **Favourite Launches**: `/favourite-launches`
+"""
+
 from fastapi import APIRouter
 
 from .agency import router as agency_router

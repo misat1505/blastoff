@@ -15,6 +15,14 @@ from .smtp_client import SMTPClient
 
 
 class EmailNotifier:
+    """
+    A class to schedule and send email notifications about upcoming launches.
+
+    This class handles scheduling email notifications to users based on the
+    launch date, sending notifications before the launch, and managing the
+    Redis cache for future launches.
+    """
+
     def __init__(
         self,
         app: FastAPI,
@@ -25,10 +33,11 @@ class EmailNotifier:
         """
         Initialize the notifier.
 
-        :param app: FastAPI for scheduling tasks.
-        :param db_session: SQLAlchemy session for database queries.
-        :param redis_client: RedisClient for handling redis cache.
-        :param email_sender: SMTPClient for sending emails.
+        Attributes:
+            app (FastAPI): FastAPI app object.
+            db_session (AsyncSession): SQLAlechemy session.
+            redis_client (RedisClient): redis client.
+            email_sender (SMTPClient): smtp client.
         """
         self.app = app
         self.db_session = db_session
@@ -45,7 +54,8 @@ class EmailNotifier:
         Schedule email notifications. Send them time_delta prior to launch.
         Invalidate redis cache.
 
-        :param time_delta: Time delta before the launch to send notifications.
+        Attributes:
+            time_delta: (timedelta): Time delta before the launch to send notifications.
         """
         await self.redis_client.flush_all()
 
@@ -62,8 +72,9 @@ class EmailNotifier:
         """
         Schedules the email to be sent at the specified send time.
 
-        :param send_time: The time to send the email.
-        :param launch: The launch object containing launch details.
+        Attributes:
+            send_time (timdelta): The time to send the email.
+            launch (Launch): The launch object containing launch details.
         """
         trigger = DateTrigger(run_date=send_time)
         self.scheduler.add_job(
@@ -78,7 +89,8 @@ class EmailNotifier:
         """
         Job to send an email when the scheduled time arrives.
 
-        :param launch: The Launch object containing launch details.
+        Attributes:
+            launch (Launch): The Launch object containing launch details.
         """
         users = await self._get_users_for_emails(launch)
 
@@ -89,7 +101,8 @@ class EmailNotifier:
         """
         Get list of users who follow launch or it's agency.
 
-        :param launch: Launch
+        Attributes:
+            launch (Launch)
         """
 
         async with self.db_session.begin():
@@ -115,8 +128,9 @@ class EmailNotifier:
         """
         Send an email about a specific launch.
 
-        :param recipient: The user to send the email to.
-        :param launch: The Launch object containing launch details.
+        Attributes:
+            recipient (User): The user to send the email to.
+            launch (Launch): The Launch object containing launch details.
         """
         subject, body = EmailBuilder.build_email(
             recipient=recipient, launch=launch

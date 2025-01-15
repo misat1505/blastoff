@@ -5,6 +5,13 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
+    """
+    Settings class for loading and managing configuration variables.
+
+    This class uses Pydantic's BaseSettings to load environment variables
+    from the environment or .env file and make them available as attributes.
+    """
+
     database_url: str
     jwt_secret: str
     frontend_url: str

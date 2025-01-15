@@ -2,15 +2,35 @@ import asyncio
 import datetime
 import logging
 
-from app.api_connection.src.api_connector import APIDataConnector
-from app.api_connection.src.get_api_data import APIError
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.api_connection.api_connector import APIDataConnector
+from app.api_connection.get_api_data import APIError
 from app.crud import *
 from app.schemas import *
 
 API_BASE = f"https://ll.thespacedevs.com/2.3.0/launches/?limit=50&ordering=net&net__gte={datetime.datetime.now().isoformat()}&format=json&mode=list"
 
 
-async def get_api_data(db):
+async def get_api_data(db: AsyncSession):
+    """
+    Fetches the latest launch data from the API, processes it, and updates
+    the relevant entities (site, program, agency, rocket, and launch) in the database.
+
+    This function performs the following steps:
+    - Retrieves current launches and their associated data from an API.
+    - Updates or creates entities in the database based on the retrieved data.
+    - Logs information about the additions to the database.
+
+    Args:
+        db (AsyncSession): The database session for interacting with the database.
+
+    Returns:
+        None: This function performs database updates but does not return any value.
+
+    Raises:
+        APIError: If there is an error during API data retrieval or processing.
+    """
     current_launches = await get_current_launches(db)
     connector = APIDataConnector(API_BASE, current_launches, max_loop_count=20)
     try:

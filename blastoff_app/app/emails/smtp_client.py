@@ -12,6 +12,10 @@ PASSWORD = settings.smtp_password
 
 
 class SMTPClient:
+    """
+    A client for sending emails using an SMTP server.
+    """
+
     def __init__(
         self,
         smtp_server=SMTP_SERVER,
@@ -22,23 +26,25 @@ class SMTPClient:
         """
         Initialize the SMTP client.
 
-        :param smtp_server: SMTP server address.
-        :param smtp_port: SMTP server port.
-        :param email: Sender's email address.
-        :param password: Sender's email password.
+        Attributes:
+            smtp_server (str): SMTP server address.
+            smtp_port (int): SMTP server port.
+            email (str): Sender's email address.
+            password (str): Sender's email password.
         """
         self.smtp_server = smtp_server
         self.smtp_port = smtp_port
         self.email = email
         self.password = password
 
-    async def send_email(self, to, subject, body):
+    async def send_email(self, to: str, subject: str, body: str):
         """
         Send an email asynchronously.
 
-        :param to: Recipient's email address.
-        :param subject: Subject of the email.
-        :param body: HTML body of the email.
+        Attributes:
+            to (str): Recipient's email address.
+            subject (str): Subject of the email.
+            body (str): HTML body of the email.
         """
         message = MIMEMultipart()
         message["From"] = self.email
