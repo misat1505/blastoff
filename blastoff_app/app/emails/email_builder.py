@@ -6,6 +6,7 @@ class EmailBuilder:
     """
     A class for constructing email content for launch notifications.
     """
+
     @staticmethod
     def build_email(recipient: User, launch: Launch) -> tuple[str, str]:
         """

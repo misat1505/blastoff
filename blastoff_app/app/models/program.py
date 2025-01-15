@@ -7,7 +7,7 @@ from app.database import Base
 class Program(Base):
     """
     Represents a space program or mission. This class corresponds to the 'programs' table in the database.
-    
+
     Attributes:
         id (int): The unique identifier for the program.
         name (str): The name of the program or mission.

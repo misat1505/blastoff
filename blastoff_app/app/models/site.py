@@ -8,7 +8,7 @@ class Site(Base):
     """
     Represents a launch site used for rocket launches. This class corresponds
     to the 'sites' table in the database.
-    
+
     Attributes:
         id (int): The unique identifier for the site.
         name (str): The name of the launch site.

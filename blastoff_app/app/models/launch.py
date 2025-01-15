@@ -7,7 +7,7 @@ from app.database import Base
 class Launch(Base):
     """
     Represents a rocket launch event. This class corresponds to the 'launches' table in the database.
-    
+
     Attributes:
         id (str): The unique identifier for the launch.
         last_updated (datetime): The timestamp of the last update for the launch details.

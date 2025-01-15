@@ -8,7 +8,7 @@ from app.database import Base
 class FavouriteAgency(Base):
     """
     Represents a user's favorite agency. This class corresponds to the 'favourite_agencies' table in the database.
-    
+
     Attributes:
         id (int): The unique identifier for the favorite agency entry.
         added_at (datetime): The timestamp when the favorite agency was added.

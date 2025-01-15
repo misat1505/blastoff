@@ -7,7 +7,7 @@ from app.database import Base
 class Rocket(Base):
     """
     Represents a rocket managed by an agency. This class corresponds to the 'rockets' table in the database.
-    
+
     Attributes:
         id (int): The unique identifier for the rocket.
         name (str): The name of the rocket.

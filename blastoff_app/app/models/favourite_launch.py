@@ -8,7 +8,7 @@ from app.database import Base
 class FavouriteLaunch(Base):
     """
     Represents a user's favorite launch. This class corresponds to the 'favourite_launches' table in the database.
-    
+
     Attributes:
         id (int): The unique identifier for the favorite launch entry.
         added_at (datetime): The timestamp when the favorite launch was added.

@@ -8,7 +8,7 @@ class Agency(Base):
     """
     Represents an agency that manages rockets and launches. This class
     corresponds to the 'agencies' table in the database.
-    
+
     Attributes:
         id (int): The unique identifier for the agency.
         name (str): The name of the agency.

@@ -22,6 +22,7 @@ class EmailNotifier:
     launch date, sending notifications before the launch, and managing the
     Redis cache for future launches.
     """
+
     def __init__(
         self,
         app: FastAPI,

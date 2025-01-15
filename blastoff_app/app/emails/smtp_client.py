@@ -15,6 +15,7 @@ class SMTPClient:
     """
     A client for sending emails using an SMTP server.
     """
+
     def __init__(
         self,
         smtp_server=SMTP_SERVER,
