@@ -3,8 +3,21 @@ from app.settings import settings
 
 
 class EmailBuilder:
+    """
+    A class for constructing email content for launch notifications.
+    """
     @staticmethod
     def build_email(recipient: User, launch: Launch) -> tuple[str, str]:
+        """
+        A method to build email title and body
+
+        Attributes:
+            recipient (User): User to who the email is sent.
+            launch (Launch): Launch about which the user gets notified.
+
+        Returns:
+            title and body
+        """
         subject = f"Upcoming Launch: {launch.mission_name}"
         body = f"""
         <html>
