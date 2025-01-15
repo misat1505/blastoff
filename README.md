@@ -53,6 +53,28 @@ Interfejs graficzny zapewni użytkownikom czytelne i przejrzyste wyświetlanie d
 - **Skrypty**: shell
 - **Automatyczne budowanie / testowanie konfiguracji**: GitHub CI/CD
 
+## Uruchomienie projektu
+
+W celu uruchominiu projektu należy wpisać
+
+```
+./docker-compose.sh --prod
+```
+
+Aby uruchomić testy należy wpisać
+
+```
+./docker-compose.sh --test
+```
+
+a potem w katalogu blastoff_app
+
+```
+pdm run pytest
+```
+
+W katalogach frontend i blastoff_app w readme są instrukcje do uruchomienia projektów nie poprzez Dockera.
+
 ## Bibliografia
 
 - FastAPI documentation - [fastapi.tiangolo.com](https://fastapi.tiangolo.com)
