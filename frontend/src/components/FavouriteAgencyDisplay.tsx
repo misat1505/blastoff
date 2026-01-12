@@ -1,21 +1,21 @@
-import { Agency, FavouriteAgency } from "@/types/Agency";
-import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
-import { FaRegStar, FaStar } from "react-icons/fa";
-import { useQuery, useQueryClient } from "react-query";
-import Tooltip from "./Tooltip";
-import { FavouritesService } from "@/services/FavouritesService";
 import { useThemeContext } from "@/context/ThemeContext";
 import { useToast } from "@/hooks/use-toast";
+import { FavouritesService } from "@/services/FavouritesService";
+import { Agency, FavouriteAgency } from "@/types/Agency";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { FaRegStar, FaStar } from "react-icons/fa";
+import Tooltip from "./Tooltip";
 
 type FavouriteAgencyDisplayProps = {
   agency: Agency;
 };
 
 const FavouriteAgencyDisplay = ({ agency }: FavouriteAgencyDisplayProps) => {
-  const { data: agencies, error } = useQuery(
-    queryKeysBuilder.favouriteAgencies(),
-    FavouritesService.getMyFavouriteAgencies
-  );
+  const { data: agencies, error } = useQuery({
+    queryKey: queryKeysBuilder.favouriteAgencies(),
+    queryFn: FavouritesService.getMyFavouriteAgencies,
+  });
 
   if (agencies === undefined || error) return <DisabledStar />;
 
@@ -30,10 +30,10 @@ type FollowedAgencyProps = { agency: Agency };
 
 const FollowedAgency = ({ agency }: FollowedAgencyProps) => {
   const queryClient = useQueryClient();
-  const { data: agencies } = useQuery(
-    queryKeysBuilder.favouriteAgencies(),
-    FavouritesService.getMyFavouriteAgencies
-  );
+  const { data: agencies } = useQuery({
+    queryKey: queryKeysBuilder.favouriteAgencies(),
+    queryFn: FavouritesService.getMyFavouriteAgencies,
+  });
   const favAgency = agencies!.find((a) => a.agency_id === agency.id)!;
   const { theme } = useThemeContext();
   const { toast } = useToast();

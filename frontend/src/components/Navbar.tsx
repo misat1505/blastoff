@@ -1,23 +1,18 @@
-import { ROUTES } from "../lib/routes";
-import { Link } from "react-router-dom";
-import Tooltip from "./Tooltip";
-import ThemeSwitch from "./ThemeSwitch";
 import { LOGO_PATH } from "@/constants";
-import { Button, buttonVariants } from "./ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./ui/sheet";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+import { AuthService } from "@/services/AuthService";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import { useQueryClient } from "@tanstack/react-query";
+import { PropsWithChildren } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Switch } from "./ui/switch";
+import { Link } from "react-router-dom";
+import { useSessionContext } from "../context/SessionContext";
 import { useCountdownFormat } from "../hooks/useCountdownFormat";
 import { useTooltipSwitch } from "../hooks/useTooltipSwitch";
-import { PropsWithChildren } from "react";
-import { useSessionContext } from "../context/SessionContext";
+import { ROUTES } from "../lib/routes";
+import ThemeSwitch from "./ThemeSwitch";
+import Tooltip from "./Tooltip";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,11 +24,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
-import { useToast } from "@/hooks/use-toast";
-import { AuthService } from "@/services/AuthService";
-import { useQueryClient } from "react-query";
-import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
-import { cn } from "@/lib/utils";
+import { Button, buttonVariants } from "./ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
+import { Switch } from "./ui/switch";
 
 const Navbar = () => {
   const { user } = useSessionContext();
@@ -183,8 +183,12 @@ const SessionButtons = () => {
     await AuthService.logout();
     setUser(null);
     toast({ title: "Successfully logged out." });
-    queryClient.invalidateQueries(queryKeysBuilder.favouriteAgencies());
-    queryClient.invalidateQueries(queryKeysBuilder.favouriteLaunches());
+    queryClient.invalidateQueries({
+      queryKey: queryKeysBuilder.favouriteAgencies(),
+    });
+    queryClient.invalidateQueries({
+      queryKey: queryKeysBuilder.favouriteLaunches(),
+    });
   };
 
   return (

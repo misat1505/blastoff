@@ -1,15 +1,25 @@
-import { Link } from "react-router-dom";
-import { useLaunchContext } from "@/context/LaunchContext";
-import Tooltip from "../Tooltip";
-import { ROUTES } from "@/lib/routes";
-import { FaPlay, FaRocket } from "react-icons/fa";
-import { buildGoogleMapsURL } from "@/utils/googleMaps";
 import { GOOGLE_MAPS_LOGO_PATH, LOGO_PATH } from "@/constants";
+import { useLaunchContext } from "@/context/LaunchContext";
+import { ROUTES } from "@/lib/routes";
 import { formatLaunchDate } from "@/utils/formatLaunchDate";
-import LaunchCountdown from "../LaunchCountdown";
-import StyledLink from "../StyledLink";
+import { buildGoogleMapsURL } from "@/utils/googleMaps";
+import { Pin } from "lucide-react";
+import { FaPlay, FaRocket } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import FavouriteAgencyDisplay from "../FavouriteAgencyDisplay";
 import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
+import LaunchCountdown from "../LaunchCountdown";
+import StyledLink from "../StyledLink";
+import Tooltip from "../Tooltip";
+import {
+  Map,
+  MapControls,
+  MapMarker,
+  MarkerContent,
+  MarkerLabel,
+  MarkerPopup,
+  MarkerTooltip,
+} from "../ui/map";
 
 const LaunchInfo = () => {
   return (
@@ -92,10 +102,10 @@ const SiteInfo = () => {
   });
 
   return (
-    <div className="mt-4 flex flex-col gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900 sm:mt-0">
+    <div className="mt-4 flex flex-col gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900 sm:mt-0 w-full">
       <h2>
-        <span className="font-semibold">{launch.mission_name}</span> is schedule
-        for blastoff from {launch.site.name}, {launch.site.country}
+        <span className="font-semibold">{launch.mission_name}</span> is
+        scheduled for blastoff from {launch.site.name}, {launch.site.country}
       </h2>
       <div className="relative flex-grow">
         <div className="absolute right-4 top-4">
@@ -109,10 +119,29 @@ const SiteInfo = () => {
             </Link>
           </Tooltip>
         </div>
-        <img
-          src={launch.site.map_image_url || undefined}
-          className="h-full rounded-md object-cover shadow-md"
-        />
+        <div className="h-full rounded-md shadow-md min-h-52 [&>div:first-child]:min-h-52">
+          <Map center={[launch.site.longitude, launch.site.latitude]} zoom={2}>
+            <MapControls />
+
+            <MapMarker
+              longitude={launch.site.longitude}
+              latitude={launch.site.latitude}
+            >
+              <MarkerContent>
+                <MarkerLabel>
+                  <Pin className="text-blue-500" />
+                </MarkerLabel>
+              </MarkerContent>
+              <MarkerPopup className="max-w-96">
+                <div className="font-semibold text-base">
+                  {launch.site.name}, {launch.site.country}
+                </div>
+                <div>{launch.site.description}</div>
+              </MarkerPopup>
+              <MarkerTooltip>{launch.site.name}</MarkerTooltip>
+            </MapMarker>
+          </Map>
+        </div>
       </div>
     </div>
   );

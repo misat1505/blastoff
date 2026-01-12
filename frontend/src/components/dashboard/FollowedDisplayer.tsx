@@ -1,8 +1,3 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FavouritesService } from "@/services/FavouritesService";
-import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
-import { useQuery, useQueryClient } from "react-query";
-import Loading from "../Loading";
 import {
   Table,
   TableBody,
@@ -12,16 +7,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FavouriteAgency } from "@/types/Agency";
-import { AgencyService } from "@/services/AgencyService";
-import { Skeleton } from "../ui/skeleton";
-import { Button, buttonVariants } from "../ui/button";
-import { FavouriteLaunch } from "@/types/Launch";
-import { LaunchService } from "@/services/LaunchService";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import Tooltip from "../Tooltip";
-import { Link } from "react-router-dom";
 import { ROUTES } from "@/lib/routes";
+import { AgencyService } from "@/services/AgencyService";
+import { FavouritesService } from "@/services/FavouritesService";
+import { LaunchService } from "@/services/LaunchService";
+import { FavouriteAgency } from "@/types/Agency";
+import { FavouriteLaunch } from "@/types/Launch";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import Loading from "../Loading";
+import Tooltip from "../Tooltip";
+import { Button, buttonVariants } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
 
 const FollowedDisplayer = () => {
   return (

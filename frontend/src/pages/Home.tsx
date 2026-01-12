@@ -1,9 +1,9 @@
-import { useQuery } from "react-query";
 import Error from "@/components/Error";
 import LaunchFeed from "@/components/home/LaunchFeed";
 import Loading from "@/components/Loading";
-import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
 import { LaunchService } from "@/services/LaunchService";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import { useQuery } from "@tanstack/react-query";
 
 const HomePage = () => {
   const {

@@ -1,11 +1,11 @@
+import { useSessionContext } from "@/context/SessionContext";
 import { FavouritesService } from "@/services/FavouritesService";
-import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
-import { useQuery } from "react-query";
-import { Skeleton } from "../ui/skeleton";
-import { FaBuilding, FaRocket } from "react-icons/fa";
 import { FavouriteAgency } from "@/types/Agency";
 import { FavouriteLaunch } from "@/types/Launch";
-import { useSessionContext } from "@/context/SessionContext";
+import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import { useQuery } from "@tanstack/react-query";
+import { FaBuilding, FaRocket } from "react-icons/fa";
+import { Skeleton } from "../ui/skeleton";
 
 const FollowedCount = () => {
   return (
