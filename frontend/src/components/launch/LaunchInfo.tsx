@@ -119,7 +119,7 @@ const SiteInfo = () => {
             </Link>
           </Tooltip>
         </div>
-        <div className="h-full rounded-md shadow-md min-h-52 [&>div:first-child]:min-h-52">
+        <div className="h-full rounded-md shadow-md min-h-52 [&>div:first-child]:min-h-52 dark:[&_.maplibregl-popup-content]:bg-black dark:[&_.maplibregl-popup-content_*]:bg-black [&_.maplibregl-popup-content]:border dark:[&_.maplibregl-popup-content_*]:text-foreground [&_.maplibregl-popup-content_*]:border-none [&_.maplibregl-popup-content_*]:shadow-none">
           <Map center={[launch.site.longitude, launch.site.latitude]} zoom={2}>
             <MapControls className="dark:[&_button]:bg-dark_primary" />
 

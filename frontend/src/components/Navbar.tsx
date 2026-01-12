@@ -81,7 +81,7 @@ const SettingsSheet = () => {
           </span>
         </SheetTrigger>
       </Tooltip>
-      <SheetContent className="bg-dark_primary">
+      <SheetContent className="dark:bg-dark_primary">
         <SheetHeader>
           <SheetTitle>Settings</SheetTitle>
           <SheetDescription>
