@@ -9,7 +9,7 @@ import { Skeleton } from "../ui/skeleton";
 
 const FollowedCount = () => {
   return (
-    <div className="flex items-stretch space-x-4 mt-4 bg-slate-300/40 dark:bg-slate-700/20 p-2 rounded-md overflow-x-auto">
+    <div className="flex items-stretch space-x-4 mt-4 bg-slate-100 dark:bg-dark_primary p-2 rounded-md overflow-x-auto">
       <FollowedAgenciesCount />
       <FollowedLaunchesCount />
       <UserCreationInfo />
@@ -24,7 +24,7 @@ const FollowedAgenciesCount = () => {
   });
 
   return (
-    <div className="flex items-center flex-grow justify-center space-x-4 bg-slate-300 dark:bg-slate-700 p-2 rounded-md min-w-[200px]">
+    <div className="flex items-center flex-grow justify-center space-x-4 bg-light_secondary dark:bg-dark_secondary p-2 rounded-md min-w-[200px]">
       <FaBuilding size={30} />
       <div>
         <h2 className="font-semibold">Followed agencies</h2>
@@ -74,7 +74,7 @@ const FollowedLaunchesCount = () => {
   });
 
   return (
-    <div className="flex items-center flex-grow justify-center space-x-4 bg-slate-300 dark:bg-slate-700 p-2 rounded-md min-w-[200px]">
+    <div className="flex items-center flex-grow justify-center space-x-4 bg-light_secondary dark:bg-dark_secondary p-2 rounded-md min-w-[200px]">
       <FaRocket size={30} />
       <div>
         <h2 className="font-semibold">Followed launches</h2>
@@ -126,7 +126,7 @@ const UserCreationInfo = () => {
   const daysSinceCreation = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
 
   return (
-    <div className="text-center flex flex-grow flex-col justify-between bg-slate-300 dark:bg-slate-700 p-2 rounded-md min-w-[200px]">
+    <div className="text-center flex flex-grow flex-col justify-between bg-light_secondary dark:bg-dark_secondary p-2 rounded-md min-w-[200px]">
       <h2 className="font-semibold">
         Active since {createdDate.toLocaleDateString()}
       </h2>

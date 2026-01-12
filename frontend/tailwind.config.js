@@ -12,6 +12,7 @@ export default {
       colors: {
         dark_primary: "#0e0e0e",
         dark_secondary: "rgb(44, 53, 60)",
+        light_secondary: "rgb(212, 218, 220)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

@@ -7,7 +7,7 @@ import FavouriteAgencyDisplay from "../FavouriteAgencyDisplay";
 
 const RocketManufacture = () => {
   return (
-    <section className="w-full bg-slate-200 py-8 dark:bg-dark_secondary">
+    <section className="w-full bg-light_secondary py-8 dark:bg-dark_secondary">
       <div className="mx-auto grid w-full grid-cols-1 gap-x-12 gap-y-6 px-4 sm:grid-cols-2 lg:w-3/5 lg:px-0">
         <FadeInWrapper>
           <ManufacturerDisplay />

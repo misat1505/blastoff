@@ -25,11 +25,21 @@ import { Skeleton } from "../ui/skeleton";
 
 const FollowedDisplayer = () => {
   return (
-    <div className="my-4 p-2 rounded-md bg-slate-300/40 dark:bg-slate-700/20">
+    <div className="my-4 p-2 rounded-md bg-slate-100 dark:bg-dark_primary">
       <Tabs defaultValue="launches" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="launches">Launches</TabsTrigger>
-          <TabsTrigger value="agencies">Agencies</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 bg-light_secondary dark:bg-dark_secondary">
+          <TabsTrigger
+            value="launches"
+            className="dark:data-[state=active]:bg-dark_primary"
+          >
+            Launches
+          </TabsTrigger>
+          <TabsTrigger
+            value="agencies"
+            className="dark:data-[state=active]:bg-dark_primary"
+          >
+            Agencies
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="launches">
           <LaunchesDisplay />
@@ -66,7 +76,7 @@ const LaunchesDisplay = () => {
     <Table>
       <TableCaption>A list of your followed launches.</TableCaption>
       <TableHeader>
-        <TableRow>
+        <TableRow className="hover:bg-light_secondary/50 hover:dark:bg-dark_secondary/50">
           <TableHead className="w-[100px]">Name</TableHead>
           <TableHead>Image</TableHead>
           <TableHead>Followed since</TableHead>
@@ -109,7 +119,7 @@ const LaunchRow = ({ launch: fav_launch }: LaunchRowProps) => {
 
   if (isLoading || !launch)
     return (
-      <TableRow className="hover:bg-inherit">
+      <TableRow className="hover:bg-light_secondary/50 hover:dark:bg-dark_secondary/50">
         <td colSpan={100} className="p-0">
           <Skeleton className="w-[calc(100%-1rem)] h-8 m-2" />
         </td>
@@ -117,7 +127,7 @@ const LaunchRow = ({ launch: fav_launch }: LaunchRowProps) => {
     );
 
   return (
-    <TableRow>
+    <TableRow className="hover:bg-light_secondary/50 hover:dark:bg-dark_secondary/50">
       <TableCell className="font-medium text-nowrap">
         {launch.mission_name}
       </TableCell>
@@ -140,7 +150,10 @@ const LaunchRow = ({ launch: fav_launch }: LaunchRowProps) => {
           <Tooltip content={`${launch.mission_name} details`}>
             <span>
               <Link
-                className={buttonVariants({ variant: "secondary" })}
+                className={buttonVariants({
+                  variant: "secondary",
+                  className: "bg-light_secondary dark:bg-dark_secondary",
+                })}
                 to={ROUTES.LAUNCH.$buildPath({
                   params: { launchId: launch.id },
                 })}
@@ -182,7 +195,7 @@ const AgenciesDisplay = () => {
     <Table>
       <TableCaption>A list of your followed agencies.</TableCaption>
       <TableHeader>
-        <TableRow>
+        <TableRow className="hover:bg-light_secondary/50 hover:dark:bg-dark_secondary/50">
           <TableHead className="w-[100px]">Name</TableHead>
           <TableHead>Logo</TableHead>
           <TableHead>Followed since</TableHead>
@@ -225,7 +238,7 @@ const AgencyRow = ({ agency: fav_agency }: AgencyRowProps) => {
 
   if (isLoading || !agency)
     return (
-      <TableRow className="hover:bg-inherit">
+      <TableRow className="hover:bg-light_secondary/50 hover:dark:bg-dark_secondary/50">
         <td colSpan={100} className="p-0">
           <Skeleton className="w-[calc(100%-1rem)] h-8 m-2" />
         </td>
@@ -233,7 +246,7 @@ const AgencyRow = ({ agency: fav_agency }: AgencyRowProps) => {
     );
 
   return (
-    <TableRow>
+    <TableRow className="hover:bg-light_secondary/50 hover:dark:bg-dark_secondary/50">
       <TableCell className="font-medium text-nowrap">{agency.name}</TableCell>
       <TableCell>
         <img

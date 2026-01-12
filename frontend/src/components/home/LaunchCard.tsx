@@ -32,7 +32,7 @@ const Image = () => {
 
   if (!launch.image_url)
     return (
-      <div className="col-span-1 max-h-56 w-full object-cover sm:h-full sm:max-h-full dark:bg-dark_primary/80 bg-slate-200/40 flex items-center justify-center">
+      <div className="col-span-1 max-h-56 w-full object-cover sm:h-full sm:max-h-full dark:bg-dark_primary/80 bg-light_secondary/40 flex items-center justify-center">
         <IoMdRocket size={224} />
       </div>
     );

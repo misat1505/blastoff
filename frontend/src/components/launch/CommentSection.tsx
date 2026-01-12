@@ -51,7 +51,7 @@ const OpenChatSectionButton = ({
     <div className="w-full p-2">
       <Tooltip content={isOpen ? "Close comments" : "Open comments"}>
         <button
-          className="flex w-full items-center justify-center rounded-md py-4 transition-colors hover:bg-slate-200 dark:hover:bg-dark_secondary"
+          className="flex w-full items-center justify-center rounded-md py-4 transition-colors hover:bg-light_secondary dark:hover:bg-dark_secondary"
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <FaArrowDown
@@ -87,7 +87,7 @@ const CommentForm = () => {
               <button
                 onClick={() => setResponse(null)}
                 className={cn(
-                  "rounded-sm p-1 hover:bg-slate-200 dark:hover:bg-dark_secondary",
+                  "rounded-sm p-1 hover:bg-light_secondary dark:hover:bg-dark_secondary",
                   { "hover:cursor-not-allowed": isSubmitting }
                 )}
                 disabled={isSubmitting}
@@ -248,7 +248,7 @@ const CommentButton = ({
     <Tooltip content={tooltipText}>
       <button
         className={cn(
-          "hidden h-6 w-6 rounded-sm p-0.5 hover:bg-slate-200 group-hover:block dark:hover:bg-dark_secondary",
+          "hidden h-6 w-6 rounded-sm p-0.5 hover:bg-light_secondary group-hover:block dark:hover:bg-dark_secondary",
           { block: isExpanded },
           className
         )}

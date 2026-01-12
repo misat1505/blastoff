@@ -68,7 +68,7 @@ const LaunchBar = ({ isVisible }: LaunchBarProps) => {
   return (
     <div
       className={cn(
-        "fixed top-0 z-40 ml-[-0.5rem] flex w-[calc(100%-1rem)] items-center justify-between overflow-hidden text-nowrap bg-slate-200 p-4 text-sm font-semibold transition-all ease-in-out dark:bg-dark_secondary sm:text-xl lg:w-[calc(50%+1rem)]",
+        "fixed top-0 z-40 ml-[-0.5rem] flex w-[calc(100%-1rem)] items-center justify-between overflow-hidden text-nowrap bg-light_secondary p-4 text-sm font-semibold transition-all ease-in-out dark:bg-dark_secondary sm:text-xl lg:w-[calc(50%+1rem)]",
         {
           "top-16 pt-8": isVisible,
         }
