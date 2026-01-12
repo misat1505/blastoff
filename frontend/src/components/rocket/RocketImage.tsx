@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-import { useThemeContext } from "@/context/ThemeContext";
 import { useRocketContext } from "@/context/RocketContext";
+import { useThemeContext } from "@/context/ThemeContext";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 const RocketImage = () => {
   const { rocket } = useRocketContext();
@@ -31,7 +31,7 @@ const RocketImage = () => {
       )}
       <div
         className={cn(
-          "absolute left-1/2 top-1/2 z-10 max-h-[calc(100vh-5rem)] w-[80vw] -translate-x-1/2 translate-y-10 overflow-y-hidden text-center text-slate-900 opacity-0 transition-all delay-500 duration-1000 ease-out dark:text-slate-100 md:w-[50vw]",
+          "absolute left-1/2 top-1/2 z-10 max-h-[calc(100vh-5rem)] w-[80vw] -translate-x-1/2 translate-y-10 overflow-y-hidden text-center text-dark_primary opacity-0 transition-all delay-500 duration-1000 ease-out dark:text-slate-100 md:w-[50vw]",
           {
             "-translate-y-1/2 opacity-100": isVisible,
           }

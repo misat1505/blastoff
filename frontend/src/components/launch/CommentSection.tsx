@@ -24,7 +24,7 @@ const CommentSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="relative min-h-fit rounded-md bg-slate-100 text-center shadow-md dark:bg-slate-900">
+    <div className="relative min-h-fit rounded-md bg-slate-100 text-center shadow-md dark:bg-dark_primary">
       <OpenChatSectionButton isOpen={isOpen} setIsOpen={setIsOpen} />
       <div>
         {isOpen && (
@@ -51,7 +51,7 @@ const OpenChatSectionButton = ({
     <div className="w-full p-2">
       <Tooltip content={isOpen ? "Close comments" : "Open comments"}>
         <button
-          className="flex w-full items-center justify-center rounded-md py-4 transition-colors hover:bg-slate-200 dark:hover:bg-slate-800"
+          className="flex w-full items-center justify-center rounded-md py-4 transition-colors hover:bg-slate-200 dark:hover:bg-dark_secondary"
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <FaArrowDown
@@ -72,7 +72,7 @@ const CommentForm = () => {
   return (
     <form
       onSubmit={submitForm}
-      className="sticky bottom-0 rounded-md bg-slate-100 shadow-md dark:bg-slate-900"
+      className="sticky bottom-0 rounded-md bg-slate-100 shadow-md dark:bg-dark_primary"
     >
       <div className="relative p-4">
         {response && (
@@ -87,7 +87,7 @@ const CommentForm = () => {
               <button
                 onClick={() => setResponse(null)}
                 className={cn(
-                  "rounded-sm p-1 hover:bg-slate-200 dark:hover:bg-slate-800",
+                  "rounded-sm p-1 hover:bg-slate-200 dark:hover:bg-dark_secondary",
                   { "hover:cursor-not-allowed": isSubmitting }
                 )}
                 disabled={isSubmitting}
@@ -130,7 +130,7 @@ const CommentForm = () => {
           </Tooltip>
         </div>
         {!isLoggedIn && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-slate-100/60 hover:cursor-not-allowed dark:bg-slate-900/80">
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-slate-100/60 hover:cursor-not-allowed dark:bg-dark_primary/80">
             <Link
               className={buttonVariants({
                 variant: "default",
@@ -248,7 +248,7 @@ const CommentButton = ({
     <Tooltip content={tooltipText}>
       <button
         className={cn(
-          "hidden h-6 w-6 rounded-sm p-0.5 hover:bg-slate-200 group-hover:block dark:hover:bg-slate-800",
+          "hidden h-6 w-6 rounded-sm p-0.5 hover:bg-slate-200 group-hover:block dark:hover:bg-dark_secondary",
           { block: isExpanded },
           className
         )}

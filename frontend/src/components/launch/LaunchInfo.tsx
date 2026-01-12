@@ -28,15 +28,15 @@ const LaunchInfo = () => {
       <div className="my-4 sm:flex sm:space-x-4">
         <div className="flex flex-col">
           <div className="flex h-full flex-col space-y-4">
-            <div className="rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
+            <div className="rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-dark_primary">
               <RocketPreview />
             </div>
 
-            <div className="flex-grow rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
+            <div className="flex-grow rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-dark_primary">
               <AgencyPreview />
             </div>
 
-            <div className="rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
+            <div className="rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-dark_primary">
               <LaunchLinks />
             </div>
           </div>
@@ -51,7 +51,7 @@ const GeneralLaunchInfo = () => {
   const { launch } = useLaunchContext();
 
   return (
-    <div className="relative my-4 rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-slate-900">
+    <div className="relative my-4 rounded-md bg-slate-100 p-4 text-center shadow-md dark:bg-dark_primary">
       <h2 className="text-2xl font-semibold">{launch.mission_name}</h2>
       <p className="text-sm text-muted-foreground">{launch.description}</p>
       <TimeDisplay />
@@ -86,7 +86,7 @@ const SiteInfo = () => {
 
   if (!launch.site)
     return (
-      <div className="mt-4 flex flex-grow flex-col items-center justify-center gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900 sm:mt-0">
+      <div className="mt-4 flex flex-grow flex-col items-center justify-center gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-dark_primary sm:mt-0">
         <img
           src={LOGO_PATH}
           alt="logo"
@@ -102,7 +102,7 @@ const SiteInfo = () => {
   });
 
   return (
-    <div className="mt-4 flex flex-col gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-slate-900 sm:mt-0 w-full">
+    <div className="mt-4 flex flex-col gap-y-4 rounded-md bg-slate-100 p-4 shadow-md dark:bg-dark_primary sm:mt-0 w-full">
       <h2>
         <span className="font-semibold">{launch.mission_name}</span> is
         scheduled for blastoff from {launch.site.name}, {launch.site.country}
@@ -121,7 +121,7 @@ const SiteInfo = () => {
         </div>
         <div className="h-full rounded-md shadow-md min-h-52 [&>div:first-child]:min-h-52">
           <Map center={[launch.site.longitude, launch.site.latitude]} zoom={2}>
-            <MapControls />
+            <MapControls className="dark:[&_button]:bg-dark_primary" />
 
             <MapMarker
               longitude={launch.site.longitude}

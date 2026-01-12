@@ -1,11 +1,11 @@
-import { LOGO_PATH } from "@/constants";
 import RegisterForm from "@/components/register/RegisterForm";
-import { Link } from "react-router-dom";
+import { LOGO_PATH } from "@/constants";
 import { ROUTES } from "@/lib/routes";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
   return (
-    <div className="absolute left-1/2 top-[calc(50vh+2.5rem)] max-w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-slate-100 p-4 text-center shadow-lg dark:bg-slate-900 lg:top-1/2">
+    <div className="absolute left-1/2 top-[calc(50vh+2.5rem)] max-w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-slate-100 p-4 text-center shadow-lg dark:bg-dark_primary lg:top-1/2">
       <h2 className="mb-6 text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-t from-orange-500 to-red-600 dark:from-orange-400 dark:to-red-500">
         Join Blastoff Community
       </h2>

@@ -40,7 +40,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed z-50 flex h-20 w-full items-center justify-between bg-slate-100 px-4 transition-all dark:bg-slate-900">
+      <header className="fixed z-50 flex h-20 w-full items-center justify-between bg-slate-100 px-4 transition-all dark:bg-dark_primary">
         <Logo />
         <div className="flex items-center space-x-4">
           <div className="font-semibold">{user ? user.username : ""}</div>
@@ -81,7 +81,7 @@ const SettingsSheet = () => {
           </span>
         </SheetTrigger>
       </Tooltip>
-      <SheetContent>
+      <SheetContent className="bg-dark_primary">
         <SheetHeader>
           <SheetTitle>Settings</SheetTitle>
           <SheetDescription>
