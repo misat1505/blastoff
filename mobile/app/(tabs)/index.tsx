@@ -3,6 +3,7 @@ import { FlatList, StyleSheet } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { LAUNCHES_QUERY_OPTIONS } from "@/features/launches/api/launches-query-options";
+import LaunchCard from "@/features/launches/components/launch-card";
 import { useQuery } from "@tanstack/react-query";
 
 export default function HomeScreen() {
@@ -22,7 +23,7 @@ export default function HomeScreen() {
       <FlatList
         data={launches!}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ThemedText>{item.mission_name}</ThemedText>}
+        renderItem={({ item }) => <LaunchCard launch={item} />}
       />
     </ThemedView>
   );
