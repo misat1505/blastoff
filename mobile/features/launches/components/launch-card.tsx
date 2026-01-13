@@ -15,7 +15,15 @@ const LaunchCard = ({ launch }: LaunchCardProps) => {
           resizeMode="cover"
         />
       )}
-      <ThemedText style={styles.title}>{launch.mission_name}</ThemedText>
+      <ThemedView style={styles.info}>
+        <ThemedText style={styles.title}>{launch.mission_name}</ThemedText>
+        <ThemedText style={styles.title}>
+          Liftoff: {launch.date.toLocaleDateString()}{" "}
+          {launch.date.toLocaleTimeString()}
+        </ThemedText>
+        <ThemedText style={styles.title}>{launch.site?.name}</ThemedText>
+        <ThemedText style={styles.title}>{launch.rocket.name}</ThemedText>
+      </ThemedView>
     </ThemedView>
   );
 };
@@ -24,20 +32,28 @@ export default LaunchCard;
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 16,
+    marginBottom: 8,
     borderRadius: 8,
     overflow: "hidden",
-    backgroundColor: "#fff",
     padding: 8,
+    flexDirection: "row",
   },
   image: {
-    width: "100%",
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 8,
+    width: "30%",
+    height: 300,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+  },
+  info: {
+    flexGrow: 1,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "white",
   },
 });
