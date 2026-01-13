@@ -5,6 +5,7 @@ import { ThemedView } from "@/components/themed-view";
 import { LAUNCHES_QUERY_OPTIONS } from "@/features/launches/api/launches-query-options";
 import LaunchCard from "@/features/launches/components/launch-card";
 import { useQuery } from "@tanstack/react-query";
+import { Image } from "expo-image";
 
 export default function HomeScreen() {
   const { data: launches, isPending } = useQuery(
@@ -21,7 +22,11 @@ export default function HomeScreen() {
   return (
     <ThemedView variant="primary" style={styles.container}>
       <ThemedView variant="primary" style={styles.navbar}>
-        <ThemedText variant="primary" type="title" style={styles.navbarText}>
+        <Image
+          source={require("@/assets/images/logo.png")}
+          style={styles.logo}
+        />
+        <ThemedText variant="primary" type="title">
           Blastoff
         </ThemedText>
       </ThemedView>
@@ -45,10 +50,15 @@ const loadingStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   navbar: {
     height: 90,
+    paddingTop: 40,
+    paddingLeft: 20,
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
   },
-  navbarText: {
-    marginTop: 40,
-    marginLeft: 20,
+  logo: {
+    width: 32,
+    height: 32,
   },
   container: {
     paddingTop: 8,
