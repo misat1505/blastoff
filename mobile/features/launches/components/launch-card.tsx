@@ -1,7 +1,9 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Launch } from "../schemas/launch";
+import LaunchCountdown from "./launch-countdown";
 
 type LaunchCardProps = { launch: Launch };
 
@@ -16,15 +18,39 @@ const LaunchCard = ({ launch }: LaunchCardProps) => {
         />
       )}
       <ThemedView variant="secondary" style={styles.info}>
-        <ThemedText variant="primary" type="title" style={styles.title}>
+        <ThemedText
+          variant="primary"
+          type="title"
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
           {launch.mission_name}
         </ThemedText>
-        <ThemedText variant="secondary">
-          Liftoff: {launch.date.toLocaleDateString()}{" "}
-          {launch.date.toLocaleTimeString()}
-        </ThemedText>
-        <ThemedText variant="secondary">{launch.site?.name}</ThemedText>
-        <ThemedText variant="secondary">{launch.rocket.name}</ThemedText>
+        <LaunchCountdown launchDate={launch.date} />
+
+        <View style={styles.row}>
+          <Icon name="map-marker" size={20} color="#888" />
+          <ThemedText
+            variant="secondary"
+            style={styles.iconText}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {launch.site?.name}
+          </ThemedText>
+        </View>
+
+        <View style={styles.row}>
+          <Icon name="rocket" size={20} color="#888" />
+          <ThemedText
+            variant="secondary"
+            style={styles.iconText}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {launch.rocket.name}
+          </ThemedText>
+        </View>
       </ThemedView>
     </ThemedView>
   );
@@ -49,14 +75,18 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 8,
   },
   info: {
-    flexGrow: 1,
+    width: "70%",
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     justifyContent: "center",
-    alignItems: "center",
+    padding: 8,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 2,
+  },
+  iconText: {
+    marginLeft: 4,
   },
 });
