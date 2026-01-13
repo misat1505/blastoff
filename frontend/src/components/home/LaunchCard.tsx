@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
+import { GOOGLE_MAPS_LOGO_PATH } from "@/constants";
 import LaunchProvider, { useLaunchContext } from "@/context/LaunchContext";
+import { ROUTES } from "@/lib/routes";
 import { Launch } from "@/types/Launch";
 import { formatLaunchDate } from "@/utils/formatLaunchDate";
-import Tooltip from "../Tooltip";
-import { GOOGLE_MAPS_LOGO_PATH } from "@/constants";
 import { buildGoogleMapsURL } from "@/utils/googleMaps";
-import { ROUTES } from "@/lib/routes";
 import { CgDetailsMore } from "react-icons/cg";
+import { IoMdRocket } from "react-icons/io";
+import { Link } from "react-router-dom";
+import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
 import LaunchCountdown from "../LaunchCountdown";
 import StyledLink from "../StyledLink";
-import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
-import { IoMdRocket } from "react-icons/io";
+import Tooltip from "../Tooltip";
 
 type LaunchCardProps = {
   launch: Launch;
@@ -18,7 +18,7 @@ type LaunchCardProps = {
 
 const LaunchCard = ({ launch }: LaunchCardProps) => {
   return (
-    <div className="mb-4 h-[calc(350px+14rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-100/80 transition-all hover:shadow-sm dark:bg-slate-900/80 sm:grid sm:h-[400px]">
+    <div className="mb-4 h-[calc(350px+14rem)] grid-cols-3 overflow-hidden rounded-sm bg-slate-100/80 transition-all hover:shadow-sm dark:bg-dark_primary/80 sm:grid sm:h-[400px]">
       <LaunchProvider launch={launch}>
         <Image />
         <Info />
@@ -32,7 +32,7 @@ const Image = () => {
 
   if (!launch.image_url)
     return (
-      <div className="col-span-1 max-h-56 w-full object-cover sm:h-full sm:max-h-full dark:bg-slate-900/80 bg-slate-200/40 flex items-center justify-center">
+      <div className="col-span-1 max-h-56 w-full object-cover sm:h-full sm:max-h-full dark:bg-dark_primary/80 bg-light_secondary/40 flex items-center justify-center">
         <IoMdRocket size={224} />
       </div>
     );

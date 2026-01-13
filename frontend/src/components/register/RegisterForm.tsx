@@ -1,17 +1,17 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import FormField from "../FormField";
-import SubmitButton from "../SubmitButton";
+import { useSessionContext } from "@/context/SessionContext";
+import { toast } from "@/hooks/use-toast";
+import { ROUTES } from "@/lib/routes";
+import { AuthService } from "@/services/AuthService";
 import {
   registerFormSchema,
   RegisterFormValues,
 } from "@/validators/RegisterForm.validators";
-import { AuthService } from "@/services/AuthService";
-import { toast } from "@/hooks/use-toast";
-import { useSessionContext } from "@/context/SessionContext";
-import { ToastAction } from "../ui/toast";
-import { ROUTES } from "@/lib/routes";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import FormField from "../FormField";
+import SubmitButton from "../SubmitButton";
+import { ToastAction } from "../ui/toast";
 
 const RegisterForm = () => {
   const {
@@ -78,7 +78,7 @@ const RegisterForm = () => {
         placeholder="Re-enter your password"
       />
 
-      <SubmitButton className="mx-auto" isPending={isSubmitting}>
+      <SubmitButton className="mx-auto w-full" isPending={isSubmitting}>
         {isSubmitting ? "Creating..." : "Create Account"}
       </SubmitButton>
     </form>

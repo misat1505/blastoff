@@ -1,11 +1,11 @@
+import { useTooltipSwitch } from "@/hooks/useTooltipSwitch";
 import React, { PropsWithChildren } from "react";
 import {
-  TooltipProvider,
-  Tooltip as TooltipLib,
-  TooltipTrigger,
   TooltipContent,
+  Tooltip as TooltipLib,
+  TooltipProvider,
+  TooltipTrigger,
 } from "./ui/tooltip";
-import { useTooltipSwitch } from "@/hooks/useTooltipSwitch";
 
 type TooltipProps = PropsWithChildren & {
   content: React.ReactNode;
@@ -20,7 +20,9 @@ export default function Tooltip({ children, content }: TooltipProps) {
     <TooltipProvider>
       <TooltipLib>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent>{content}</TooltipContent>
+        <TooltipContent className="bg-white dark:bg-black">
+          {content}
+        </TooltipContent>
       </TooltipLib>
     </TooltipProvider>
   );

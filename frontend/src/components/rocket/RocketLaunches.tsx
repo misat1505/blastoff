@@ -1,5 +1,5 @@
-import CountUp from "react-countup";
 import { useRocketContext } from "@/context/RocketContext";
+import CountUp from "react-countup";
 import { FaCheck, FaDollarSign } from "react-icons/fa";
 import { IoMdRocket } from "react-icons/io";
 import { MdOutlinePendingActions } from "react-icons/md";
@@ -40,7 +40,7 @@ const RocketLaunches = () => {
   ];
 
   return (
-    <section className="w-full bg-slate-200 py-8 dark:bg-slate-800">
+    <section className="w-full bg-light_secondary py-8 dark:bg-dark_secondary">
       <h2 className="mb-6 text-center text-4xl font-semibold">Launches</h2>
       <div className="grid grid-cols-2 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
         {items.map((item, idx) => (

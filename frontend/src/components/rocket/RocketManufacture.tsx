@@ -1,13 +1,13 @@
+import { useRocketContext } from "@/context/RocketContext";
+import { cn } from "@/lib/utils";
 import { MdFactory } from "react-icons/md";
 import { TbDimensions } from "react-icons/tb";
-import { useRocketContext } from "@/context/RocketContext";
 import { useInView } from "react-intersection-observer";
-import { cn } from "@/lib/utils";
 import FavouriteAgencyDisplay from "../FavouriteAgencyDisplay";
 
 const RocketManufacture = () => {
   return (
-    <section className="w-full bg-slate-200 py-8 dark:bg-slate-800">
+    <section className="w-full bg-light_secondary py-8 dark:bg-dark_secondary">
       <div className="mx-auto grid w-full grid-cols-1 gap-x-12 gap-y-6 px-4 sm:grid-cols-2 lg:w-3/5 lg:px-0">
         <FadeInWrapper>
           <ManufacturerDisplay />
@@ -26,7 +26,7 @@ const ManufacturerDisplay = () => {
   const { rocket } = useRocketContext();
 
   return (
-    <div className="relative flex h-full flex-col items-center justify-between gap-y-12 rounded-md border border-slate-300 bg-slate-100 p-4 transition-all hover:shadow-lg dark:border-slate-700 dark:bg-slate-900">
+    <div className="relative flex h-full flex-col items-center justify-between gap-y-12 rounded-md border border-slate-300 bg-slate-100 p-4 transition-all hover:shadow-lg dark:border-slate-700 dark:bg-dark_primary/80">
       <div className="flex items-center space-x-4">
         <MdFactory size={20} />
         <h2 className="text-2xl font-semibold">Manufacturer</h2>
@@ -56,7 +56,7 @@ const RocketDimensions = () => {
   ];
 
   return (
-    <div className="flex h-full flex-col items-center justify-between gap-y-12 rounded-md border border-slate-300 bg-slate-100 p-4 transition-all hover:shadow-lg dark:border-slate-700 dark:bg-slate-900">
+    <div className="flex h-full flex-col items-center justify-between gap-y-12 rounded-md border border-slate-300 bg-slate-100 p-4 transition-all hover:shadow-lg dark:border-slate-700 dark:bg-dark_primary/80">
       <div className="flex items-center space-x-4">
         <TbDimensions size={20} />
         <h2 className="text-2xl font-semibold">Dimensions</h2>

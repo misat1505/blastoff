@@ -1,17 +1,17 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import FormField from "../FormField";
-import SubmitButton from "../SubmitButton";
+import { useSessionContext } from "@/context/SessionContext";
+import { useToast } from "@/hooks/use-toast";
+import { ROUTES } from "@/lib/routes";
+import { AuthService } from "@/services/AuthService";
 import {
   loginFormSchema,
   LoginFormValues,
 } from "@/validators/LoginForm.validators";
-import { AuthService } from "@/services/AuthService";
-import { useToast } from "@/hooks/use-toast";
-import { useSessionContext } from "@/context/SessionContext";
-import { ToastAction } from "../ui/toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@/lib/routes";
+import FormField from "../FormField";
+import SubmitButton from "../SubmitButton";
+import { ToastAction } from "../ui/toast";
 
 const LoginForm = () => {
   const {
@@ -68,7 +68,7 @@ const LoginForm = () => {
         placeholder="Password"
       />
       <div className="w-full text-center">
-        <SubmitButton className="mx-auto" isPending={isSubmitting}>
+        <SubmitButton className="mx-auto w-full" isPending={isSubmitting}>
           {isSubmitting ? "Logging in..." : "Log in"}
         </SubmitButton>
       </div>

@@ -1,8 +1,8 @@
-import { User } from "@/types/User";
 import { AuthService } from "@/services/AuthService";
+import { User } from "@/types/User";
 import { queryKeysBuilder } from "@/utils/queryKeysBuilder";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, PropsWithChildren, useContext } from "react";
-import { useQuery, useQueryClient } from "react-query";
 
 type SessionContextProps = PropsWithChildren & {};
 

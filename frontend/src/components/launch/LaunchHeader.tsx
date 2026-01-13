@@ -1,10 +1,10 @@
 import { useLaunchContext } from "@/context/LaunchContext";
 import { useThemeContext } from "@/context/ThemeContext";
-import { useInView } from "react-intersection-observer";
 import { cn } from "@/lib/utils";
-import LaunchCountdown from "../LaunchCountdown";
-import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
 import { IoMdRocket } from "react-icons/io";
+import { useInView } from "react-intersection-observer";
+import FavouriteLaunchDisplay from "../FavouriteLaunchDisplay";
+import LaunchCountdown from "../LaunchCountdown";
 
 const LaunchHeader = () => {
   const { theme } = useThemeContext();
@@ -21,7 +21,7 @@ const LaunchHeader = () => {
           className="absolute top-[calc(50%-4rem)] -translate-y-1/2"
         ></div>
         <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-nowrap text-center text-2xl font-semibold text-slate-900 dark:text-slate-100"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-nowrap text-center text-2xl font-semibold text-dark_primary dark:text-slate-100"
           style={{
             textShadow:
               theme === "dark" ? "2px 2px 4px black" : "2px 2px 4px white",
@@ -68,7 +68,7 @@ const LaunchBar = ({ isVisible }: LaunchBarProps) => {
   return (
     <div
       className={cn(
-        "fixed top-0 z-40 ml-[-0.5rem] flex w-[calc(100%-1rem)] items-center justify-between overflow-hidden text-nowrap bg-slate-200 p-4 text-sm font-semibold transition-all ease-in-out dark:bg-slate-800 sm:text-xl lg:w-[calc(50%+1rem)]",
+        "fixed top-0 z-40 ml-[-0.5rem] flex w-[calc(100%-1rem)] items-center justify-between overflow-hidden text-nowrap bg-light_secondary p-4 text-sm font-semibold transition-all ease-in-out dark:bg-dark_secondary sm:text-xl lg:w-[calc(50%+1rem)]",
         {
           "top-16 pt-8": isVisible,
         }
