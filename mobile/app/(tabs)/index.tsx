@@ -20,6 +20,11 @@ export default function HomeScreen() {
 
   return (
     <ThemedView variant="primary" style={styles.container}>
+      <ThemedView variant="primary" style={styles.navbar}>
+        <ThemedText variant="primary" type="title" style={styles.navbarText}>
+          Blastoff
+        </ThemedText>
+      </ThemedView>
       <FlatList
         data={launches!}
         keyExtractor={(item) => item.id}
@@ -38,6 +43,13 @@ const loadingStyles = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
+  navbar: {
+    height: 90,
+  },
+  navbarText: {
+    marginTop: 40,
+    marginLeft: 20,
+  },
   container: {
     paddingTop: 8,
   },
