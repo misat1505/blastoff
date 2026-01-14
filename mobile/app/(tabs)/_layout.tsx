@@ -2,25 +2,43 @@ import { Tabs } from "expo-router";
 import React from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
-import { IconSymbol } from "@/components/ui/icon-symbol";
+import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet } from "react-native";
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarButton: HapticTab,
+        tabBarButton: (props) => <HapticTab {...props} />,
+        tabBarActiveTintColor: "#f97316",
+        tabBarInactiveTintColor: "#9ca3af",
+        tabBarStyle: tabBarStyles.bar,
       }}
     >
+      <Tabs.Screen
+        name="index"
+        options={{
+          href: null,
+        }}
+      />
       <Tabs.Screen
         name="launches/index"
         options={{
           title: "Launches",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="rocket" size={size ?? 28} color={color} />
           ),
         }}
       />
     </Tabs>
   );
 }
+
+const tabBarStyles = StyleSheet.create({
+  bar: {
+    height: 68,
+    paddingTop: 8,
+    paddingBottom: 8,
+  },
+});
