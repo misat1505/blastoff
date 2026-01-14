@@ -20,11 +20,11 @@ export const Colors = {
   },
   dark: {
     primary: {
-      background: "rgb(14, 14, 14)",
+      background: "rgb(44, 53, 60)",
       text: "rgb(230, 230, 230)",
     },
     secondary: {
-      background: "rgb(44, 53, 60)",
+      background: "rgb(14, 14, 14)",
       text: "rgb(220, 220, 220)",
     },
   },

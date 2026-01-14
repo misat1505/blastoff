@@ -4,8 +4,8 @@ import { StyleSheet } from "react-native";
 
 const LaunchLoader = () => {
   return (
-    <ThemedView variant="primary" style={styles.container}>
-      <ThemedText variant="primary">loading...</ThemedText>
+    <ThemedView variant="secondary" style={styles.container}>
+      <ThemedText variant="secondary">loading...</ThemedText>
     </ThemedView>
   );
 };

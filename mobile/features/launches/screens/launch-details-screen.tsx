@@ -1,14 +1,15 @@
-import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { LAUNCHES_QUERY_OPTIONS } from "@/features/launches/api/launches-query-options";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import GeneralLaunchInfo from "../components/general-launch-info";
 import LaunchDetailsTopBar from "../components/launch-details-top-bar";
 import LaunchImageCountdown from "../components/launch-image-countdown";
 import LaunchLoader from "../components/launch-loader";
 import LaunchNotFound from "../components/launch-not-found";
+import LaunchSiteInfo from "../components/launch-site-info";
+import LaunchVehicleInfo from "../components/launch-vehicle-info";
 
 const LaunchDetailsScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -23,7 +24,9 @@ const LaunchDetailsScreen = () => {
       <ScrollView>
         <LaunchImageCountdown {...launch} />
         <GeneralLaunchInfo {...launch} />
-        <ThemedText variant="primary">{JSON.stringify(launch)}</ThemedText>
+        {launch.site ? <LaunchSiteInfo {...launch} site={launch.site} /> : null}
+        <LaunchVehicleInfo rocket={launch.rocket} />
+        <View style={{ height: 80 }}></View>
       </ScrollView>
     </ThemedView>
   );

@@ -13,16 +13,16 @@ const LaunchDetailsTopBar = ({ mission_name }: LaunchDetailsTopBarProps) => {
   const theme = useColorScheme() ?? "light";
   const router = useRouter();
 
-  const iconColor = Colors[theme].primary.text;
+  const iconColor = Colors[theme].secondary.text;
 
   return (
-    <ThemedView variant="primary" style={styles.navbar}>
+    <ThemedView variant="secondary" style={styles.navbar}>
       <TouchableOpacity onPress={() => router.back()}>
         <Ionicons name="arrow-back" size={28} style={{ color: iconColor }} />
       </TouchableOpacity>
       <Image source={require("@/assets/images/logo.png")} style={styles.logo} />
       <ThemedText
-        variant="primary"
+        variant="secondary"
         type="subtitle"
         ellipsizeMode="tail"
         numberOfLines={1}

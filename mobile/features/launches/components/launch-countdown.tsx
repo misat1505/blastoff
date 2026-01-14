@@ -1,14 +1,23 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { Colors } from "@/constants/theme";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import useCountdown from "../hooks/useCountdown";
+import { Launch } from "../schemas/launch";
 
-const LaunchCountdown = ({ launchDate }: { launchDate: Date }) => {
-  const { days, hours, minutes, seconds } = useCountdown(launchDate);
+type LaunchCountdownProps = Pick<Launch, "date"> & {
+  variant?: keyof typeof Colors.dark;
+};
+
+const LaunchCountdown = ({
+  date,
+  variant = "primary",
+}: LaunchCountdownProps) => {
+  const { days, hours, minutes, seconds } = useCountdown(date);
 
   const renderBox = (value: number | string) => (
-    <ThemedView variant="primary" style={styles.box}>
+    <ThemedView variant={variant} style={styles.box}>
       <ThemedText variant="secondary" style={styles.boxText}>
         {value.toString().padStart(2, "0")}
       </ThemedText>

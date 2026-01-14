@@ -31,7 +31,7 @@ const LaunchCard = ({ launch }: LaunchCardProps) => {
           >
             {launch.mission_name}
           </ThemedText>
-          <LaunchCountdown launchDate={launch.date} />
+          <LaunchCountdown date={launch.date} />
 
           <View style={styles.row}>
             <Icon name="map-marker" size={20} color="#888" />

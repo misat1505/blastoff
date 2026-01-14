@@ -20,8 +20,8 @@ const LaunchImageCountdown = ({
 }: LaunchImageCountdownProps) => {
   const theme = useColorScheme() ?? "light";
 
-  const fallbackIconColor = Colors[theme].primary.text;
-  const overlayColor = withAlpha(Colors[theme].primary.background, 0.6);
+  const fallbackIconColor = Colors[theme].secondary.text;
+  const overlayColor = withAlpha(Colors[theme].secondary.background, 0.6);
 
   return (
     <View style={styles.container}>
@@ -37,12 +37,12 @@ const LaunchImageCountdown = ({
       >
         <ThemedText
           type="subtitle"
-          variant="primary"
+          variant="secondary"
           style={{ textAlign: "center" }}
         >
           {mission_name}
         </ThemedText>
-        <LaunchCountdown launchDate={date} />
+        <LaunchCountdown date={date} variant="secondary" />
       </View>
     </View>
   );

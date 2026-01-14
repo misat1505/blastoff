@@ -14,19 +14,19 @@ const LaunchFeedScreen = () => {
 
   if (isPending)
     return (
-      <ThemedView variant="primary" style={loadingStyles.container}>
-        <ThemedText variant="primary">loading...</ThemedText>
+      <ThemedView variant="secondary" style={loadingStyles.container}>
+        <ThemedText variant="secondary">loading...</ThemedText>
       </ThemedView>
     );
 
   return (
     <ThemedView variant="primary" style={styles.container}>
-      <ThemedView variant="primary" style={styles.navbar}>
+      <ThemedView variant="secondary" style={styles.navbar}>
         <Image
           source={require("@/assets/images/logo.png")}
           style={styles.logo}
         />
-        <ThemedText variant="primary" type="subtitle">
+        <ThemedText variant="secondary" type="subtitle">
           Blastoff
         </ThemedText>
       </ThemedView>
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingLeft: 20,
     flexDirection: "row",
+    marginBottom: 8,
     gap: 8,
     alignItems: "center",
   },

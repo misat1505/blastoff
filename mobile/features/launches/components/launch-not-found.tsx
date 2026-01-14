@@ -4,8 +4,10 @@ import { StyleSheet } from "react-native";
 
 const LaunchNotFound = () => {
   return (
-    <ThemedView variant="primary" style={styles.container}>
-      <ThemedText variant="primary">This launch doesn&apos;t exist.</ThemedText>
+    <ThemedView variant="secondary" style={styles.container}>
+      <ThemedText variant="secondary">
+        This launch doesn&apos;t exist.
+      </ThemedText>
     </ThemedView>
   );
 };

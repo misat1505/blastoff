@@ -18,7 +18,6 @@ const GeneralLaunchInfo = ({
 
   return (
     <ThemedView variant="secondary" style={styles.container}>
-      {/* STATUS */}
       <ThemedView variant="secondary" style={styles.statusRow}>
         <ThemedView variant="primary" style={styles.badge}>
           <ThemedText
@@ -38,12 +37,10 @@ const GeneralLaunchInfo = ({
         </ThemedText>
       </ThemedView>
 
-      {/* DESCRIPTION */}
       <ThemedText variant="secondary" style={styles.description}>
         {description}
       </ThemedText>
 
-      {/* DATE */}
       <ThemedText variant="secondary" type="subtitle" style={styles.date}>
         {dateStr}
       </ThemedText>
@@ -55,7 +52,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     gap: 12,
-    borderRadius: 16,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
   },
   statusRow: {
     flexDirection: "row",
