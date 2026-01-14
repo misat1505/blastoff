@@ -32,6 +32,7 @@ const LaunchFeedScreen = () => {
       </ThemedView>
       <FlatList
         data={launches!}
+        style={styles.list}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <LaunchCard launch={item} />}
       />
@@ -53,16 +54,19 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingLeft: 20,
     flexDirection: "row",
-    marginBottom: 8,
+    // marginBottom: 8,
     gap: 8,
     alignItems: "center",
+  },
+  list: {
+    paddingTop: 8,
   },
   logo: {
     width: 32,
     height: 32,
   },
   container: {
-    paddingTop: 8,
+    // paddingTop: 8,
   },
 });
 
