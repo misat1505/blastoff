@@ -23,7 +23,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="launches/index"
+        name="launches"
         options={{
           title: "Launches",
           tabBarIcon: ({ color, size }) => (
@@ -37,7 +37,7 @@ export default function TabLayout() {
 
 const tabBarStyles = StyleSheet.create({
   bar: {
-    height: 68,
+    height: 78,
     paddingTop: 8,
     paddingBottom: 8,
   },
