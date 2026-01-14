@@ -4,6 +4,7 @@ import { LAUNCHES_QUERY_OPTIONS } from "@/features/launches/api/launches-query-o
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView } from "react-native";
+import GeneralLaunchInfo from "../components/general-launch-info";
 import LaunchDetailsTopBar from "../components/launch-details-top-bar";
 import LaunchImageCountdown from "../components/launch-image-countdown";
 import LaunchLoader from "../components/launch-loader";
@@ -18,13 +19,10 @@ const LaunchDetailsScreen = () => {
 
   return (
     <ThemedView variant="primary">
-      <LaunchDetailsTopBar />
+      <LaunchDetailsTopBar mission_name={launch.mission_name} />
       <ScrollView>
-        <LaunchImageCountdown
-          imageUrl={launch.image_url}
-          launchDate={launch.date}
-          name={launch.mission_name}
-        />
+        <LaunchImageCountdown {...launch} />
+        <GeneralLaunchInfo {...launch} />
         <ThemedText variant="primary">{JSON.stringify(launch)}</ThemedText>
       </ScrollView>
     </ThemedView>

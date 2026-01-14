@@ -5,8 +5,11 @@ import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Launch } from "../schemas/launch";
 
-const LaunchDetailsTopBar = () => {
+type LaunchDetailsTopBarProps = Pick<Launch, "mission_name">;
+
+const LaunchDetailsTopBar = ({ mission_name }: LaunchDetailsTopBarProps) => {
   const theme = useColorScheme() ?? "light";
   const router = useRouter();
 
@@ -18,8 +21,14 @@ const LaunchDetailsTopBar = () => {
         <Ionicons name="arrow-back" size={28} style={{ color: iconColor }} />
       </TouchableOpacity>
       <Image source={require("@/assets/images/logo.png")} style={styles.logo} />
-      <ThemedText variant="primary" type="title">
-        Blastoff
+      <ThemedText
+        variant="primary"
+        type="subtitle"
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={{ maxWidth: "70%" }}
+      >
+        {mission_name ?? "Blastoff"}
       </ThemedText>
     </ThemedView>
   );
@@ -30,6 +39,7 @@ const styles = StyleSheet.create({
     height: 90,
     paddingTop: 40,
     paddingLeft: 20,
+    paddingBottom: 10,
     flexDirection: "row",
     gap: 8,
     alignItems: "center",

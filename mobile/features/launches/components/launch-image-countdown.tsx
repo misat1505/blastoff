@@ -5,18 +5,18 @@ import { withAlpha } from "@/utils/with-alpha";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { StyleSheet, View } from "react-native";
+import { Launch } from "../schemas/launch";
 import LaunchCountdown from "./launch-countdown";
 
-type LaunchImageCountdownProps = {
-  imageUrl: string | null;
-  launchDate: Date;
-  name: string | null;
-};
+type LaunchImageCountdownProps = Pick<
+  Launch,
+  "image_url" | "date" | "mission_name"
+>;
 
 const LaunchImageCountdown = ({
-  imageUrl,
-  launchDate,
-  name,
+  image_url,
+  date,
+  mission_name,
 }: LaunchImageCountdownProps) => {
   const theme = useColorScheme() ?? "light";
 
@@ -25,8 +25,8 @@ const LaunchImageCountdown = ({
 
   return (
     <View style={styles.container}>
-      {imageUrl ? (
-        <Image source={{ uri: imageUrl }} style={styles.image} />
+      {image_url ? (
+        <Image source={{ uri: image_url }} style={styles.image} />
       ) : (
         <View style={styles.fallback}>
           <Ionicons name="rocket" size={150} color={fallbackIconColor} />
@@ -40,9 +40,9 @@ const LaunchImageCountdown = ({
           variant="primary"
           style={{ textAlign: "center" }}
         >
-          {name}
+          {mission_name}
         </ThemedText>
-        <LaunchCountdown launchDate={launchDate} />
+        <LaunchCountdown launchDate={date} />
       </View>
     </View>
   );

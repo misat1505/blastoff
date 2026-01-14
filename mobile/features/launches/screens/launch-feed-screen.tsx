@@ -26,7 +26,7 @@ const LaunchFeedScreen = () => {
           source={require("@/assets/images/logo.png")}
           style={styles.logo}
         />
-        <ThemedText variant="primary" type="title">
+        <ThemedText variant="primary" type="subtitle">
           Blastoff
         </ThemedText>
       </ThemedView>
