@@ -2,10 +2,10 @@ import { FlatList, StyleSheet } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import TopBar from "@/components/top-bar";
 import { LAUNCHES_QUERY_OPTIONS } from "@/features/launches/api/launches-query-options";
 import LaunchCard from "@/features/launches/components/launch-card";
 import { useQuery } from "@tanstack/react-query";
-import { Image } from "expo-image";
 
 const LaunchFeedScreen = () => {
   const { data: launches, isPending } = useQuery(
@@ -20,16 +20,8 @@ const LaunchFeedScreen = () => {
     );
 
   return (
-    <ThemedView variant="primary" style={styles.container}>
-      <ThemedView variant="secondary" style={styles.navbar}>
-        <Image
-          source={require("@/assets/images/logo.png")}
-          style={styles.logo}
-        />
-        <ThemedText variant="secondary" type="subtitle">
-          Blastoff
-        </ThemedText>
-      </ThemedView>
+    <ThemedView variant="primary">
+      <TopBar text="Blastoff" withGetBackIcon={false} />
       <FlatList
         data={launches!}
         style={styles.list}
@@ -49,24 +41,12 @@ const loadingStyles = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
-  navbar: {
-    height: 90,
-    paddingTop: 40,
-    paddingLeft: 20,
-    flexDirection: "row",
-    // marginBottom: 8,
-    gap: 8,
-    alignItems: "center",
-  },
   list: {
     paddingTop: 8,
   },
   logo: {
     width: 32,
     height: 32,
-  },
-  container: {
-    // paddingTop: 8,
   },
 });
 

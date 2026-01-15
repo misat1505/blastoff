@@ -1,15 +1,15 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Colors } from "@/constants/theme";
+import { TOP_BAR_HEIGHT } from "@/constants/ui";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Launch } from "../schemas/launch";
 
-type LaunchDetailsTopBarProps = Pick<Launch, "mission_name">;
+type TopBarProps = { text: string; withGetBackIcon?: boolean };
 
-const LaunchDetailsTopBar = ({ mission_name }: LaunchDetailsTopBarProps) => {
+const TopBar = ({ text, withGetBackIcon = true }: TopBarProps) => {
   const theme = useColorScheme() ?? "light";
   const router = useRouter();
 
@@ -17,9 +17,11 @@ const LaunchDetailsTopBar = ({ mission_name }: LaunchDetailsTopBarProps) => {
 
   return (
     <ThemedView variant="secondary" style={styles.navbar}>
-      <TouchableOpacity onPress={() => router.back()}>
-        <Ionicons name="arrow-back" size={28} style={{ color: iconColor }} />
-      </TouchableOpacity>
+      {withGetBackIcon ? (
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={28} style={{ color: iconColor }} />
+        </TouchableOpacity>
+      ) : null}
       <Image source={require("@/assets/images/logo.png")} style={styles.logo} />
       <ThemedText
         variant="secondary"
@@ -28,7 +30,7 @@ const LaunchDetailsTopBar = ({ mission_name }: LaunchDetailsTopBarProps) => {
         numberOfLines={1}
         style={{ maxWidth: "70%" }}
       >
-        {mission_name ?? "Blastoff"}
+        {text}
       </ThemedText>
     </ThemedView>
   );
@@ -36,7 +38,7 @@ const LaunchDetailsTopBar = ({ mission_name }: LaunchDetailsTopBarProps) => {
 
 const styles = StyleSheet.create({
   navbar: {
-    height: 90,
+    height: TOP_BAR_HEIGHT,
     paddingTop: 40,
     paddingLeft: 20,
     paddingBottom: 10,
@@ -50,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LaunchDetailsTopBar;
+export default TopBar;

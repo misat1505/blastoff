@@ -10,7 +10,12 @@ type LaunchVehicleInfoProps = Pick<Launch, "rocket">;
 const LaunchVehicleInfo = ({ rocket }: LaunchVehicleInfoProps) => {
   const router = useRouter();
 
-  const goToRocketDetails = () => {};
+  const goToRocketDetails = () => {
+    router.push({
+      pathname: "/(tabs)/rockets/[id]",
+      params: { id: rocket.id },
+    });
+  };
 
   return (
     <Pressable onPress={goToRocketDetails}>
