@@ -12,7 +12,7 @@ const LaunchVehicleInfo = ({ rocket }: LaunchVehicleInfoProps) => {
 
   const goToRocketDetails = () => {
     router.push({
-      pathname: "/(tabs)/rockets/[id]",
+      pathname: "/(tabs)/launches/rockets/[id]",
       params: { id: rocket.id },
     });
   };
