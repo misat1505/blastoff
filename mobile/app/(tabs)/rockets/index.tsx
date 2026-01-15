@@ -1,12 +1,7 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import RocketListScreen from "@/features/rockets/screens/rocket-list-screen";
 
 const RocketList = () => {
-  return (
-    <ThemedView variant="secondary">
-      <ThemedText variant="secondary">list of rockets</ThemedText>
-    </ThemedView>
-  );
+  return <RocketListScreen />;
 };
 
 export default RocketList;

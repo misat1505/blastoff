@@ -37,3 +37,7 @@ export const Rocket = z.object({
 });
 
 export type Rocket = z.infer<typeof Rocket>;
+
+export const RocketCore = Rocket.omit({ agency: true });
+
+export type RocketCore = z.infer<typeof RocketCore>;
