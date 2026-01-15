@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
+import { Href, usePathname, useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Launch } from "../schemas/launch";
 
@@ -9,10 +9,20 @@ type LaunchVehicleInfoProps = Pick<Launch, "rocket">;
 
 const LaunchVehicleInfo = ({ rocket }: LaunchVehicleInfoProps) => {
   const router = useRouter();
+  const pathname = usePathname();
+
+  const getRedirectPathname = (): Href | undefined => {
+    if (pathname.startsWith("/launches"))
+      return "/(tabs)/launches/rockets/[id]";
+    if (pathname.startsWith("/rockets")) return "/(tabs)/rockets/[id]";
+  };
 
   const goToRocketDetails = () => {
+    const redirectTo = getRedirectPathname();
+    if (!redirectTo) return;
     router.push({
-      pathname: "/(tabs)/launches/rockets/[id]",
+      // @ts-ignore
+      pathname: redirectTo,
       params: { id: rocket.id },
     });
   };
