@@ -2,12 +2,10 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { StyleSheet } from "react-native";
 
-const LaunchNotFound = () => {
+const LoadingScreen = () => {
   return (
     <ThemedView variant="secondary" style={styles.container}>
-      <ThemedText variant="secondary">
-        This launch doesn&apos;t exist.
-      </ThemedText>
+      <ThemedText variant="secondary">loading...</ThemedText>
     </ThemedView>
   );
 };
@@ -20,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LaunchNotFound;
+export default LoadingScreen;

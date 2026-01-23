@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet } from "react-native";
 
-import { ThemedText } from "@/components/themed-text";
+import LoadingScreen from "@/components/loading-screen";
 import { ThemedView } from "@/components/themed-view";
 import TopBar from "@/components/top-bar";
 import { LAUNCHES_QUERY_OPTIONS } from "@/features/launches/api/launches-query-options";
@@ -9,15 +9,10 @@ import { useQuery } from "@tanstack/react-query";
 
 const LaunchFeedScreen = () => {
   const { data: launches, isPending } = useQuery(
-    LAUNCHES_QUERY_OPTIONS.upcoming()
+    LAUNCHES_QUERY_OPTIONS.upcoming(),
   );
 
-  if (isPending)
-    return (
-      <ThemedView variant="secondary" style={loadingStyles.container}>
-        <ThemedText variant="secondary">loading...</ThemedText>
-      </ThemedView>
-    );
+  if (isPending) return <LoadingScreen />;
 
   return (
     <ThemedView variant="primary">
@@ -31,14 +26,6 @@ const LaunchFeedScreen = () => {
     </ThemedView>
   );
 };
-
-const loadingStyles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-  },
-});
 
 const styles = StyleSheet.create({
   list: {

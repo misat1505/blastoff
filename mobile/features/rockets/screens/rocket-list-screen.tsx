@@ -1,3 +1,4 @@
+import LoadingScreen from "@/components/loading-screen";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import TopBar from "@/components/top-bar";
@@ -9,12 +10,7 @@ import RocketCard from "../components/rocket-card";
 const RocketListScreen = () => {
   const { data: rockets, isPending } = useQuery(ROCKETS_QUERY_OPTIONS.all());
 
-  if (isPending)
-    return (
-      <ThemedView variant="secondary">
-        <ThemedText variant="secondary">loading...</ThemedText>
-      </ThemedView>
-    );
+  if (isPending) return <LoadingScreen />;
 
   return (
     <View>
