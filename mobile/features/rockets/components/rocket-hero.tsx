@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     transform: "translate(-50%, -50%)",
     padding: 8,
     borderRadius: 8,
+    maxWidth: "80%",
   },
 });
 
